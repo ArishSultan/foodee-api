@@ -37,6 +37,7 @@ Route::group([
         Route::get('logout', 'AuthController@logout');
         Route::get('user', 'AuthController@user');
         Route::resource('posts', 'PostController');
+        Route::resource('profile', 'ProfileController');
     });
 });
 //Route::middleware('auth:api')->get('/user', '');
