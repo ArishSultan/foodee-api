@@ -12,7 +12,7 @@ class ProfileController extends Controller
     public function index() {
     }
 
-    public function show(User $user, Request $request) {
+    public function show(User $user) {
 //        $user = $request->user();
         return $user;
     }
