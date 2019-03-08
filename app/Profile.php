@@ -8,6 +8,6 @@ class Profile extends Model
 {
     public function foods()
     {
-        return $this->belongsToMany(FoodCategory::class);
+        return $this->belongsToMany(FoodCategory::class, 'food_profile');
     }
 }
