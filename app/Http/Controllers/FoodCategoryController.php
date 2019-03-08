@@ -27,7 +27,7 @@ class FoodCategoryController extends Controller
         $food = new FoodCategory();
         $food->name = $request->name;
         $photo_path = time().'.'.request()->photo->getClientOriginalExtension();
-        $request->photo->storeAs('logos',$photo_path);
+        $request->photo->storeAs('foods',$photo_path);
         $food->photo = $photo_path;
         if($food->save()){
             return response()->json(["success"=>true, "message"=> "Food has been added successfully", "data"=>$food]);
