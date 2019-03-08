@@ -19,6 +19,13 @@ class CreateFoodCategoriesTable extends Migration
             $table->longText('photo')->nullable();
             $table->timestamps();
         });
+
+        Schema::create('food_profile', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('food_id')->unsigned()->index()->nullable();
+            $table->integer('profile_id')->unsigned()->index()->nullable();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -29,5 +36,6 @@ class CreateFoodCategoriesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('food_categories');
+        Schema::dropIfExists('food_profile');
     }
 }

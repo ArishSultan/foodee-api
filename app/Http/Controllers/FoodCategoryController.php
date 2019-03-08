@@ -34,7 +34,6 @@ class FoodCategoryController extends Controller
             return response()->json(["success"=>true, "message"=> "Food has been added successfully", "data"=>$food]);
         } else {
             return response()->json(["success"=>false, "message"=> "Could not added", "data"=>[]]);
-
         }
     }
     public function update(FoodCategory $food, Request $request) {

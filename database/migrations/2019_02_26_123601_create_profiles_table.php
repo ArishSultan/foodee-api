@@ -22,6 +22,9 @@ class CreateProfilesTable extends Migration
                 ->onDelete('cascade');
             $table->string('interest')->nullable();
             $table->string('ages')->nullable();
+            $table->integer('age')->nullable();
+            $table->integer('min_age')->nullable();
+            $table->integer('max_age')->nullable();
             $table->string('contribution')->nullable();
             $table->boolean('notification')->default(1);
             $table->timestamps();
