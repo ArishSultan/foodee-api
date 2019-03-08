@@ -12,9 +12,9 @@ class ProfileController extends Controller
     public function index() {
     }
 
-    public function show(Profile $user) {
+    public function show($id) {
 //        $user = $request->user();
-        return $user;
+        return User::with('profile')->where('id', $id)->first();
     }
 
     public function store(Request $request) {
