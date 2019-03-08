@@ -38,6 +38,7 @@ Route::group([
         Route::get('user', 'AuthController@user');
         Route::resource('posts', 'PostController');
         Route::resource('profile', 'ProfileController');
+        Route::resource('food', 'FoodCategoryController');
     });
 });
 //Route::middleware('auth:api')->get('/user', '');
