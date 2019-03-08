@@ -10,6 +10,7 @@ use App\User;
 class FoodCategoryController extends Controller
 {
     public function index() {
+        return FoodCategory::all()->random()->get();
     }
 
     public function show(FoodCategory $food) {
