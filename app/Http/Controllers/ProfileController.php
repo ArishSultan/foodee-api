@@ -12,8 +12,9 @@ class ProfileController extends Controller
     public function index() {
     }
 
-    public function show(Profile $profile) {
-        return $profile;
+    public function show(User $user, Request $request) {
+//        $user = $request->user();
+        return $user->profile;
     }
 
     public function store(Request $request) {
