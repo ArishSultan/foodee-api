@@ -13,7 +13,8 @@ use Illuminate\Http\Request;
 |
 */
 Route::group([
-    'prefix' => 'auth'
+    'prefix' => 'auth',
+    'middleware' => 'cors'
 ], function () {
     Route::post('login', 'AuthController@login');
     Route::post('signup', 'AuthController@signup');
@@ -26,7 +27,8 @@ Route::group([
 });
 
 Route::group([
-    'prefix' => 'v1'
+    'prefix' => 'v1',
+    'middleware' => 'cors'
 ], function () {
     Route::post('login', 'AuthController@login');
     Route::post('signup', 'AuthController@signup');
