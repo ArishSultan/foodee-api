@@ -50,6 +50,7 @@ class PostController extends Controller
 
     public function like(Request $request, $id)
     {
+        $post = NewsFeed::where('id', $id)->select('id')->first();
         $existing_like = Like::where('post_id', $id)->where('user_id',$request->user()->id)->first();
 
         if (is_null($existing_like)) {
@@ -57,11 +58,14 @@ class PostController extends Controller
                 'post_id' => $id,
                 'user_id' => $request->user()->id
             ]);
+            return response()->json(["status"=>true, 'post_count'=>$post->likes()->count()], 200);
         } else {
             if (is_null($existing_like->deleted_at)) {
                 $existing_like->delete();
+                return response()->json(["status"=>false, 'post_count'=>$post->likes()->count()], 200);
             } else {
                 $existing_like->restore();
+                return response()->json(["status"=>false, 'post_count'=>$post->likes()->count()], 200);
             }
         }
     }
