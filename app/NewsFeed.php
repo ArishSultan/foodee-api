@@ -21,6 +21,14 @@ class NewsFeed extends Model
 //        'photos' => 'array',
 //    ];
 
+    /*
+     * Each post has many comments
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'post_id');
+    }
+
     public function getPhotosAttribute($value) {
 //        $temp = $value.split(",");
         return explode(',', $value);

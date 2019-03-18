@@ -9,7 +9,7 @@ use App\User;
 class PostController extends Controller
 {
     public function index() {
-        return NewsFeed::orderBy('created_at', 'desc')->paginate(6);
+        return NewsFeed::with('comments')->orderBy('created_at', 'desc')->paginate(6);
     }
     public function show(NewsFeed $post) {
         return $post;
