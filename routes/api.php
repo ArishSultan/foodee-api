@@ -41,7 +41,7 @@ Route::group([
         Route::resource('profile', 'ProfileController');
         Route::resource('food', 'FoodCategoryController');
         Route::get('post/{id}/isLikedByMe', 'PostController@isLikedByMe');
-        Route::post('post/like', 'PostController@like');
+        Route::post('post/like/{id}', 'PostController@like');
     });
 });
 //Route::middleware('auth:api')->get('/user', '');
