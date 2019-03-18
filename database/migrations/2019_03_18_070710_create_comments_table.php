@@ -23,16 +23,18 @@ class CreateCommentsTable extends Migration
             $table->timestamps();
         });
 
+
         Schema::table('comments', function($table) {
             $table->foreign('post_id')
                 ->references('id')
-                ->on('posts')
+                ->on('news_feeds')
                 ->onDelete('cascade');
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
         });
+
     }
 
     /**
