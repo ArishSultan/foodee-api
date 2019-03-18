@@ -55,7 +55,7 @@ class PostController extends Controller
                 'user_id' => $request->user()->id
             ]);
         } else {
-            if (is_null($existing_like->created_at)) {
+            if (is_null($existing_like->deleted_at)) {
                 $existing_like->delete();
             } else {
                 $existing_like->restore();
