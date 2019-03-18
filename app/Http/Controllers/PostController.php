@@ -35,10 +35,12 @@ class PostController extends Controller
     {
         $post = NewsFeed::findOrFail($id)->first();
         if(isset($post)){
-            if (Like::where('user_id',$request->user()->id)->where('post_id',$post->id)->exists()){
+            $isLiked = Like::where('user_id',$request->user()->id)->where('post_id',$post->id)->exists();
+            if ($isLiked){
                 return response()->json(["status"=>true], 200);
+            } else {
+                return response()->json(["status"=>false], 200);
             }
-            return response()->json(["status"=>false], 200);
         } else {
             return response()->json(["message"=>"No content were found!"], 204);
         }
