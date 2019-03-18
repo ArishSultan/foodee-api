@@ -34,7 +34,7 @@ class PostController extends Controller
     public function isLikedByMe(Request $request, $id)
     {
 
-        $post = NewsFeed::findOrFail($id)->first();
+        $post = NewsFeed::where('id', $id)->first();
         return $post;
         if(isset($post)){
             $isLiked = Like::where('user_id', $request->user()->id)->where('post_id', $post->id)->first();
