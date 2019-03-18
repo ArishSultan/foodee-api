@@ -23,7 +23,7 @@ class NewsFeed extends Model
 
     public function likes()
     {
-        return $this->belongsToMany('App\User', 'likes');
+        return $this->belongsToMany('App\User', 'likes', 'post_id', 'user_id');
     }
 
     /*
