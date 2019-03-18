@@ -22,6 +22,6 @@ class Comment extends Model
      */
     public function user()
     {
-        return $this->belongsTo(User::class, 'id')->select(['username', 'email']);
+        return $this->belongsTo('App\User', 'user_id');
     }
 }
