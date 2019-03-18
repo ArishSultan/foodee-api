@@ -37,7 +37,6 @@ class PostController extends Controller
         $post = NewsFeed::where('id', $id)->first();
         if(isset($post)){
             $isLiked = Like::where('user_id', $request->user()->id)->where('post_id', $post->id)->first();
-            return $isLiked;
             if ($isLiked){
                 return response()->json(["status"=>true], 200);
             } else {
