@@ -21,6 +21,11 @@ class NewsFeed extends Model
 //        'photos' => 'array',
 //    ];
 
+    public function likes()
+    {
+        return $this->belongsToMany('App\User', 'likes');
+    }
+
     /*
      * Each post has many comments
      */

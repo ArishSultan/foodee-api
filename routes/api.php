@@ -40,6 +40,8 @@ Route::group([
         Route::resource('comments', 'CommentController');
         Route::resource('profile', 'ProfileController');
         Route::resource('food', 'FoodCategoryController');
+        Route::get('post/{id}/isLikedByMe', 'API\PostController@isLikedByMe');
+        Route::post('post/like', 'PostController@like');
     });
 });
 //Route::middleware('auth:api')->get('/user', '');

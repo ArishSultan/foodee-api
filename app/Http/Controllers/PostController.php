@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers;
+use App\Like;
 use App\NewsFeed;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,5 +29,37 @@ class PostController extends Controller
     public function delete(NewsFeed $post) {
         $post->delete();
         return response()->json(null, 204);
+    }
+
+    public function isLikedByMe(Request $request, $id)
+    {
+        $post = NewsFeed::findOrFail($id)->first();
+        if(isset($post)){
+            if (Like::whereUserId($request->user()->id)->wherePostId($post->id)->exists()){
+                return response()->json(["status"=>true], 200);
+            }
+            return response()->json(["status"=>false], 200);
+        } else {
+            return response()->json(["message"=>"No content were found!"], 204);
+        }
+
+    }
+
+    public function like(NewsFeed $post)
+    {
+        $existing_like = Like::withTrashed()->wherePostId($post->id)->whereUserId(Auth::id())->first();
+
+        if (is_null($existing_like)) {
+            Like::create([
+                'post_id' => $post->id,
+                'user_id' => Auth::id()
+            ]);
+        } else {
+            if (is_null($existing_like->deleted_at)) {
+                $existing_like->delete();
+            } else {
+                $existing_like->restore();
+            }
+        }
     }
 }

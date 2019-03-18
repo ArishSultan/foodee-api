@@ -26,6 +26,11 @@ class User extends Authenticatable
         return $this->hasOne(Profile::class, 'user_id');
     }
 
+    public function likes()
+    {
+        return $this->belongsToMany('App\Post', 'likes', 'user_id', 'post_id');
+    }
+
     /**
      * The attributes that should be hidden for arrays.
      *
