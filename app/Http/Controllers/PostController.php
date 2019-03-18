@@ -35,7 +35,6 @@ class PostController extends Controller
     {
 
         $post = NewsFeed::where('id', $id)->first();
-        return $post;
         if(isset($post)){
             $isLiked = Like::where('user_id', $request->user()->id)->where('post_id', $post->id)->first();
             return $isLiked;
