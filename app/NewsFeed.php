@@ -26,7 +26,7 @@ class NewsFeed extends Model
      */
     public function comments()
     {
-        return $this->hasMany(Comment::class, 'post_id')->withCount('comments');
+        return $this->hasMany(Comment::class, 'post_id');
     }
 
     public function getPhotosAttribute($value) {
