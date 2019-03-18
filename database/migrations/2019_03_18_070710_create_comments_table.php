@@ -1,11 +1,10 @@
 <?php
 
-use App\Like;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNewsFeedsTable extends Migration
+class CreateCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,27 +13,15 @@ class CreateNewsFeedsTable extends Migration
      */
     public function up()
     {
-        Schema::create('news_feeds', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('post_id')->unsigned()->index();
             $table->integer('user_id')->unsigned()->index();
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
             $table->longText('content')->nullable();
-            $table->longText('photos')->nullable();
             $table->string('type')->default('text')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();
         });
-    }
-
-    /*
-     * Each post belongs to many likes
-     */
-    public function likes()
-    {
-        return $this->belongsToMany(Like::class, 'like_post', 'like_id', 'post_id');
     }
 
     /**
@@ -44,6 +31,6 @@ class CreateNewsFeedsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('news_feeds');
+        Schema::dropIfExists('comments');
     }
 }
