@@ -45,17 +45,17 @@ class PostController extends Controller
 
     }
 
-    public function like(NewsFeed $post)
+    public function like(Request $request, NewsFeed $post)
     {
-        $existing_like = Like::withTrashed()->wherePostId($post->id)->whereUserId(Auth::id())->first();
+        $existing_like = Like::withTrashed()->wherePostId($post->id)->whereUserId($request->user()->id)->first();
 
         if (is_null($existing_like)) {
             Like::create([
                 'post_id' => $post->id,
-                'user_id' => Auth::id()
+                'user_id' => $request->user()->id
             ]);
         } else {
-            if (is_null($existing_like->deleted_at)) {
+            if (is_null($existing_like->created_at)) {
                 $existing_like->delete();
             } else {
                 $existing_like->restore();
