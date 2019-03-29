@@ -29,6 +29,9 @@ class AuthController extends Controller
             'phone' => 'required|numeric|unique:users',
             'password' => 'required|string|confirmed'
         ]);
+        if ($request->fails()) {
+            return $this->errorResponse($request->errors()->all());
+        }
         $user = new User([
             'name' => $request->username,
             'email' => $request->email,
@@ -39,9 +42,12 @@ class AuthController extends Controller
             $tokenResult = $user->createToken('Foodee');
             $token = $tokenResult->accessToken;
             return response()->json([
+                'status'=>true,
                 'access_token' => $tokenResult->accessToken,
                 'token_type' => 'Bearer',
-                'user' => $user
+                'message' => 'Your account has been created successfully',
+                'user' => $user,
+                'status_code' => 201
             ], 201);
         }
     }
@@ -66,7 +72,9 @@ class AuthController extends Controller
         $credentials = request(['email', 'password']);
         if(!Auth::attempt($credentials))
             return response()->json([
-                'message' => 'Unauthorized'
+                'status'=>false,
+                'message' => 'Incorrect username or password!',
+                'status_code' => 401
             ], 401);
         $user = $request->user();
         $tokenResult = $user->createToken('Foodee');
@@ -75,9 +83,12 @@ class AuthController extends Controller
 //            $token->expires_at = Carbon::now()->addWeeks(1);
 //        $token->save();
         return response()->json([
+            'status'=>true,
             'access_token' => $token,
             'token_type' => 'Bearer',
-            'user' => $user
+            'user' => $user,
+            'message' => 'Login Successfull',
+            'status_code' => 200
 //            'expires_at' => Carbon::parse(
 //                $tokenResult->token->expires_at
 //            )->toDateTimeString()
