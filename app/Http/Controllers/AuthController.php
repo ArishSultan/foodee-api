@@ -30,7 +30,7 @@ class AuthController extends Controller
             'password' => 'required|string|confirmed'
         ]);
         $user = new User([
-            'name' => $request->usernamename,
+            'name' => $request->username,
             'email' => $request->email,
             'phone' => $request->phone,
             'password' => bcrypt($request->password)
