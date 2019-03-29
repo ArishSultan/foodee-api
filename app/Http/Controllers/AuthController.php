@@ -29,9 +29,9 @@ class AuthController extends Controller
             'phone' => 'required|numeric|unique:users',
             'password' => 'required|string|confirmed'
         ]);
-        if ($request->fails()) {
-            return $this->errorResponse($request->errors()->all());
-        }
+//        if ($request->fails()) {
+//            return $this->errorResponse($request->errors()->all());
+//        }
         $user = new User([
             'name' => $request->username,
             'email' => $request->email,
