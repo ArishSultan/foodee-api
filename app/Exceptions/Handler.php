@@ -56,7 +56,7 @@ class Handler extends ExceptionHandler
                 "status" => false,
                 "statusCode" => 422,
                 "message" =>  "The given data was invalid.",
-                "errors" => $e->errors()
+                "errors" => $e->errors()->all()
             ], 422);
         }else{
             parent::convertValidationExceptionToResponse($e, $request);
