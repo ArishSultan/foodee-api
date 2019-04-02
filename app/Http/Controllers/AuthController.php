@@ -33,7 +33,7 @@ class AuthController extends Controller
 //            return $this->errorResponse($request->errors()->all());
 //        }
         $user = new User([
-            'name' => $request->username,
+            'username' => $request->username,
             'email' => $request->email,
             'phone' => $request->phone,
             'password' => bcrypt($request->password)
