@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\User;
+use Illuminate\Support\Facades\DB;
+
 class AuthController extends Controller
 {
 
@@ -116,5 +118,32 @@ class AuthController extends Controller
     public function user(Request $request)
     {
         return response()->json($request->user());
+    }
+    
+    /*
+     * Update lat, lng and fetching users within 10miles radius.
+     */
+    public function userLatLng(Request $request)
+    {
+        $user = $request->user();
+        $user->lat = $request->lat;
+        $user->lng = $request->lng;
+        if($user->save()){
+            $users = DB::select(DB::raw("SELECT
+  id, (
+    3959 * acos (
+      cos ( radians($request->lat) )
+      * cos( radians( lat ) )
+      * cos( radians( lng ) - radians($request->lng) )
+      + sin ( radians($request->lat) )
+      * sin( radians( lat ) )
+    )
+  ) AS distance
+FROM users
+HAVING distance <= 10
+ORDER BY distance
+LIMIT 0 , 20;"));
+            return response()->json(["success"=>true, "data"=>$user]);
+        }
     }
 }
