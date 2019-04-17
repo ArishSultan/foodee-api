@@ -47,6 +47,7 @@ Route::group([
         Route::get('post/{id}/isLikedByMe', 'PostController@isLikedByMe');
         Route::post('post/like/{id}', 'PostController@like');
     });
+
 });
 //Route::middleware('auth:api')->get('/user', '');
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
