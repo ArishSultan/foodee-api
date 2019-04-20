@@ -34,8 +34,9 @@ class AuthController extends Controller
         $password = bcrypt($request->password);
 
         $existingUser = User::where('email',$email)->first();
+
         if($existingUser) {
-            return response()->json(['message' => 'Email already exists.', 'status' => false, 'token' => null], 200);
+            return response()->json(['message' => 'Email already exists.', 'status' => false, 'access_token' => null], 200);
         }else {
 
             $user = new User([
@@ -78,18 +79,15 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        $request->validate([
-            'email' => 'required|string|email',
-            'password' => 'required|string',
-            'remember_me' => 'boolean'
-        ]);
+
+
         $credentials = request(['email', 'password']);
         if(!Auth::attempt($credentials))
             return response()->json([
                 'status'=>false,
                 'message' => 'Incorrect username or password!',
-                'status_code' => 401
-            ], 401);
+                'token' => null
+            ], 201);
         $user = $request->user();
         $tokenResult = $user->createToken('Foodee');
         $token = $tokenResult->accessToken;
@@ -102,11 +100,11 @@ class AuthController extends Controller
             'token_type' => 'Bearer',
             'user' => $user,
             'message' => 'Login Successfull',
-            'status_code' => 200
+
 //            'expires_at' => Carbon::parse(
 //                $tokenResult->token->expires_at
 //            )->toDateTimeString()
-        ]);
+        ],200);
     }
 
     /**
