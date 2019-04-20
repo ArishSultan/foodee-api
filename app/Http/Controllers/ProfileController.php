@@ -25,7 +25,7 @@ class ProfileController extends Controller
         $profile->interest = $request->interest;
         $profile->ages = $request->ages;
         $profile->contribution = $request->contribution;
-        if($profile->save()){
+        if($profile->save()) {
             if(isset($request->foods) && count($request->foods) > 0){
                 foreach($request->foods as $food){
                     $profile->foods()->attach($food);

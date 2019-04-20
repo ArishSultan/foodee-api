@@ -23,35 +23,47 @@ class AuthController extends Controller
      * @param  [string] password_confirmation
      * @return [string] message
      */
+
     public function signup(Request $request)
     {
-        $request->validate([
-            'username' => 'required|string',
-            'email' => 'required|string|email|unique:users',
-            'phone' => 'required|numeric|unique:users',
-            'password' => 'required|string|confirmed'
-        ]);
-//        if ($request->fails()) {
-//            return $this->errorResponse($request->errors()->all());
-//        }
-        $user = new User([
-            'username' => $request->username,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'password' => bcrypt($request->password)
-        ]);
-        if($user->save()){
-            $tokenResult = $user->createToken('Foodee');
-            $token = $tokenResult->accessToken;
-            return response()->json([
-                'status'=>true,
-                'access_token' => $tokenResult->accessToken,
-                'token_type' => 'Bearer',
-                'message' => 'Your account has been created successfully',
-                'user' => $user,
-                'status_code' => 201
-            ], 201);
+
+
+        $username = $request->username;
+        $email = $request->email;
+        $phone = $request->phone;
+        $password = bcrypt($request->password);
+
+        $existingUser = User::where('email',$email)->first();
+        if($existingUser) {
+            return response()->json(['message' => 'Email already exists.', 'status' => false, 'token' => null], 200);
+        }else {
+
+            $user = new User([
+                'username' => $username,
+                'email' => $email,
+                'phone' => $phone,
+                'password' => $password
+            ]);
+
+            if(!$user) {
+
+                throw new HttpException(500);
+
+            }else {
+                if($user->save()){
+                    $tokenResult = $user->createToken('Foodee');
+                    $token = $tokenResult->accessToken;
+                    return response()->json([
+                        'status'=>true,
+                        'access_token' => $tokenResult->accessToken,
+                        'message' => 'Your account has been created successfully',
+                        'user' => $user
+                    ], 201);
+                }
+            }
         }
+
+
     }
 
     /**
