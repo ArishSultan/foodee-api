@@ -76,4 +76,21 @@ class ProfileController extends Controller
         $profile->delete();
         return response()->json(null, 204);
     }
+
+    public function updatePhoto(Request $request)
+    {
+        $photo = $request->photo;
+        $type = $request->type;
+        $user = $request->user();
+        if($type === "avatar"){
+
+            $user->profile->avatar = $photo;
+        } else if ($type === "cover") {
+            $user->profile->cover = $photo;
+        }
+
+        if($user->profile->save()){
+            return response()->json(["success"=>true, "message"=>"Saved", "imgUrl"=>$photo]);
+        }
+    }
 }

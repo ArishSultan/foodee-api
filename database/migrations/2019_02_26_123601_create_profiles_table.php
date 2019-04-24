@@ -29,6 +29,8 @@ class CreateProfilesTable extends Migration
             $table->integer('max_age')->nullable();
             $table->string('gender')->nullable();
             $table->string('contribution')->nullable();
+            $table->string('avatar')->nullable();
+            $table->string('cover')->nullable();
             $table->boolean('notification')->default(1);
             $table->timestamps();
         });
