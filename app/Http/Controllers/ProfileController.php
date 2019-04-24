@@ -39,8 +39,9 @@ class ProfileController extends Controller
 
     }
     public function update(Profile $profile, Request $request) {
-        $profile->update($request->all());
-        return response()->json($profile);
+//        $profile->update($request->all());
+//        return response()->json($profile);
+        return $profile;
     }
     public function delete(Profile $profile) {
         $profile->delete();
