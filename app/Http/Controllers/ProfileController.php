@@ -41,7 +41,35 @@ class ProfileController extends Controller
     public function update($id, Request $request) {
 //        $profile->update($request->all());
 //        return response()->json($profile);
+        $username = $request->username;
+        $message = $request->message;
+        $age = $request->age;
+        $location = $request->location;
+        $categories = $request->categories;
+        $gender = $request->gender;
+        $contribution = $request->contribution;
+
         $user = User::where('id', $id)->first();
+
+        $user->username = $username;
+        $user->message = $message;
+        $user->age = $age;
+        $user->location = $location;
+        //if($user->save()){
+
+            if(isset($categories) && count($categories) > 0){
+                foreach($categories as $catId){
+                    $user->profile->foods()->attach($catId);
+                }
+            }
+
+            $user->profile->gender = $gender;
+            $user->profile->contribution = $contribution;
+            if($user->save() && $user->profile->save()){
+                return response()->json(["success"=>true, "message"=>"Profile has been updated successfully", "data"=>$user]);
+            }
+
+        //}
     }
     public function delete(Profile $profile) {
         $profile->delete();
