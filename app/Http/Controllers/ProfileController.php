@@ -41,7 +41,7 @@ class ProfileController extends Controller
     public function update($id, Request $request) {
 //        $profile->update($request->all());
 //        return response()->json($profile);
-        return $id;
+        $user = User::where('id', $id)->first();
     }
     public function delete(Profile $profile) {
         $profile->delete();
