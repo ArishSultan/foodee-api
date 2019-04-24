@@ -81,30 +81,35 @@ class AuthController extends Controller
     {
 
 
-        $credentials = request(['email', 'password']);
-        if(!Auth::attempt($credentials))
-            return response()->json([
-                'status'=>false,
-                'message' => 'Incorrect username or password!',
-                'token' => null
-            ], 201);
-        $user = $request->user();
-        $tokenResult = $user->createToken('Foodee');
-        $token = $tokenResult->accessToken;
-//        if ($request->remember_me)
-//            $token->expires_at = Carbon::now()->addWeeks(1);
-//        $token->save();
-        return response()->json([
-            'status'=>true,
-            'access_token' => $token,
-            'token_type' => 'Bearer',
-            'user' => $user,
-            'message' => 'Login Successfull',
+        $email = $request->email;
+        $existingUser = User::where('email',$email)->first();
 
-//            'expires_at' => Carbon::parse(
-//                $tokenResult->token->expires_at
-//            )->toDateTimeString()
-        ],200);
+        if($existingUser) {
+            return response()->json(['message' => 'Email already exists.', 'status' => false, 'access_token' => null], 200);
+        }else {
+
+            $credentials = request(['email', 'password']);
+            if(!Auth::attempt($credentials))
+                return response()->json([
+                    'status'=>false,
+                    'message' => 'Incorrect username or password!',
+                    'token' => null
+                ], 201);
+            $user = $request->user();
+            $tokenResult = $user->createToken('Foodee');
+            $token = $tokenResult->accessToken;
+
+            return response()->json([
+                'status'=>true,
+                'access_token' => $token,
+                'token_type' => 'Bearer',
+                'user' => $user,
+                'message' => 'Login Successfull',
+
+
+           ],200);
+        }
+
     }
 
     /**
