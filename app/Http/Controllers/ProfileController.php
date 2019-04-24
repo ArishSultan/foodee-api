@@ -52,7 +52,6 @@ class ProfileController extends Controller
         $user = User::where('id', $id)->first();
 
         $user->username = $username;
-        $user->message = $message;
         $user->age = $age;
         $user->location = $location;
         //if($user->save()){
@@ -63,6 +62,7 @@ class ProfileController extends Controller
                 }
             }
 
+            $user->profile->message = $message;
             $user->profile->gender = $gender;
             $user->profile->contribution = $contribution;
             if($user->save() && $user->profile->save()){
