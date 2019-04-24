@@ -46,6 +46,7 @@ Route::group([
         Route::resource('food', 'FoodCategoryController');
         Route::get('post/{id}/isLikedByMe', 'PostController@isLikedByMe');
         Route::post('post/like/{id}', 'PostController@like');
+        Route::post('update/photo', 'ProfileController@updatePhoto');
     });
 
 });
