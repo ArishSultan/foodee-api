@@ -85,7 +85,7 @@ class AuthController extends Controller
         $existingUser = User::where('email',$email)->first();
 
         if($existingUser) {
-            return response()->json(['message' => 'Email already exists.', 'status' => false, 'access_token' => null], 200);
+            return response()->json(['message' => 'Incorrect username or password!', 'status' => false, 'access_token' => null], 200);
         }else {
 
             $credentials = request(['email', 'password']);
