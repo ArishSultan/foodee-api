@@ -66,6 +66,7 @@ class ProfileController extends Controller
             $user->profile->gender = $gender;
             $user->profile->contribution = $contribution;
             if($user->save() && $user->profile->save()){
+                $user->profile->foods;
                 return response()->json(["success"=>true, "message"=>"Profile has been updated successfully", "data"=>$user]);
             }
 
