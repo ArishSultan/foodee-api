@@ -85,10 +85,10 @@ class ProfileController extends Controller
         $type = $request->type;
         $user = $request->user();
         if($type === "avatar"){
-            $uploadedFile = UploadServiceProvider::upload($request, $user, "avatar");
+            $uploadedFile = UploadServiceProvider::upload($request, $user, "avatar/");
             $user->profile->avatar = $uploadedFile;
         } else if ($type === "cover") {
-            $uploadedFile = UploadServiceProvider::upload($request, $user, "cover");
+            $uploadedFile = UploadServiceProvider::upload($request, $user, "cover/");
             $user->profile->cover = $uploadedFile;
         }
 
