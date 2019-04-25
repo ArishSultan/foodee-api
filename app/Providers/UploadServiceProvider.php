@@ -18,8 +18,9 @@ class UploadServiceProvider
             if($check)
             {
 //                $filename = $file->store('media/'.$folder.'/'.$product->id);
-                $file->storeAs('media/'.$folder.'/'.$product->id, time().'.jpg');
-                $filename = time().$file->getClientOriginalName();
+                $filename = time().$extension;
+                $file->storeAs('media/'.$folder.'/'.$product->id, $filename);
+
                 return $filename;
             }
     }
