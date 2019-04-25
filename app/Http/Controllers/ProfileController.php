@@ -85,15 +85,15 @@ class ProfileController extends Controller
         $type = $request->type;
         $user = $request->user();
         if($type === "avatar"){
-            $uploadedFile = UploadServiceProvider::upload($request, $user, "avatar/");
+            $uploadedFile = UploadServiceProvider::upload($request, $user, $type);
             $user->profile->avatar = $uploadedFile;
         } else if ($type === "cover") {
-            $uploadedFile = UploadServiceProvider::upload($request, $user, "cover/");
+            $uploadedFile = UploadServiceProvider::upload($request, $user, $type);
             $user->profile->cover = $uploadedFile;
         }
 
         if($user->profile->save()){
-            return response()->json(["success"=>true, "message"=>"Saved", "type"=>$type, "photo"=>env('APP_URL').'/storage/'.$uploadedFile]);
+            return response()->json(["success"=>true, "message"=>"Saved", "type"=>$type, "photo"=>$uploadedFile]);
         }
     }
 }
