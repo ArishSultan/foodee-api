@@ -80,19 +80,20 @@ class ProfileController extends Controller
 
     public function updatePhoto(Request $request)
     {
+        global $uploadedFile;
         $photo = $request->photo;
         $type = $request->type;
         $user = $request->user();
         if($type === "avatar"){
-            $avatar = UploadServiceProvider::upload($request, $user, "avatar");
-            $user->profile->avatar = $avatar;
+            $uploadedFile = UploadServiceProvider::upload($request, $user, "avatar");
+            $user->profile->avatar = $uploadedFile;
         } else if ($type === "cover") {
-            $cover = UploadServiceProvider::upload($request, $user, "cover");
-            $user->profile->cover = $cover;
+            $uploadedFile = UploadServiceProvider::upload($request, $user, "cover");
+            $user->profile->cover = $uploadedFile;
         }
 
         if($user->profile->save()){
-            return response()->json(["success"=>true, "message"=>"Saved", "type"=>$type, "imgUrl"=>env('APP_URL').'/storage'.$photo]);
+            return response()->json(["success"=>true, "message"=>"Saved", "type"=>$type, "imgUrl"=>env('APP_URL').'/storage'.$uploadedFile]);
         }
     }
 }
