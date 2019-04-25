@@ -87,9 +87,9 @@ class AuthController extends Controller
         if($existingUser) {
 
             $credentials = request(['email', 'password']);
-            if(!Auth::attempt($credentials))
+            if (!Auth::attempt($credentials))
                 return response()->json([
-                    'status'=>false,
+                    'status' => false,
                     'message' => 'Incorrect username or password!',
                     'token' => null
                 ], 201);
@@ -98,14 +98,15 @@ class AuthController extends Controller
             $token = $tokenResult->accessToken;
 
             return response()->json([
-                'status'=>true,
+                'status' => true,
                 'access_token' => $token,
                 'token_type' => 'Bearer',
                 'user' => $user,
                 'message' => 'Login Successfull',
 
 
-           ],200);
+            ], 200);
+        }
 
     }
 
