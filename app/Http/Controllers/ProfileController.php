@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 use App\NewsFeed;
 use App\Profile;
+use App\Providers\UploadServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -83,14 +84,15 @@ class ProfileController extends Controller
         $type = $request->type;
         $user = $request->user();
         if($type === "avatar"){
-
-            $user->profile->avatar = $photo;
+            $avatar = UploadServiceProvider::upload($request, $user->id, "avatar");
+            $user->profile->avatar = $avatar;
         } else if ($type === "cover") {
-            $user->profile->cover = $photo;
+            $cover = UploadServiceProvider::upload($request, $user->id, "cover");
+            $user->profile->cover = $cover;
         }
 
         if($user->profile->save()){
-            return response()->json(["success"=>true, "message"=>"Saved", "imgUrl"=>$photo]);
+            return response()->json(["success"=>true, "message"=>"Saved", "imgUrl"=>env('APP_URL').'/storage'.$photo]);
         }
     }
 }
