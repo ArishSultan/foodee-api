@@ -18,6 +18,7 @@ class UploadServiceProvider
             if($check)
             {
                 $filename = $file->store('media/'.$folder.$product->id);
+                $filename = time().$file->getClientOriginalName();
                 return $filename;
             }
     }
