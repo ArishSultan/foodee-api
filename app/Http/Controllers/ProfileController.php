@@ -93,7 +93,7 @@ class ProfileController extends Controller
         }
 
         if($user->profile->save()){
-            return response()->json(["success"=>true, "message"=>"Saved", "type"=>$type, "baseUrl"=>url("/"), "photo"=>"storage/media/avatar/".$user->id.'/'.$uploadedFile]);
+            return response()->json(["success"=>true, "message"=>"Saved", "type"=>$type, "baseUrl"=>url("/"), "photo"=>"storage/media/$type/".$user->id.'/'.$uploadedFile]);
         }
     }
 }
