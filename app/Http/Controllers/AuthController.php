@@ -154,10 +154,13 @@ class AuthController extends Controller
       * sin( radians( lat ) )
     )
   ) AS distance
-FROM users JOIN profiles pr ON pr.user_id = users.id
+FROM users
 HAVING distance <= 10
 ORDER BY distance
 LIMIT 0 , 20;"));
+            foreach($users as $user){
+                $user['profile'] = $user->profile;
+            }
             return response()->json(["success"=>true, "data"=>$users]);
         }
     }
