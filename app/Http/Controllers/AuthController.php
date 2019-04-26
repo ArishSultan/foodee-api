@@ -140,6 +140,7 @@ class AuthController extends Controller
      */
     public function userLatLng(Request $request)
     {
+        $collection = collect();
         $user = $request->user();
         $user->lat = $request->lat;
         $user->lng = $request->lng;
@@ -159,9 +160,10 @@ HAVING distance <= 10
 ORDER BY distance
 LIMIT 0 , 20;"));
             foreach($users as $user){
-                $user->profile;
+
+                $collection->push($user);
             }
-            return response()->json(["success"=>true, "data"=>$users]);
+            return response()->json(["success"=>true, "data"=>$collection]);
         }
     }
 }
