@@ -31,6 +31,7 @@ class FoodCategoryController extends Controller
         $request->photo->storeAs('foods',$photo_path);
         $food->photo = $photo_path;
         if($food->save()){
+            $user->profile->foods()->attach($food->id);
             return response()->json(["success"=>true, "message"=> "Food has been added successfully", "data"=>$food]);
         } else {
             return response()->json(["success"=>false, "message"=> "Could not added", "data"=>[]]);
