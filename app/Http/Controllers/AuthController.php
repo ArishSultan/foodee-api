@@ -154,7 +154,7 @@ class AuthController extends Controller
       * sin( radians( lat ) )
     )
   ) AS distance
-FROM users
+FROM users JOIN profiles pr ON pr.user_id = $user->id
 HAVING distance <= 10
 ORDER BY distance
 LIMIT 0 , 20;"));
