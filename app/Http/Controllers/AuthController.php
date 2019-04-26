@@ -159,11 +159,8 @@ FROM users
 HAVING distance <= 10
 ORDER BY distance
 LIMIT 0 , 20;"));
-            foreach($users as $user){
-                $user->profile;
-                $collection->push($user);
-            }
-            return response()->json(["success"=>true, "data"=>$collection]);
+
+            return response()->json(["success"=>true, "data"=>$users]);
         }
     }
 }
