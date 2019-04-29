@@ -146,7 +146,7 @@ class AuthController extends Controller
         $user->lng = $request->lng;
         if($user->save()){
             $users = DB::select(DB::raw("SELECT
-  id, username, email, phone, lat, lng, user_id, avatar, cover, (
+  users.id, users.username, users.email, users.phone, users.lat, users.lng, profiles.user_id, profiles.avatar, profiles.cover, (
     3959 * acos (
       cos ( radians($request->lat) )
       * cos( radians( lat ) )
@@ -155,7 +155,7 @@ class AuthController extends Controller
       * sin( radians( lat ) )
     )
   ) AS distance
-FROM users right join profiles on users.id = profiles.user_id
+FROM users join profiles on profiles.user_.id = users.id
 HAVING distance <= 10
 ORDER BY distance
 LIMIT 0 , 20;"));
