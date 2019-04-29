@@ -146,7 +146,7 @@ class AuthController extends Controller
         $user->lng = $request->lng;
         if($user->save()){
             $users = DB::select(DB::raw("SELECT
-  id, username, email, phone, lat, lng, user_id, avatar, cover (
+  id, username, email, phone, lat, lng, user_id, avatar, cover, (
     3959 * acos (
       cos ( radians($request->lat) )
       * cos( radians( lat ) )
