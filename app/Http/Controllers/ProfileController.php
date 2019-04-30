@@ -74,8 +74,7 @@ class ProfileController extends Controller
                 $profileData = DB::select(DB::raw("SELECT
   users.id, users.username, users.email, users.phone, users.lat, users.lng,
    profiles.user_id,
-    profiles.avatar 
-FROM users join profiles on profiles.user_id = users.id where id=$user->id;"));
+    profiles.avatar FROM users join profiles on profiles.user_id = users.id where users.id=$user->id;"));
 
                 return response()->json(["success"=>true, "message"=>"Profile has been created successfully", "data"=>$profileData]);
             }
