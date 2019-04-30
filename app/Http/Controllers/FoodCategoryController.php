@@ -12,7 +12,7 @@ class FoodCategoryController extends Controller
     public function index(Request $request) {
 //        return FoodCategory::orderByRaw("RAND()")->get();
         $user = $request->user();
-        return $user->profile->foods;
+        return $user->profile->foods()->orderBy('created_at');
     }
 
     public function show(FoodCategory $food) {
