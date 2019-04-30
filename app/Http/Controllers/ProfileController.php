@@ -56,6 +56,7 @@ class ProfileController extends Controller
 
         if($user->profile == null){
             $profile = new Profile();
+            $profile->user_id = $user->id;
             $profile->message = $message;
             $profile->age = $age;
             $profile->location = $location;
