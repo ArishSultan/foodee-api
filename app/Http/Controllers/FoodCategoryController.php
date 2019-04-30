@@ -32,9 +32,14 @@ class FoodCategoryController extends Controller
         $food->photo = $photo_path;
         if($food->save()){
             $hasFood = $user->profile->foods()->where('food_id', $food->id)->exists();
-            echo $hasFood;
-            $user->profile->foods()->attach($food->id);
-            return response()->json(["success"=>true, "message"=> "Food has been added successfully", "data"=>$food]);
+            if($hasFood){
+                $user->profile->foods()->attach($food->id);
+                return response()->json(["success"=>true, "message"=> "Food has been added successfully", "data"=>$food]);
+            } else {
+                return response()->json(["success"=>true, "message"=> "Pleas try another, Its already been added", "data"=>$food]);
+
+            }
+
         } else {
             return response()->json(["success"=>false, "message"=> "Could not added", "data"=>[]]);
         }
