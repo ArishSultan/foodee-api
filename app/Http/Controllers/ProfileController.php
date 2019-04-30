@@ -64,8 +64,10 @@ class ProfileController extends Controller
             $profile->contribution = $contribution;
             if($profile->save()){
                 $user_ = $user;
-                $user_->profile->foods;
-                return response()->json(["success"=>true, "message"=>"Profile has been created successfully", "data"=>$user]);
+                if(count($user_->profile->foods) > 0){
+                    $user_->profile->foods;
+                }
+                return response()->json(["success"=>true, "message"=>"Profile has been created successfully", "data"=>$user_]);
             }
 
         } else {
