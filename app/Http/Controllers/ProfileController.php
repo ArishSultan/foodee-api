@@ -67,7 +67,7 @@ class ProfileController extends Controller
 //                if(count($user_->profile->foods) > 0){
 //                    $user_->profile->foods;
 //                }
-                return response()->json(["success"=>true, "message"=>"Profile has been created successfully", "data"=>$user_]);
+                return response()->json(["success"=>true, "message"=>"Profile has been created successfully", "data"=>$user]);
             }
 
         } else {
