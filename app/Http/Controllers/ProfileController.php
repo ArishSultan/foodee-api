@@ -70,14 +70,14 @@ class ProfileController extends Controller
 //                if(count($user_->profile->foods) > 0){
 //                    $user_->profile->foods;
 //                }
-                    $userNew = User::where('id', $id)->first();
-                    $userNew->profile;
+                    $profile = User::where('id', $id)->first();
+                $profile->profile;
 //                $profileData = DB::select(DB::raw("SELECT
 //  users.id, users.username, users.email, users.phone, users.lat, users.lng,
 //   profiles.user_id,
 //    profiles.avatar FROM users join profiles on profiles.user_id = users.id where users.id=$user->id;"));
 
-                return response()->json(["success"=>true, "message"=>"Profile has been created successfully", "data"=>$userNew]);
+                return response()->json(["success"=>true, "message"=>"Profile has been created successfully", "data"=>$profile]);
             }
 
         } else {
