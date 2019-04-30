@@ -68,8 +68,8 @@ class ProfileController extends Controller
 //                if(count($user_->profile->foods) > 0){
 //                    $user_->profile->foods;
 //                }
-                $user_ = $user;
-                $user_->profile;
+                $userProfile = Profile::where('user_id', $id)->first();
+                $user['profile'] = $userProfile;
                 return response()->json(["success"=>true, "message"=>"Profile has been created successfully", "data"=>$user_]);
             }
 
