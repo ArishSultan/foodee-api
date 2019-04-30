@@ -9,8 +9,10 @@ use App\User;
 
 class FoodCategoryController extends Controller
 {
-    public function index() {
-        return FoodCategory::orderByRaw("RAND()")->get();
+    public function index(Request $request) {
+//        return FoodCategory::orderByRaw("RAND()")->get();
+        $user = $request->user();
+        return $user->profile->foods();
     }
 
     public function show(FoodCategory $food) {
