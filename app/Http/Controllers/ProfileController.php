@@ -54,7 +54,7 @@ class ProfileController extends Controller
 
         $user = User::where('id', $id)->first();
 
-        if($user->profile !== null){
+        if($user->profile == null){
             $profile = new Profile();
             $profile->message = $message;
             $profile->age = $age;
@@ -63,7 +63,7 @@ class ProfileController extends Controller
             $profile->contribution = $contribution;
             if($profile->save()){
                 $user->profile->foods;
-                return response()->json(["success"=>true, "message"=>"Profile has been updated successfully", "data"=>$user]);
+                return response()->json(["success"=>true, "message"=>"Profile has been created successfully", "data"=>$user]);
             }
 
         } else {
