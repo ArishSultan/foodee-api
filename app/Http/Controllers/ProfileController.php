@@ -55,12 +55,13 @@ class ProfileController extends Controller
         $user = User::where('id', $id)->first();
 
         if($user->profile !== null){
-            $user->profile->message = $message;
-            $user->profile->age = $age;
-            $user->profile->location = $location;
-            $user->profile->gender = $gender;
-            $user->profile->contribution = $contribution;
-            if($user->save() && $user->profile->save()){
+            $profile = new Profile();
+            $profile->message = $message;
+            $profile->age = $age;
+            $profile->location = $location;
+            $profile->gender = $gender;
+            $profile->contribution = $contribution;
+            if($profile->save()){
                 $user->profile->foods;
                 return response()->json(["success"=>true, "message"=>"Profile has been updated successfully", "data"=>$user]);
             }
