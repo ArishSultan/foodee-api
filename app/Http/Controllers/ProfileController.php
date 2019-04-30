@@ -62,13 +62,14 @@ class ProfileController extends Controller
             $profile->location = $location;
             $profile->gender = $gender;
             $profile->contribution = $contribution;
-            if($profile->save()){
 
+            if($profile->save()){
+                    return $profile;
 //                $user_ = $user;
 //                if(count($user_->profile->foods) > 0){
 //                    $user_->profile->foods;
 //                }
-                $userProfile = Profile::where('user_id', $id)->first();
+
                 $user['profile'] = $userProfile;
                 return response()->json(["success"=>true, "message"=>"Profile has been created successfully", "data"=>$user]);
             }
