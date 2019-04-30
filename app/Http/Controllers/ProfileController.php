@@ -64,13 +64,19 @@ class ProfileController extends Controller
             $profile->contribution = $contribution;
 
             if($profile->save()){
-                $user['profile'] = $profile;
+//                $user['profile'] = $profile;
 //                $user_ = $user;
 //                if(count($user_->profile->foods) > 0){
 //                    $user_->profile->foods;
 //                }
 
-                return response()->json(["success"=>true, "message"=>"Profile has been created successfully", "data"=>$user]);
+                $profileData = DB::select(DB::raw("SELECT
+  users.id, users.username, users.email, users.phone, users.lat, users.lng,
+   profiles.user_id,
+    profiles.avatar 
+FROM users join profiles on profiles.user_id = users.id;"));
+
+                return response()->json(["success"=>true, "message"=>"Profile has been created successfully", "data"=>$profileData]);
             }
 
         } else {
