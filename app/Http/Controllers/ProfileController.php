@@ -70,7 +70,7 @@ class ProfileController extends Controller
 //                }
                 $userProfile = Profile::where('user_id', $id)->first();
                 $user['profile'] = $userProfile;
-                return response()->json(["success"=>true, "message"=>"Profile has been created successfully", "data"=>$user_]);
+                return response()->json(["success"=>true, "message"=>"Profile has been created successfully", "data"=>$user]);
             }
 
         } else {
