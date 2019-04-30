@@ -40,6 +40,8 @@ class ProfileController extends Controller
 
     }
     public function update($id, Request $request) {
+
+
 //        $profile->update($request->all());
 //        return response()->json($profile);
         $username = $request->username;
@@ -52,14 +54,25 @@ class ProfileController extends Controller
 
         $user = User::where('id', $id)->first();
 
-        $user->username = $username;
-        //if($user->save()){
-
-            if(isset($categories) && count($categories) > 0){
-                foreach($categories as $catId){
-                    $user->profile->foods()->attach($catId);
-                }
+        if($user->profile !== null){
+            $user->profile->message = $message;
+            $user->profile->age = $age;
+            $user->profile->location = $location;
+            $user->profile->gender = $gender;
+            $user->profile->contribution = $contribution;
+            if($user->save() && $user->profile->save()){
+                $user->profile->foods;
+                return response()->json(["success"=>true, "message"=>"Profile has been updated successfully", "data"=>$user]);
             }
+
+        } else {
+
+            $user->username = $username;
+//            if(isset($categories) && count($categories) > 0){
+//                foreach($categories as $catId){
+//                    $user->profile->foods()->attach($catId);
+//                }
+//            }
 
             $user->profile->message = $message;
             $user->profile->age = $age;
@@ -70,6 +83,7 @@ class ProfileController extends Controller
                 $user->profile->foods;
                 return response()->json(["success"=>true, "message"=>"Profile has been updated successfully", "data"=>$user]);
             }
+        }
 
         //}
     }
