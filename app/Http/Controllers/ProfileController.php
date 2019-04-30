@@ -63,10 +63,10 @@ class ProfileController extends Controller
             $profile->gender = $gender;
             $profile->contribution = $contribution;
             if($profile->save()){
-                $user_ = $user;
-                if(count($user_->profile->foods) > 0){
-                    $user_->profile->foods;
-                }
+//                $user_ = $user;
+//                if(count($user_->profile->foods) > 0){
+//                    $user_->profile->foods;
+//                }
                 return response()->json(["success"=>true, "message"=>"Profile has been created successfully", "data"=>$user_]);
             }
 
