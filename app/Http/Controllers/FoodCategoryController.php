@@ -34,9 +34,9 @@ class FoodCategoryController extends Controller
             $hasFood = $user->profile->foods()->where('food_id', $food->id)->exists();
             if($hasFood){
                 $user->profile->foods()->attach($food->id);
-                return response()->json(["success"=>true, "message"=> "Food has been added successfully", "data"=>$food]);
-            } else {
                 return response()->json(["success"=>true, "message"=> "Pleas try another, Its already been added", "data"=>$food]);
+            } else {
+                return response()->json(["success"=>true, "message"=> "Food has been added successfully", "data"=>$food]);
 
             }
 
