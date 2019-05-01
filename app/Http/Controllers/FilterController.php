@@ -12,6 +12,9 @@ class FilterController extends Controller
     public function index(Request $request) {
         $food = $request->query('food');
         $contribution = $request->query('contribution');
-        return $food." - ".$contribution;
+
+        $users = User::with('profile')->where('id', $request->user()->id)->get();
+        return $users;
+
     }
 }
