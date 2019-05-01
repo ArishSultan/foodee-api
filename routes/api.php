@@ -47,7 +47,7 @@ Route::group([
         Route::get('post/{id}/isLikedByMe', 'PostController@isLikedByMe');
         Route::post('post/like/{id}', 'PostController@like');
         Route::post('update/photo', 'ProfileController@updatePhoto');
-        Route::get('search/user/?food={food}?contribution={contribution}', 'FilterController@index');
+        Route::get('search/user/{food}?contribution={contribution}', 'FilterController@index');
     });
 
 });
