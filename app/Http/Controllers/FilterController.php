@@ -13,10 +13,15 @@ class FilterController extends Controller
         $food = $request->query('food');
         $contribution = $request->query('contribution');
 
-        $users = User::whereHas('profile.foods', function($query) use ($food, $contribution) {
-            $query->where('contribution', $contribution)
-                  ->where('name', 'LIKE', "%{$food}%");
+        $users = User::whereHas('profile', function($query) use ($food, $contribution) {
+            $query->where('contribution', 'LIKE', "%{$contribution}%");
+//                  ->where('name', 'LIKE', "%{$food}%");
         })
+
+            ->whereHas('profile.foods', function($query) use ($food, $contribution) {
+
+                    $query->where('name', 'LIKE', "%{$food}%");
+            })
 
 //            ->whereHas('profile.foods', function($query) use ($food, $contribution) {
 //            $query->where('name', 'LIKE', "%{$food}%");
