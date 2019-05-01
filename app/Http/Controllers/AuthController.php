@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers;
+use App\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -52,14 +53,19 @@ class AuthController extends Controller
 
             }else {
                 if($user->save()){
-                    $tokenResult = $user->createToken('Foodee');
-                    $token = $tokenResult->accessToken;
-                    return response()->json([
-                        'status'=>true,
-                        'access_token' => $tokenResult->accessToken,
-                        'message' => 'Your account has been created successfully',
-                        'user' => $user
-                    ], 201);
+                    $profile = new Profile();
+                    $profile->user_id = $user->id;
+                    if($profile->save()){
+                        $tokenResult = $user->createToken('Foodee');
+                        $token = $tokenResult->accessToken;
+                        return response()->json([
+                            'status'=>true,
+                            'access_token' => $tokenResult->accessToken,
+                            'message' => 'Your account has been created successfully',
+                            'user' => $user
+                        ], 201);
+                    }
+
                 }
             }
         }
