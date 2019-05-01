@@ -18,7 +18,7 @@ class FilterController extends Controller
 
         })->orWhereHas('profile.foods', function($query) use ($food, $contribution) {
             $query->where('name', 'LIKE', "%{$food}%");
-        })
+        })->with('profile.foods')
 //            ->with(['profile.foods' => function ($query) use ($food, $contribution) {
 //                $query->where('name', 'LIKE', "%{$food}%");
 //            }])
