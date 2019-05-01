@@ -17,6 +17,7 @@ class FilterController extends Controller
             $query->where('contribution', $contribution)
                   ->where('name', 'LIKE', "%{$food}%");
         })
+
 //            ->whereHas('profile.foods', function($query) use ($food, $contribution) {
 //            $query->where('name', 'LIKE', "%{$food}%");
 //        })
