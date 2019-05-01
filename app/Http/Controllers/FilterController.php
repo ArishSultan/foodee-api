@@ -10,6 +10,8 @@ use App\User;
 class FilterController extends Controller
 {
     public function index(Request $request) {
+
+
         $food = $request->query('food');
         $contribution = $request->query('contribution');
 
