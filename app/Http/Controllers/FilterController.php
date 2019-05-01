@@ -13,7 +13,7 @@ class FilterController extends Controller
         $food = $request->query('food');
         $contribution = $request->query('contribution');
 
-        $users = User::with('profile')->where('id', '!=', $request->user()->id)->get();
+        $users = User::whereHas('profile')->where('id', '!=', $request->user()->id)->get();
         return $users;
 
     }
