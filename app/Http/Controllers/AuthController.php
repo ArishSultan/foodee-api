@@ -138,7 +138,7 @@ class AuthController extends Controller
     {
         $user = $request->user();
         $user['profile'] = $user->profile;
-        return response()->json($user->toString());
+        return response()->json($user);
     }
     
     /*
