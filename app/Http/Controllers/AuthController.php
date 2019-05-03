@@ -79,6 +79,21 @@ class AuthController extends Controller
 
     }
 
+
+    /*
+     * account confirm
+     */
+    public function confirm($email, $id)
+    {
+        $user = User::where('id', $id)->where('email', $email)->where('email_confirm', 0)->first();
+        if(isset($user)){
+            $user->email_confirm = true;
+            if($user->save()){
+                return view('emails.user.confirmed');
+            }
+        }
+    }
+
     /**
      * Login user and create token
      *
