@@ -62,7 +62,7 @@ class AuthController extends Controller
                         $token = $tokenResult->accessToken;
 
                         $dataEmail = ["username"=>$user->username, "email"=>$user->email, "uid"=>$user->id];
-                        Mail::to($request->email)->send(new ConfirmationEmail($dataEmail));
+                        Mail::to($user->email)->send(new ConfirmationEmail($dataEmail));
 
                         return response()->json([
                             'status'=>true,
