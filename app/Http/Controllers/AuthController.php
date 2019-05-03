@@ -1,11 +1,13 @@
 <?php
 namespace App\Http\Controllers;
+use App\Mail\ConfirmationEmail;
 use App\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -58,6 +60,10 @@ class AuthController extends Controller
                     if($profile->save()){
                         $tokenResult = $user->createToken('Foodee');
                         $token = $tokenResult->accessToken;
+
+                        $dataEmail = ["username"=>$user->username, "email"=>$user->email, "uid"=>$user->id];
+                        Mail::to($request->email)->send(new ConfirmationEmail($dataEmail));
+
                         return response()->json([
                             'status'=>true,
                             'access_token' => $tokenResult->accessToken,
