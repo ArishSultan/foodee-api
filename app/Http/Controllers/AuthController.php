@@ -196,7 +196,7 @@ HAVING distance <= 10
 ORDER BY distance
 LIMIT 0 , 20;"));
 
-            return $user->user_id;
+            return $user[0]['user_id'];
 //            foreach($users as $user){
 //                $user->foods = Profile::where('user_id', $user['user_id'])->select('id', 'user_id')->first();
 //            }
