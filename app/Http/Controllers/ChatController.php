@@ -29,7 +29,7 @@ class ChatController extends Controller
 
         if($messageID == "-1" || $messageID == -1){
 
-            $checkInbox = DB::raw(DB::select("SELECT DISTINCT M.id, M.`from_id`, M.`to_id`, p.avatar, u.username, u.id as user_id FROM messages M INNER JOIN (SELECT `from_id` FROM messages)T ON T.`from_id` IN (SELECT `from_id` FROM messages) LEFT JOIN users AS u ON u.id = (CASE WHEN M.from_id='".$user->id."' THEN M.to_id ELSE M.from_id END) inner join profiles AS p ON p.user_id = u.id WHERE M.from_id = '".$user->id."' || M.to_id='".$user->id."' LIMIT 1"))->getValue();
+            $checkInbox = Message::where('from_id', $user->id)->orWhere('to_id', $user->id)->first();
             return $checkInbox;
             $message = new Message();
             $message->to_id = $toID;
