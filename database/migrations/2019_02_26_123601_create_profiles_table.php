@@ -25,6 +25,7 @@ class CreateProfilesTable extends Migration
             $table->string('interest')->nullable();
             $table->string('ages')->nullable();
             $table->integer('age')->nullable();
+            $table->boolean('is_age_private')->nullable();
             $table->integer('min_age')->nullable();
             $table->integer('max_age')->nullable();
             $table->string('gender')->nullable();
