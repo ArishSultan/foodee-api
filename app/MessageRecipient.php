@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class MessageRecipient extends Model
 {
 
-    protected $with = ["sender"];
+    protected $with = ["receiver"];
     protected $fillable = [
         "message_id",
         "recipient_id",
@@ -18,7 +18,15 @@ class MessageRecipient extends Model
     /*
      * Each message belongs To User
      */
-    public function sender()
+//    public function sender()
+//    {
+//        return $this->belongsTo('App\User', 'recipient_id');
+//    }
+
+    /*
+     * Each message belongs to sender
+     */
+    public function receiver()
     {
         return $this->belongsTo('App\User', 'recipient_id');
     }

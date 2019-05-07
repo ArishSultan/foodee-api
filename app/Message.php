@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Message extends Model
 {
-    protected $with = ["user", 'receiver'];
+    protected $with = ['user'];
     protected $fillable = [
         "from_id",
         "to_id"
@@ -20,13 +20,7 @@ class Message extends Model
         return $this->hasMany('App\MessageRecipient', 'message_id');
     }
 
-    /*
-     * Each message belongs to sender
-     */
-    public function receiver()
-    {
-        return $this->belongsTo('App\User', 'recipient_id');
-    }
+
 
     /*
      * Each chat belongs to user
