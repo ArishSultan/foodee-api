@@ -197,8 +197,8 @@ ORDER BY distance
 LIMIT 0 , 20;"));
 
             foreach($users as $user){
-                echo $user->user_id;
-                $user->foods = Profile::where('user_id', $user['user_id'])->select('id', 'user_id')->first();
+//                echo $user->user_id;
+                $user->foods = Profile::where('user_id', $user->user_id)->select('id', 'user_id')->first();
             }
 
             return response()->json(["success"=>true, "data"=>$users]);
