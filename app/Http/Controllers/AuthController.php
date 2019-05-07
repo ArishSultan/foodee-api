@@ -196,9 +196,10 @@ HAVING distance <= 10
 ORDER BY distance
 LIMIT 0 , 20;"));
 
-            foreach($users as $user){
-                $user->foods = Profile::where('user_id', $user['user_id'])->select('id', 'user_id')->first();
-            }
+            return $user->user_id;
+//            foreach($users as $user){
+//                $user->foods = Profile::where('user_id', $user['user_id'])->select('id', 'user_id')->first();
+//            }
 
             return response()->json(["success"=>true, "data"=>$users]);
 
