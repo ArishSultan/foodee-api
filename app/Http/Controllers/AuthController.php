@@ -196,6 +196,7 @@ HAVING distance <= 10
 ORDER BY distance
 LIMIT 0 , 20;"));
 
+
 //            foreach($users as $user){
 //                $user['foods'] = $user->profile->foods;
 //            }
