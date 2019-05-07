@@ -54,7 +54,7 @@ Route::group([
 
         Route::get('chats', 'ChatController@chats');
 
-        Route::get('chat/messages/{id}', 'ChatController@messages');
+        Route::get('messages/{id}', 'ChatController@messages');
     });
 
 });
