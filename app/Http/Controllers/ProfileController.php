@@ -52,6 +52,7 @@ class ProfileController extends Controller
         $categories = $request->categories;
         $gender = $request->gender;
         $contribution = $request->contribution;
+        $is_age_private = $request->is_age_private;
 
         $user = User::where('id', $id)->first();
 
@@ -63,6 +64,7 @@ class ProfileController extends Controller
             $profile->location = $location;
             $profile->gender = $gender;
             $profile->contribution = $contribution;
+            $profile->is_age_private = $is_age_private;
 
             if($profile->save()){
 //                $user['profile'] = $profile;
@@ -94,6 +96,8 @@ class ProfileController extends Controller
             $user->profile->location = $location;
             $user->profile->gender = $gender;
             $user->profile->contribution = $contribution;
+            $profile->is_age_private = $is_age_private;
+
             if($user->save() && $user->profile->save()){
                 $user->profile->foods;
                 return response()->json(["success"=>true, "message"=>"Profile has been updated successfully", "data"=>$user]);
