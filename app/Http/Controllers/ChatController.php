@@ -1,19 +1,14 @@
 <?php
 
-namespace App\Api\V1\Controllers;
+namespace App\Http\Controllers;
 
 use App\Message;
 use App\MessageRecipient;
-use App\Models\User;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use League\Fractal\Manager;
-use League\Fractal\Resource\Item;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
-use League\Fractal\Resource\Collection;
-use App\Api\V1\Transformers\UserTransformer;
-use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ChatController extends Controller
