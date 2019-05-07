@@ -31,11 +31,11 @@ class ChatController extends Controller
 
             $checkInbox = Message::where(function($q) use ($user, $request, $toID){
                     $q->where('from_id', $user->id);
-                    $q->orWhere('to_id', $toID)->first();
+                    $q->where('to_id', $toID)->first();
 
                     })->orWhere(function($q) use ($user, $request, $toID){
                         $q->where('from_id', $toID);
-                        $q->orWhere('to_id', $user->id)->first();
+                        $q->where('to_id', $user->id)->first();
                     })->first();
 
             return $checkInbox;
