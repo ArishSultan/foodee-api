@@ -21,6 +21,14 @@ class Message extends Model
     }
 
     /*
+     * Each message belongs to sender
+     */
+    public function receiver()
+    {
+        return $this->hasMany('App\MessageRecipient', 'recipient_id');
+    }
+
+    /*
      * Each chat belongs to user
      */
     public function user()
