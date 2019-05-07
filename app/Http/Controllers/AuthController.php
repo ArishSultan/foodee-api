@@ -198,6 +198,7 @@ LIMIT 0 , 20;"));
 
             foreach($users as $user){
 //                echo $user->user_id;
+                $user->is_age_private = ($user->is_age_private == 1 ? true : false);
                 $user->foods = Profile::where('user_id', $user->user_id)->select('id', 'user_id')->first()->foods;
             }
 
