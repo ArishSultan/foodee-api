@@ -96,7 +96,7 @@ class ProfileController extends Controller
             $user->profile->location = $location;
             $user->profile->gender = $gender;
             $user->profile->contribution = $contribution;
-            $profile->is_age_private = $is_age_private;
+            $user->is_age_private = $is_age_private;
 
             if($user->save() && $user->profile->save()){
                 $user->profile->foods;
