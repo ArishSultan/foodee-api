@@ -38,7 +38,9 @@ class ChatController extends Controller
                         $q->where('to_id', $user->id)->first();
                     })->first();
 
-            return $checkInbox;
+            if($checkInbox === null){
+                return "null data";
+            }
             $message = new Message();
             $message->to_id = $toID;
             $message->from_id = $user->id;
