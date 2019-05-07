@@ -181,7 +181,7 @@ class AuthController extends Controller
      profiles.location,
      profiles.age,
      profiles.contribution,
-     profiles.is_age_private
+     profiles.is_age_private,
       (
     3959 * acos (
       cos ( radians($request->lat) )
