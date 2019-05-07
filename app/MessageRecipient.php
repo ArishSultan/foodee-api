@@ -31,4 +31,5 @@ class MessageRecipient extends Model
         return $this->belongsTo('App\User', 'recipient_id')->select('id', 'username');
     }
 
+
 }

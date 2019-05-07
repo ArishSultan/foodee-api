@@ -73,7 +73,7 @@ class ChatController extends Controller
 //                ->whereIn("from_id", MessageRecipient::select("recipient_id")->pluck('from_id'));
 //        })->get();
 
-        $chats = DB::raw(DB::select("SELECT DISTINCT M.id, M.`from_id`, M.`to_id`, u.username, u.id as user_id FROM messages M INNER JOIN (SELECT `from_id` FROM messages)T ON T.`from_id` IN (SELECT `from_id` FROM messages) LEFT JOIN users AS u ON u.id = (CASE WHEN M.from_id='".$user->id."' THEN M.to_id ELSE M.from_id END) WHERE M.from_id = '".$user->id."' || M.to_id='".$user->id."'"))->getValue();
+        $chats = DB::raw(DB::select("SELECT DISTINCT M.id, M.`from_id`, M.`to_id`, p.avatar, u.username, u.id as user_id FROM messages M INNER JOIN (SELECT `from_id` FROM messages)T ON T.`from_id` IN (SELECT `from_id` FROM messages) LEFT JOIN users AS u ON u.id = (CASE WHEN M.from_id='".$user->id."' THEN M.to_id ELSE M.from_id END) inner join profiles AS p ON p.user_id = u.id WHERE M.from_id = '".$user->id."' || M.to_id='".$user->id."'"))->getValue();
 
         return $chats;
     }
