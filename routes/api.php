@@ -48,6 +48,13 @@ Route::group([
         Route::post('post/like/{id}', 'PostController@like');
         Route::post('update/photo', 'ProfileController@updatePhoto');
         Route::get('search/user', 'FilterController@index');
+
+        // Chat messages routes
+        Route::post('send/message', 'ChatController@send');
+
+        Route::get('chats', 'ChatController@chats');
+
+        Route::get('chat/messages/{id}', 'ChatController@messages');
     });
 
 });
