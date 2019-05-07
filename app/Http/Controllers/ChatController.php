@@ -29,7 +29,15 @@ class ChatController extends Controller
 
         if($messageID == "-1" || $messageID == -1){
 
-            $checkInbox = Message::where('from_id', $user->id)->orWhere('to_id', $user->id)->first();
+            $checkInbox = Message::where(function($q) use ($user, $request, $toID){
+                    $q->where('from_id', $user->id);
+                    $q->orWhere('to_id', $toID)->first();
+
+                    })->orWhere(function($q) use ($user, $request, $toID){
+                        $q->where('from_id', $toID);
+                        $q->orWhere('to_id', $user->id)->first();
+                    })->first();
+
             return $checkInbox;
             $message = new Message();
             $message->to_id = $toID;
