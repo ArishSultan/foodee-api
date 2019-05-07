@@ -181,6 +181,7 @@ class AuthController extends Controller
      profiles.location,
      profiles.age,
      profiles.contribution,
+     profiles.is_age_private
       (
     3959 * acos (
       cos ( radians($request->lat) )
@@ -195,9 +196,9 @@ HAVING distance <= 10
 ORDER BY distance
 LIMIT 0 , 20;"));
 
-            foreach($users as $user){
-                $user['foods'] = $user->profile->foods;
-            }
+//            foreach($users as $user){
+//                $user['foods'] = $user->profile->foods;
+//            }
 
             return response()->json(["success"=>true, "data"=>$users]);
 
