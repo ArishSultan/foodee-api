@@ -16,7 +16,9 @@ class FilterController extends Controller
         $contribution = $request->query('contribution');
 
         if($contribution === "all"){
-            $users = User::whereHas('profile.foods')->with('profile.foods')->get();
+            $users = User::whereHas('profile.foods', function($query) use ($food, $contribution) {
+                $query->where('name', 'LIKE', "%{$food}%");
+            })->with('profile.foods')->get();
             return $users;
         }
 
