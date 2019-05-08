@@ -14,9 +14,8 @@ class FilterController extends Controller
 
         $food = $request->query('food');
         $contribution = $request->query('contribution');
-        $all = $request->query('all');
 
-        if($all === "all"){
+        if($contribution === "all"){
             $users = User::whereHas('profile.foods')->with('profile.foods')->get();
             return $users;
         }
