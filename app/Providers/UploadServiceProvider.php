@@ -31,7 +31,7 @@ class UploadServiceProvider
         $array = [];
         $files = $request->file('photos');
         foreach($files as $file){
-            $allowedFileExtension=['jpg', 'png'];
+            $allowedFileExtension=['jpg', 'png', 'gif'];
             $filename = $file->getClientOriginalName();
             $extension = $file->getClientOriginalExtension();
             $check=in_array($extension,$allowedFileExtension);
