@@ -41,7 +41,7 @@ class UploadServiceProvider
                 $filename = time().".".$extension;
                 $file->storeAs('media/'.$folder, $filename);
                 array_push($array, $filename);
-                return $array;
+                return implode(",", $array);
             }
         }
     }
