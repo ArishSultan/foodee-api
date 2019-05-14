@@ -45,7 +45,7 @@ class UploadServiceProvider
 
             }
         }
-        return implode(",", $array);
+        return $array;
     }
 
 }
