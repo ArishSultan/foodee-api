@@ -22,8 +22,8 @@ class PostController extends Controller
 //        $request['photos'] = implode(",", $photos);
         if($request->hasFile('photos')){
             $photos = UploadServiceProvider::multiUploads($request, 'post');
-            $request['photos'] = $photos;
-            return dd(implode(",", $photos));
+            $request['photos'] = implode(",", $photos);
+//            return dd(implode(",", $photos));
         }
 
         $post = NewsFeed::create($request->all());
