@@ -25,4 +25,24 @@ class UploadServiceProvider
             }
     }
 
+    public static function multiUploads($request, $folder)
+    {
+        global $array;
+        $files = $request->file('photos');
+        foreach($files as $file){
+            $allowedFileExtension=['jpg', 'png'];
+            $filename = $file->getClientOriginalName();
+            $extension = $file->getClientOriginalExtension();
+            $check=in_array($extension,$allowedFileExtension);
+            if($check)
+            {
+//                $filename = $file->store('media/'.$folder.'/'.$product->id);
+                $filename = time().".".$extension;
+                $file->storeAs('media/'.$folder, $filename);
+                $array[$filename];
+                return $array;
+            }
+        }
+    }
+
 }
