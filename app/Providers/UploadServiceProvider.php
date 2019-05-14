@@ -42,10 +42,10 @@ class UploadServiceProvider
                 $file->storeAs('media/'.$folder, $filename);
 
                 array_push($array, $filename);
-                join(',', $array);
-                return $array;
+
             }
         }
+        return join(',', $array);
     }
 
 }
