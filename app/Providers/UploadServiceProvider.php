@@ -28,7 +28,7 @@ class UploadServiceProvider
     public static function multiUploads($request, $folder)
     {
         global $array;
-        $array = [];
+
         $files = $request->file('photos');
         foreach($files as $file){
             $allowedFileExtension=['jpg', 'png', 'gif'];
@@ -40,8 +40,9 @@ class UploadServiceProvider
 //                $filename = $file->store('media/'.$folder.'/'.$product->id);
                 $filename = time().".".$extension;
                 $file->storeAs('media/'.$folder, $filename);
+                $array = [];
                 array_push($array, $filename);
-                return implode(",", $array);
+                return join(',', $array);
             }
         }
     }
