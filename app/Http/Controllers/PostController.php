@@ -22,7 +22,6 @@ class PostController extends Controller
 //        $request['photos'] = implode(",", $photos);
         if($request->hasFile('photos')){
             $photos = UploadServiceProvider::multiUploads($request, 'post');
-            return $photos;
             $request['photos'] = $photos;
         }
 
