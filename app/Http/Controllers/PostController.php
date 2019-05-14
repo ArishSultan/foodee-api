@@ -23,7 +23,7 @@ class PostController extends Controller
         if($request->hasFile('photos')){
             $photos = UploadServiceProvider::multiUploads($request, 'post');
             $request['photos'] = $photos;
-            return $request->all();
+            return $photos;
         }
 
         $post = NewsFeed::create($request->all());
