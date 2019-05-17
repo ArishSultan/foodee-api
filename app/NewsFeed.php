@@ -15,6 +15,8 @@ class NewsFeed extends Model
         'user_id',
         'content',
         'photos',
+        'lat',
+        'lng'
     ];
 
 //    protected $casts = [

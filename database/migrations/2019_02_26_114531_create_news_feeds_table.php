@@ -21,6 +21,8 @@ class CreateNewsFeedsTable extends Migration
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
+            $table->string('lat')->nullable();
+            $table->string('lng')->nullable();
             $table->longText('content')->nullable();
             $table->longText('photos')->nullable();
             $table->string('type')->default('text')->nullable();
