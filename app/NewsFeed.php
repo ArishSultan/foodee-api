@@ -65,7 +65,8 @@ class NewsFeed extends Model
 //        $now = new Carbon();
 //        $dt = new Carbon($this->created_at);
 //        $dt->setLocale('es');
-        return $this->created_at = $this->created_at->diffForHumans();
+        return Carbon::create($value)->diffForHumans();
+        //return $this->created_at = $this->created_at->diffForHumans();
     }
 
     public function scopeDistance($query, $lat, $lng, $radius = 100, $unit = "km")
