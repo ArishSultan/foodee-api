@@ -23,7 +23,7 @@ class NewsFeed extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User', 'user_id')->select('username')->first();
+        return $this->belongsTo('App\User', 'id');
     }
 
     public function likes()
