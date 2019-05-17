@@ -50,11 +50,11 @@ class NewsFeed extends Model
         return explode(',', $value);
     }
 
-    public function getCreatedAtAttribute() {
-        $now = new Carbon();
-        $dt = new Carbon($this->created_at);
+    public function getCreatedAtAttribute($value) {
+//        $now = new Carbon();
+//        $dt = new Carbon($this->created_at);
 //        $dt->setLocale('es');
-        return $dt->diffForHumans($now);
+        return $this->created_at = "blah";
     }
 
     public function scopeDistance($query, $lat, $lng, $radius = 100, $unit = "km")
