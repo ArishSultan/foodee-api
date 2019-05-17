@@ -21,6 +21,11 @@ class NewsFeed extends Model
 //        'photos' => 'array',
 //    ];
 
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'id')->select('username');
+    }
+
     public function likes()
     {
         return $this->belongsToMany('App\User', 'likes', 'post_id', 'user_id');
