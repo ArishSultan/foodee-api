@@ -56,10 +56,10 @@ class NewsFeed extends Model
         return $query->having('distance','<=',$radius)
             ->select(DB::raw("*,
                             ($unit * ACOS(COS(RADIANS($lat))
-                                * COS(RADIANS(latitude))
-                                * COS(RADIANS($lng) - RADIANS(longitude))
+                                * COS(RADIANS(lat))
+                                * COS(RADIANS($lng) - RADIANS(lng))
                                 + SIN(RADIANS($lat))
-                                * SIN(RADIANS(latitude)))) AS distance")
+                                * SIN(RADIANS(lat)))) AS distance")
             )->orderBy('distance','asc');
     }
 }
