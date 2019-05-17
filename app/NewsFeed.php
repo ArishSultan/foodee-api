@@ -60,6 +60,6 @@ class NewsFeed extends Model
                                 * COS(RADIANS($lng) - RADIANS(lng))
                                 + SIN(RADIANS($lat))
                                 * SIN(RADIANS(lat)))) AS distance")
-            )->orderBy('distance','asc');
+            )->orderBy('created_at','desc');
     }
 }
