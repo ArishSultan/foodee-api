@@ -47,9 +47,9 @@ class NewsFeed extends Model
         return explode(',', $value);
     }
 
-    public function scopeDistance($query, $lat, $lng, $radius = 100, $unit = "km")
+    public function scopeDistance($query, $lat, $lng, $radius = 100, $unit = "miles")
     {
-        $unit = ($unit === "km") ? 6378.10 : 3963.17;
+        $unit = ($unit === "miles") ? 6378.10 : 3963.17;
         $lat = (float) $lat;
         $lng = (float) $lng;
         $radius = (double) $radius;
