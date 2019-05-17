@@ -15,7 +15,7 @@ class PostController extends Controller
         //return NewsFeed::withCount('comments')->with('user', 'comments')->orderBy('created_at', 'desc')->paginate(6);
         $lat = $request->query('lat');
         $lng = $request->query('lng');
-        $newsFeeds = NewsFeed::distance($lat, $lng, 10)->paginate(6);
+        $newsFeeds = NewsFeed::distance($lat, $lng, 10)->get();
         return $newsFeeds;
     }
     public function show(NewsFeed $post) {
