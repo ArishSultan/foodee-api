@@ -20,6 +20,8 @@ class NewsFeed extends Model
         'lng'
     ];
 
+//    protected $appends = '';
+
 //    protected $casts = [
 //        'photos' => 'array',
 //    ];
@@ -45,6 +47,10 @@ class NewsFeed extends Model
     public function getPhotosAttribute($value) {
 //        $temp = $value.split(",");
         return explode(',', $value);
+    }
+
+    public function getCreatedAtAttribute($time) {
+       return $this->attributes['created_at'] = $this->created_at->diffForHumans();
     }
 
     public function scopeDistance($query, $lat, $lng, $radius = 100, $unit = "km")
