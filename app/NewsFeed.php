@@ -21,6 +21,16 @@ class NewsFeed extends Model
         'lng'
     ];
 
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'created_at',
+        'updated_at'
+    ];
+
 //    protected $appends = '';
 
 //    protected $casts = [
@@ -50,11 +60,12 @@ class NewsFeed extends Model
         return explode(',', $value);
     }
 
+
     public function getCreatedAtAttribute($value) {
 //        $now = new Carbon();
 //        $dt = new Carbon($this->created_at);
 //        $dt->setLocale('es');
-        return $this->created_at = "blah";
+        return $this->created_at = "132546789";
     }
 
     public function scopeDistance($query, $lat, $lng, $radius = 100, $unit = "km")
