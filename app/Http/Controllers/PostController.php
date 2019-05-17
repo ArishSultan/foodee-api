@@ -12,7 +12,7 @@ class PostController extends Controller
 {
     public function index() {
 
-        return NewsFeed::withCount('comments')->with(['user'=>function($q) { $q->select('username'); }], 'comments')->orderBy('created_at', 'desc')->paginate(6);
+        return NewsFeed::withCount('comments')->with('user.profile', 'comments')->orderBy('created_at', 'desc')->paginate(6);
 
     }
     public function show(NewsFeed $post) {
