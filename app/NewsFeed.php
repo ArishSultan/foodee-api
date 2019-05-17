@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -49,8 +50,11 @@ class NewsFeed extends Model
         return explode(',', $value);
     }
 
-    public function getCreatedAtAttribute($time) {
-       return $this->attributes['created_at'] = $this->created_at->diffForHumans();
+    public function getCreatedAtAttribute() {
+        $now = new Carbon();
+        $dt = new Carbon($this->created_at);
+//        $dt->setLocale('es');
+        return $dt->diffForHumans($now);
     }
 
     public function scopeDistance($query, $lat, $lng, $radius = 100, $unit = "km")
