@@ -52,7 +52,7 @@ class NewsFeed extends Model
         $unit = ($unit === "km") ? 6378.10 : 3963.17;
         $lat = (float) $lat;
         $lng = (float) $lng;
-        $radius = (double) $radius;
+        //$radius = $radius;
         return $query->having('distance','<=',$radius)
             ->select(DB::raw("*,
                             ($unit * ACOS(COS(RADIANS($lat))
