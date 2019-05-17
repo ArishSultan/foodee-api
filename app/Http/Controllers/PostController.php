@@ -10,10 +10,13 @@ use App\User;
 
 class PostController extends Controller
 {
-    public function index() {
+    public function index(Request $request) {
 
-        return NewsFeed::withCount('comments')->with('user', 'comments')->orderBy('created_at', 'desc')->paginate(6);
-
+        //return NewsFeed::withCount('comments')->with('user', 'comments')->orderBy('created_at', 'desc')->paginate(6);
+        $lat = $request['lat'];
+        $lng = $request['lng'];
+        $newsFeeds = NewsFeed::distance($lat, $lng, 10);
+        return $newsFeeds;
     }
     public function show(NewsFeed $post) {
         return $post;
