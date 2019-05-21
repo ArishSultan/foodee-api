@@ -55,6 +55,14 @@ class NewsFeed extends Model
         return $this->hasMany(Comment::class, 'post_id');
     }
 
+    /*
+     * Post has many likes
+     */
+//    public function likes()
+//    {
+//        return $this->hasMany('App\Like', 'post_id');
+//    }
+
     public function getPhotosAttribute($value) {
 //        $temp = $value.split(",");
         return explode(',', $value);
