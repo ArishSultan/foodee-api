@@ -31,6 +31,8 @@ class NewsFeed extends Model
         'updated_at'
     ];
 
+    protected $appends = ['is_liked'];
+
 //    protected $appends = '';
 
 //    protected $casts = [
@@ -62,6 +64,11 @@ class NewsFeed extends Model
 //    {
 //        return $this->hasMany('App\Like', 'post_id');
 //    }
+
+    public function getIsLikedAttribute($value) {
+//        $temp = $value.split(",");
+        return true;
+    }
 
     public function getPhotosAttribute($value) {
 //        $temp = $value.split(",");
