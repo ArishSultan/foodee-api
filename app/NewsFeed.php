@@ -4,6 +4,7 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class NewsFeed extends Model
@@ -67,7 +68,17 @@ class NewsFeed extends Model
 
     public function getIsLikedAttribute($value) {
 //        $temp = $value.split(",");
-        return true;
+        if (Auth::user()) {   // Check is user logged in
+            // do stuff
+            $isLiked = Like::where('user_id', Auth::user()->id)->where('post_id', $this->id)->first();
+            if ($isLiked){
+                return response()->json(["status"=>true], 200);
+            } else {
+                return response()->json(["status"=>false], 200);
+            }
+//            return true;
+        }
+
     }
 
     public function getPhotosAttribute($value) {
