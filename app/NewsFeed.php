@@ -66,15 +66,18 @@ class NewsFeed extends Model
 //        return $this->hasMany('App\Like', 'post_id');
 //    }
 
-    public function getIsLikedAttribute($request, $value) {
+    public function getIsLikedAttribute($value) {
 //        $temp = $value.split(",");
+        if (Auth::user()) {   // Check is user logged in
             // do stuff
-            $isLiked = Like::where('user_id', $request->user()->id)->where('post_id', $this->id)->first();
+            $isLiked = Like::where('user_id', Auth::user()->id)->where('post_id', $this->id)->first();
             if ($isLiked){
                 return response()->json(["status"=>true], 200);
             } else {
                 return response()->json(["status"=>false], 200);
             }
+//            return true;
+        }
 
     }
 
