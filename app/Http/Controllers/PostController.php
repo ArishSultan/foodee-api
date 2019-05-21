@@ -12,7 +12,7 @@ class PostController extends Controller
 {
     public function index(Request $request) {
 
-        return NewsFeed::withCount('comments')->withCount('likes')->with(['user.profile', 'comments'=>function($query) { $query->with(['user.profile'=>function($q){$q->select('id', 'username','email', 'avatar');}])->take(3); }])->orderBy('created_at', 'desc')->paginate(6);
+        return NewsFeed::withCount('comments')->withCount('likes')->with(['user.profile', 'comments'=>function($query) { $query->with(['user.profile'=>function($q){$q->select('id', 'post_id', 'username','email', 'avatar');}])->take(3); }])->orderBy('created_at', 'desc')->paginate(6);
 //        $lat = $request->query('lat');
 //        $lng = $request->query('lng');
 //        $newsFeeds = NewsFeed::distance($lat, $lng, 10)->simplePaginate(10);
