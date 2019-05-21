@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class Comment extends Model
 {
@@ -16,6 +17,12 @@ class Comment extends Model
         'user_id',
         'content'
     ];
+
+    public function getCreatedAtAttribute($value) {
+        $carbonDate = new Carbon($value);
+        return $carbonDate->diffForHumans();
+    }
+
 
     /*
      * Each comment belong to user
