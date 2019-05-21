@@ -72,9 +72,9 @@ class NewsFeed extends Model
             // do stuff
             $isLiked = Like::where('user_id', Auth::user()->id)->where('post_id', $this->id)->first();
             if ($isLiked){
-                return response()->json(["status"=>true], 200);
+                return true;
             } else {
-                return response()->json(["status"=>false], 200);
+                return false;
             }
 //            return true;
         }
