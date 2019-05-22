@@ -10,7 +10,15 @@ use App\User;
 class CommentController extends Controller
 {
     public function index(Request $request) {
-        $comments = Comment::orderBy('created_at', 'asc')->where('post_id', $request->post_id)->paginate(6);
+        $comments = Comment::orderBy('created_at', 'asc')
+            ->where('post_id', $request->post_id)
+            with(['user'=>function($q){
+                $q->select('id', 'username', 'email')
+                    ->with(['profile'=>function($q){
+                        $q->select('user_id', 'avatar');
+                    }])
+                ;}])
+            ->paginate(6);
         return $comments;
     }
     public function show($id) {

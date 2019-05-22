@@ -35,7 +35,8 @@ class PostController extends Controller
                     $q->select('id', 'username', 'email')
                         ->with(['profile'=>function($q){
                             $q->select('user_id', 'avatar');
-                        }]);}]);
+                        }])
+                    ;}]);
             }])
             ->with(['user'=>function($q){
                 $q->select('id', 'username', 'email')
