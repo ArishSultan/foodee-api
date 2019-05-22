@@ -29,12 +29,13 @@ class PostController extends Controller
 
 
 
-        return NewsFeed::with(['comments'=>function($query) {
+        return NewsFeed::
+        with(['comments'=>function($query) {
                 $query->with(['user'=>function($q){
                     $q->select('id', 'username', 'email')
                         ->with(['profile'=>function($q){
                             $q->select('user_id', 'avatar');
-                        }]);}])->take(3);
+                        }]);}]);
             }])
             ->with(['user'=>function($q){
                 $q->select('id', 'username', 'email')
