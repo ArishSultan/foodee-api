@@ -29,9 +29,7 @@ class PostController extends Controller
 
 
 
-        return NewsFeed::withCount('comments')
-            ->withCount('likes')
-            ->with(['comments'=>function($query) {
+        return NewsFeed::with(['comments'=>function($query) {
                 $query->with(['user'=>function($q){
                     $q->select('id', 'username', 'email')
                         ->with(['profile'=>function($q){
@@ -43,7 +41,7 @@ class PostController extends Controller
                     ->with(['profile'=>function($q){
                         $q->select('user_id', 'avatar');
                     }]);
-            }])->orderBy('created_at', 'desc')->paginate(6);
+            }])->withCount('likes')->withCount('comments')->orderBy('created_at', 'desc')->paginate(6);
 
 
 //        $lat = $request->query('lat');
