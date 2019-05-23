@@ -70,6 +70,7 @@ class PostController extends Controller
 //            return dd(implode(",", $photos));
         }
 
+
         $post = NewsFeed::create(["user_id"=>$request->user()->id, "lat"=>$request['lat'], "lng"=>$request['lng'], "content"=>$request['content'], "photos"=>$photos_string]);
         return response()->json($post, 201);
     }
