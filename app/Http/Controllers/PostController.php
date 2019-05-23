@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers;
+use App\Helpers\CustomBroadcaster;
 use App\Like;
 use App\NewsFeed;
 use App\Providers\UploadServiceProvider;
@@ -29,7 +30,7 @@ class PostController extends Controller
 
 
 
-        return NewsFeed::
+        $posts =  NewsFeed::
         with(['comments'=>function($query) {
                 $query->with(['user'=>function($q){
                     $q->select('id', 'username', 'email')
@@ -45,6 +46,8 @@ class PostController extends Controller
                     }]);
             }])->withCount('likes')->withCount('comments')->orderBy('created_at', 'desc')->paginate(6);
 
+        CustomBroadcaster::fire(1, 'news_feed', $posts);
+        return $posts;
 
 //        $lat = $request->query('lat');
 //        $lng = $request->query('lng');
