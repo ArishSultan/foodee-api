@@ -21,6 +21,7 @@ class CustomBroadcaster
      */
     public static function fire($user, $event, $data_)
     {
+
         $channel = "user-global-" . $user;
         $data = [
             'event' => $event,
