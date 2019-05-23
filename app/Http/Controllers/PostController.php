@@ -47,6 +47,7 @@ class PostController extends Controller
             }])->withCount('likes')->withCount('comments')->orderBy('created_at', 'desc')->paginate(6);
 
         CustomBroadcaster::fire(1, 'news_feed', $posts);
+
         return $posts;
 
 //        $lat = $request->query('lat');
