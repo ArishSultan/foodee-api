@@ -20,7 +20,7 @@ class CommentController extends Controller
                 ->with(['profile'=>function($q){
                     $q->select('user_id', 'avatar');
                 }])
-            ;}])->orderBy('created_at', 'asc')->where('post_id', $id)->paginate(6);
+            ;}])->orderBy('created_at', 'asc')->where('post_id', $id)->paginate(30);
         return $comments;
     }
     public function store(Request $request) {
