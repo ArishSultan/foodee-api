@@ -40,6 +40,7 @@ Route::group([
         Route::get('user', 'AuthController@user');
         Route::get('me', 'AuthController@user');
         Route::post('lat/lng', 'AuthController@userLatLng');
+        Route::get('find/peoples', 'AuthController@findPeoples');
         Route::resource('posts', 'PostController');
         Route::resource('comments', 'CommentController');
         Route::resource('profile', 'ProfileController');

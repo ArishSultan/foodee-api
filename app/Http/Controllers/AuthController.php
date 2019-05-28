@@ -206,4 +206,13 @@ LIMIT 0 , 20;"));
 
         }
     }
+
+    /*
+     * Search users for tagging
+     */
+    public function findPeoples(Request $request)
+    {
+        $username = $request->query('username');
+        return User::where('username', 'LIKE', "%{$username}%")->get();
+    }
 }
