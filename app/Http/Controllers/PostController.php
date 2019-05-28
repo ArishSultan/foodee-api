@@ -79,7 +79,7 @@ class PostController extends Controller
         if($request->has('tags')){
             $users = $request->tags;
             foreach($users as $user){
-                $post->tags()->attach($user);
+                $post->tags()->attach($user, ['mode' => 'is with']);
             }
         }
         return response()->json($post, 201);
