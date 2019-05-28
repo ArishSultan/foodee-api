@@ -46,7 +46,7 @@ class PostController extends Controller
                     }]);
             }])
             ->with(['tags'=>function($query){
-                $query->select('id', 'username');
+                $query->select('username');
             }])
             ->withCount('likes')->withCount('comments')->orderBy('created_at', 'desc')->paginate(6);
 
