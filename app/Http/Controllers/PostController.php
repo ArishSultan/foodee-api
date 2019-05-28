@@ -44,7 +44,9 @@ class PostController extends Controller
                     ->with(['profile'=>function($q){
                         $q->select('user_id', 'avatar');
                     }]);
-            }])->withCount('likes')->withCount('comments')->orderBy('created_at', 'desc')->paginate(6);
+            }])
+            ->with('tags')
+            ->withCount('likes')->withCount('comments')->orderBy('created_at', 'desc')->paginate(6);
 
         CustomBroadcaster::fire(1, 'news_feed', $posts);
 
@@ -72,6 +74,12 @@ class PostController extends Controller
 
 
         $post = NewsFeed::create(["user_id"=>$request->user()->id, "lat"=>$request['lat'], "lng"=>$request['lng'], "content"=>$request['content'], "photos"=>$photos_string]);
+        if($request->has('tags')){
+            $users = $request->tags;
+            foreach($users as $user){
+                $post->tags()->attach($user);
+            }
+        }
         return response()->json($post, 201);
     }
     public function update(NewsFeed $post, Request $request) {

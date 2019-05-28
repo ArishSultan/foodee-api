@@ -29,6 +29,14 @@ class CreateNewsFeedsTable extends Migration
             $table->string('status')->nullable();
             $table->timestamps();
         });
+
+        Schema::create('post_tags', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('post_id')->unsigned()->index();
+            $table->integer('user_id')->unsigned()->index();
+            $table->string('mode')->nullable();
+            $table->timestamps();
+        });
     }
 
     /*

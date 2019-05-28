@@ -45,6 +45,14 @@ class NewsFeed extends Model
         return $this->belongsTo('App\User', 'user_id');
     }
 
+    /*
+     * A post may Belongs-To-Many Users
+     */
+    public function tags()
+    {
+        return $this->belongsToMany('App\User', 'post_tags', 'post_id', 'user_id')->withPivot(['post_id', 'user_id', 'mode']);
+    }
+
     public function likes()
     {
         return $this->belongsToMany('App\User', 'likes', 'post_id', 'user_id');
