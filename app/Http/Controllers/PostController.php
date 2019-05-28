@@ -45,7 +45,9 @@ class PostController extends Controller
                         $q->select('user_id', 'avatar');
                     }]);
             }])
-            ->with('tags')
+            ->with(['tags'=>function($query){
+                $query->select('id', 'username');
+            }])
             ->withCount('likes')->withCount('comments')->orderBy('created_at', 'desc')->paginate(6);
 
         CustomBroadcaster::fire(1, 'news_feed', $posts);
