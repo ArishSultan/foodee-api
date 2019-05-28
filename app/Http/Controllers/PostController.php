@@ -50,7 +50,7 @@ class PostController extends Controller
             }])
             ->withCount('likes')->withCount('comments')->orderBy('created_at', 'desc')->paginate(6);
 
-        CustomBroadcaster::fire(1, 'news_feed', $posts);
+//        CustomBroadcaster::fire(1, 'news_feed', $posts);
 
         return $posts;
 
@@ -91,6 +91,35 @@ class PostController extends Controller
     public function delete(NewsFeed $post) {
         $post->delete();
         return response()->json(null, 204);
+    }
+
+    public function myTimeline(Request $request)
+    {
+        $user = $request->user();
+        $posts =  NewsFeed::
+        with(['comments'=>function($query) {
+            $query->with(['user'=>function($q){
+                $q->select('id', 'username', 'email')
+                    ->with(['profile'=>function($q){
+                        $q->select('user_id', 'avatar');
+                    }])
+                ;}]);
+        }])
+            ->with(['user'=>function($q){
+                $q->select('id', 'username', 'email')
+                    ->with(['profile'=>function($q){
+                        $q->select('user_id', 'avatar');
+                    }]);
+            }])
+            ->with(['tags'=>function($query){
+                $query->select('username');
+            }])
+            ->where('user_id', $user->id)
+            ->withCount('likes')
+            ->withCount('comments')
+            ->orderBy('created_at', 'desc')
+            ->paginate(6);
+        return $posts;
     }
 
     public function isLikedByMe(Request $request, $id)
