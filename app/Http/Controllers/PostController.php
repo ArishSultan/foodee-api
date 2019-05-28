@@ -111,9 +111,10 @@ class PostController extends Controller
                         $q->select('user_id', 'avatar');
                     }]);
             }])
-            ->with(['tags'=>function($query){
-                $query->select('username');
-            }])
+            ->whereDoesntHave('tags')
+//            ->with(['tags'=>function($query){
+//                $query->select('username');
+//            }])
             ->where('user_id', $user->id)
             ->withCount('likes')
             ->withCount('comments')
