@@ -150,6 +150,7 @@ class AuthController extends Controller
         ]);
     }
 
+
     /**
      * Get the authenticated User
      *
