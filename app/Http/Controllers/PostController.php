@@ -93,9 +93,9 @@ class PostController extends Controller
         return response()->json(null, 204);
     }
 
-    public function myTimeline(Request $request)
+    public function myTimeline(Request $request, $id)
     {
-        $user = $request->user();
+        $user = User::where('id', $id)->select('id')->first();
         $posts =  NewsFeed::
         with(['comments'=>function($query) {
             $query->with(['user'=>function($q){
@@ -111,10 +111,10 @@ class PostController extends Controller
                         $q->select('user_id', 'avatar');
                     }]);
             }])
-            ->whereDoesntHave('tags')
-//            ->with(['tags'=>function($query){
-//                $query->select('username');
-//            }])
+//            ->whereDoesntHave('tags')
+            ->with(['tags'=>function($query){
+                $query->select('username');
+            }])
             ->where('user_id', $user->id)
             ->withCount('likes')
             ->withCount('comments')

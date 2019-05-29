@@ -47,7 +47,7 @@ Route::group([
         Route::resource('food', 'FoodCategoryController');
         Route::get('post/{id}/isLikedByMe', 'PostController@isLikedByMe');
         Route::post('post/like/{id}', 'PostController@like');
-        Route::get('me/timeline', 'PostController@myTimeline');
+        Route::get('timeline/{id}', 'PostController@myTimeline');
         Route::post('update/photo', 'ProfileController@updatePhoto');
         Route::get('search/user', 'FilterController@index');
 
