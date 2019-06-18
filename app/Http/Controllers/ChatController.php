@@ -20,6 +20,9 @@ class ChatController extends Controller
     public function send(Request $request)
     {
 
+        global $initialMessageId;
+        $initialMessageId = -1;
+
         $user = $request->user();
 
         $messageID = $request->message_id;
@@ -27,42 +30,77 @@ class ChatController extends Controller
         $type = $request->type;
         $messageText = $request->message;
 
-        if($messageID == "-1" || $messageID == -1){
+        $checkInbox = Message::where(function($q) use ($user, $request, $toID){
+            $q->where('from_id', $user->id);
+            $q->where('to_id', $toID)->first();
 
-            $checkInbox = Message::where(function($q) use ($user, $request, $toID){
-                    $q->where('from_id', $user->id);
-                    $q->where('to_id', $toID)->first();
+        })->orWhere(function($q) use ($user, $request, $toID){
+            $q->where('from_id', $toID);
+            $q->where('to_id', $user->id)->first();
+        })->first();
 
-                    })->orWhere(function($q) use ($user, $request, $toID){
-                        $q->where('from_id', $toID);
-                        $q->where('to_id', $user->id)->first();
-                    })->first();
-
-            // if inbox exist (if two users sending a new message with -1 at a time so in this case it does not create duplicate instance)
-            if($checkInbox !== null){
+        if($checkInbox !== null){
+            $messageRecipient = new MessageRecipient();
+            $messageRecipient->message_id = $checkInbox->id;
+            $messageRecipient->recipient_id = $toID;
+            $messageRecipient->message = $messageText;
+            $messageRecipient->type = $type;
+            if($messageRecipient->save()){
+                return response()->json(["success"=>true, "data"=>$messageRecipient]);
+            }
+        } else {
+            $message = new Message();
+            $message->to_id = $toID;
+            $message->from_id = $user->id;
+            if($message->save()){
                 $messageRecipient = new MessageRecipient();
-                $messageRecipient->message_id = $checkInbox->id;
+                $messageRecipient->message_id = $message->id;
                 $messageRecipient->recipient_id = $toID;
                 $messageRecipient->message = $messageText;
                 $messageRecipient->type = $type;
                 if($messageRecipient->save()){
                     return response()->json(["success"=>true, "data"=>$messageRecipient]);
                 }
-            } else {
-                $message = new Message();
-                $message->to_id = $toID;
-                $message->from_id = $user->id;
-                if($message->save()){
-                    $messageRecipient = new MessageRecipient();
-                    $messageRecipient->message_id = $message->id;
-                    $messageRecipient->recipient_id = $toID;
-                    $messageRecipient->message = $messageText;
-                    $messageRecipient->type = $type;
-                    if($messageRecipient->save()){
-                        return response()->json(["success"=>true, "data"=>$messageRecipient]);
-                    }
-                }
             }
+        }
+
+
+//        if($messageID == "-1" || $messageID == -1){
+
+//            $checkInbox = Message::where(function($q) use ($user, $request, $toID){
+//                    $q->where('from_id', $user->id);
+//                    $q->where('to_id', $toID)->first();
+//
+//                    })->orWhere(function($q) use ($user, $request, $toID){
+//                        $q->where('from_id', $toID);
+//                        $q->where('to_id', $user->id)->first();
+//                    })->first();
+
+            // if inbox exist (if two users sending a new message with -1 at a time so in this case it does not create duplicate instance)
+//            if($checkInbox !== null){
+//                $messageRecipient = new MessageRecipient();
+//                $messageRecipient->message_id = $checkInbox->id;
+//                $messageRecipient->recipient_id = $toID;
+//                $messageRecipient->message = $messageText;
+//                $messageRecipient->type = $type;
+//                if($messageRecipient->save()){
+//                    return response()->json(["success"=>true, "data"=>$messageRecipient]);
+//                }
+//            } else {
+//                $message = new Message();
+//                $message->to_id = $toID;
+//                $message->from_id = $user->id;
+//                if($message->save()){
+//                    $messageRecipient = new MessageRecipient();
+//                    $messageRecipient->message_id = $message->id;
+//                    $messageRecipient->recipient_id = $toID;
+//                    $messageRecipient->message = $messageText;
+//                    $messageRecipient->type = $type;
+//                    if($messageRecipient->save()){
+//                        return response()->json(["success"=>true, "data"=>$messageRecipient]);
+//                    }
+//                }
+//            }
 //            $message = new Message();
 //            $message->to_id = $toID;
 //            $message->from_id = $user->id;
@@ -76,16 +114,16 @@ class ChatController extends Controller
 //                    return response()->json(["success"=>true, "data"=>$messageRecipient]);
 //                }
 //            }
-        } else {
-            $messageRecipient = new MessageRecipient();
-            $messageRecipient->message_id = $messageID;
-            $messageRecipient->recipient_id = $toID;
-            $messageRecipient->message = $messageText;
-            $messageRecipient->type = $type;
-            if($messageRecipient->save()){
-                return response()->json(["success"=>true, "data"=>$messageRecipient]);
-            }
-        }
+//        } else {
+//            $messageRecipient = new MessageRecipient();
+//            $messageRecipient->message_id = $messageID;
+//            $messageRecipient->recipient_id = $toID;
+//            $messageRecipient->message = $messageText;
+//            $messageRecipient->type = $type;
+//            if($messageRecipient->save()){
+//                return response()->json(["success"=>true, "data"=>$messageRecipient]);
+//            }
+//        }
     }
 
     /*
