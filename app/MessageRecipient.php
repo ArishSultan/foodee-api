@@ -49,7 +49,7 @@ class MessageRecipient extends Model
     {
         $message = Message::where('id', $this->message_id)->select('id', 'to_id', 'from_id')->with('sender')->first();
         if ($message){
-            return $message;
+            return ["sender"=>$message];
         } else {
             return false;
         }
