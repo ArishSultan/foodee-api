@@ -15,20 +15,20 @@ class MessageRecipient extends Model
         "type"
     ];
 
-    protected $appends = ['sender'];
-
-
-    public function getSenderAttribute($value) {
-//        $temp = $value.split(",");
-            // do stuff
-            $message = Message::where('id', $this->message_id)->select('id', 'to_id', 'from_id')->with('sender')->first();
-            if ($message){
-                return $message;
-            } else {
-                return false;
-            }
-
-    }
+//    protected $appends = ['sender'];
+//
+//
+//    public function getSenderAttribute($value) {
+////        $temp = $value.split(",");
+//            // do stuff
+//            $message = Message::where('id', $this->message_id)->select('id', 'to_id', 'from_id')->with('sender')->first();
+//            if ($message){
+//                return $message;
+//            } else {
+//                return false;
+//            }
+//
+//    }
     /*
      * Each message belongs To User
      */
