@@ -28,7 +28,7 @@ class MessageRecipient extends Model
      */
     public function receiver()
     {
-        return $this->belongsTo('App\User', 'recipient_id')->select('id', 'username')->with('profile');
+        return $this->belongsTo('App\User', 'recipient_id')->select('id', 'username')->with(['profile'=>function($query) { $query->select('user_id', 'avatar');}]);
     }
 
 
