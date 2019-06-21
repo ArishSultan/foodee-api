@@ -47,8 +47,33 @@ class FoodCategoryController extends Controller
         }
     }
     public function update(FoodCategory $food, Request $request) {
-        $food->update($request->all());
-        return response()->json($food);
+//        $food->update($request->all());
+        $request->validate([
+            'name' => 'required|string',
+            'photo' => 'required|file|max:1024'
+        ]);
+        $user = $request->user();
+        global  $photo_path;
+        $photo_path = "";
+//        $food = new FoodCategory();
+        $food->name = $request->name;
+        $photo_path = time().'.'.request()->photo->getClientOriginalExtension();
+        $request->photo->storeAs('foods',$photo_path);
+        $food->photo = $photo_path;
+        if($food->save()){
+            $hasFood = $user->profile->foods()->where('food_id', $food->id)->exists();
+            if($hasFood){
+                return response()->json(["success"=>true, "message"=> "Pleas try another, Its already been added", "data"=>$food]);
+            } else {
+                $user->profile->foods()->attach($food->id);
+                return response()->json(["success"=>true, "message"=> "Food has been updated successfully", "data"=>$food]);
+
+            }
+
+        } else {
+            return response()->json(["success"=>false, "message"=> "Could not be update", "data"=>[]]);
+        }
+//        return response()->json($food);
     }
     public function delete(FoodCategory $food) {
         $food->delete();
