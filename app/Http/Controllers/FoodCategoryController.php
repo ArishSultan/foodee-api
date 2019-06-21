@@ -65,7 +65,8 @@ class FoodCategoryController extends Controller
             if($hasFood){
                 return response()->json(["success"=>true, "message"=> "Pleas try another, Its already been added", "data"=>$food]);
             } else {
-                $user->profile->foods()->attach($food->id);
+//                $user->profile->foods()->attach($food->id);
+//                $user->profile->foods()->updateExistingPivot($food->id, ['food_id'=>$food->id]);
                 return response()->json(["success"=>true, "message"=> "Food has been updated successfully", "data"=>$food]);
 
             }
