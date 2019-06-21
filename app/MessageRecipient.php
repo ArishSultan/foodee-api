@@ -47,12 +47,13 @@ class MessageRecipient extends Model
 
     public function sender()
     {
-        $message = Message::where('id', $this->message_id)->select('id', 'to_id', 'from_id')->with('sender')->first();
-        if ($message){
-            return ["sender"=>$message];
-        } else {
-            return false;
-        }
+        return $this->belongsTo('App\User', 'recipient_id')->select('id', 'username')->with(['profile'=>function($query) { $query->select('user_id', 'avatar');}]);
+//        $message = Message::where('id', $this->message_id)->select('id', 'to_id', 'from_id')->with('sender')->first();
+//        if ($message){
+//            return ["sender"=>$message];
+//        } else {
+//            return false;
+//        }
     }
 
 //    public function sender()
