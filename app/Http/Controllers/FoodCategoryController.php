@@ -48,10 +48,10 @@ class FoodCategoryController extends Controller
     }
     public function update(FoodCategory $food, Request $request) {
 //        $food->update($request->all());
-        $request->validate([
-            'name' => 'required|string',
-            'photo' => 'required|file|max:1024'
-        ]);
+//        $request->validate([
+//            'name' => 'required|string',
+//            'photo' => 'required|file|max:1024'
+//        ]);
         $user = $request->user();
         global  $photo_path;
         $photo_path = "";
