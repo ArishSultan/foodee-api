@@ -50,7 +50,7 @@ class MessageRecipient extends Model
 //        return $this->belongsTo('App\User', 'recipient_id')->select('id', 'username')->with(['profile'=>function($query) { $query->select('user_id', 'avatar');}]);
         $message = Message::where('id', $this->message_id)->select('id', 'to_id', 'from_id')->first();
         if ($message){
-            return $message;
+            return response()->json($message);
         } else {
             return null;
         }
