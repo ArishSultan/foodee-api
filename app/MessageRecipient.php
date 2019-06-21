@@ -52,7 +52,7 @@ class MessageRecipient extends Model
         if ($message){
             return response()->json($message);
         } else {
-            return null;
+            return response()->json(["success"=>true]);
         }
     }
 
