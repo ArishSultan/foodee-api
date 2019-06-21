@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class MessageRecipient extends Model
 {
 
-    protected $with = ["receiver"];
+    protected $with = ["receiver", "sender"];
     protected $fillable = [
         "message_id",
         "recipient_id",
@@ -43,6 +43,11 @@ class MessageRecipient extends Model
     public function receiver()
     {
         return $this->belongsTo('App\User', 'recipient_id')->select('id', 'username')->with(['profile'=>function($query) { $query->select('user_id', 'avatar');}]);
+    }
+
+    public function sender()
+    {
+        return $this->getSenderAttribute("sender");
     }
 
     /*
