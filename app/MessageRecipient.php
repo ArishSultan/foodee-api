@@ -15,6 +15,20 @@ class MessageRecipient extends Model
         "type"
     ];
 
+    protected $appends = ['sender'];
+
+
+    public function getSenderAttribute($value) {
+//        $temp = $value.split(",");
+            // do stuff
+            $message = Message::where('id', $this->message_id)->select('id', 'to_id', 'from_id')->with('sender')->first();
+            if ($message){
+                return $message;
+            } else {
+                return false;
+            }
+
+    }
     /*
      * Each message belongs To User
      */
@@ -24,12 +38,20 @@ class MessageRecipient extends Model
 //    }
 
     /*
-     * Each message belongs to sender
+     * Each message belongs to receiver
      */
     public function receiver()
     {
         return $this->belongsTo('App\User', 'recipient_id')->select('id', 'username')->with(['profile'=>function($query) { $query->select('user_id', 'avatar');}]);
     }
+
+    /*
+    * Each message belongs to sender
+    */
+//    public function sender()
+//    {
+//        return $this->belongsTo('App\User', 'recipient_id')->select('id', 'username')->with(['profile'=>function($query) { $query->select('user_id', 'avatar');}]);
+//    }
 
 
 }

@@ -30,4 +30,13 @@ class Message extends Model
         return$this->belongsTo('App\User', 'to_id');
     }
 
+
+    /*
+     * Each chat belongs to user
+     */
+    public function sender()
+    {
+        return$this->belongsTo('App\User', 'from_id')->select('id', 'username')->with(['profile'=>function($query) { $query->select('user_id', 'avatar');}]);
+    }
+
 }
