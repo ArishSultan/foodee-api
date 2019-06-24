@@ -159,7 +159,15 @@ class ChatController extends Controller
      */
     public function messages($to_id, $from_id)
     {
-        $inbox = Message::where("from_id", $from_id)->where('to_id', $to_id)->first();
+//        $inbox = Message::where("from_id", $from_id)->where('to_id', $to_id)->first();
+        $inbox = Message::where(function($q) use ($to_id, $from_id){
+            $q->where('from_id', $from_id);
+            $q->where('to_id', $to_id)->first();
+
+        })->orWhere(function($q) use ($to_id, $from_id){
+            $q->where('from_id', $to_id);
+            $q->where('to_id', $from_id)->first();
+        })->first();
         $messages = $inbox->messages;
         return $messages;
     }
