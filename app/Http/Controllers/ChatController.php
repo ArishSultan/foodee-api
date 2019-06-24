@@ -157,9 +157,9 @@ class ChatController extends Controller
     /*
      * getMessages
      */
-    public function messages($id)
+    public function messages($to_id, $from_id)
     {
-        $inbox = Message::where("id", $id)->first();
+        $inbox = Message::where("from_id", $from_id)->where('to_id', $to_id)->first();
         $messages = $inbox->messages;
         return $messages;
     }
