@@ -36,7 +36,7 @@ class Message extends Model
      */
     public function sender()
     {
-        return$this->belongsTo('App\User', 'from_id')->select('id', 'username')->with(['profile'=>function($query) { $query->select('user_id', 'avatar');}]);
+        return$this->belongsTo('App\User', 'to_id')->select('id', 'username')->with(['profile'=>function($query) { $query->select('user_id', 'avatar');}]);
     }
 
 }

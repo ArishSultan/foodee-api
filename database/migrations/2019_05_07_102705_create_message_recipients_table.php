@@ -17,6 +17,7 @@ class CreateMessageRecipientsTable extends Migration
             $table->increments('id');
             $table->integer('message_id')->unsigned()->index()->nullable();
             $table->integer('recipient_id')->unsigned()->index()->nullable();
+            $table->integer('sender_id')->unsigned()->index()->nullable();
             $table->longText('message')->nullable();
             $table->tinyInteger('type')->nullable();
             $table->boolean('is_read')->default(0);

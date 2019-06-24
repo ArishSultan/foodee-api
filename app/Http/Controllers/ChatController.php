@@ -43,6 +43,7 @@ class ChatController extends Controller
             $messageRecipient = new MessageRecipient();
             $messageRecipient->message_id = $checkInbox->id;
             $messageRecipient->recipient_id = $toID;
+            $messageRecipient->sender_id = $user->id;
             $messageRecipient->message = $messageText;
             $messageRecipient->type = $type;
             if($messageRecipient->save()){
@@ -56,6 +57,7 @@ class ChatController extends Controller
                 $messageRecipient = new MessageRecipient();
                 $messageRecipient->message_id = $message->id;
                 $messageRecipient->recipient_id = $toID;
+                $messageRecipient->sender_id = $user->id;
                 $messageRecipient->message = $messageText;
                 $messageRecipient->type = $type;
                 if($messageRecipient->save()){
