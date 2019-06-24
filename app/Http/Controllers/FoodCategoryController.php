@@ -76,8 +76,8 @@ class FoodCategoryController extends Controller
         }
 //        return response()->json($food);
     }
-    public function delete(FoodCategory $food) {
+    public function destroy(FoodCategory $food) {
         $food->delete();
-        return response()->json(null, 204);
+        return response()->json(['success'=>true, 'message'=>'Food deleted successfully!'], 200);
     }
 }
