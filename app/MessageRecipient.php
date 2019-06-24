@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class MessageRecipient extends Model
 {
 
-    protected $with = ["receiver", "sender"];
+    protected $with = ["receiver"];
     protected $fillable = [
         "message_id",
         "recipient_id",
@@ -15,20 +15,20 @@ class MessageRecipient extends Model
         "type"
     ];
 
-//    protected $appends = ['sender'];
-//
-//
-//    public function getSenderAttribute($value) {
-////        $temp = $value.split(",");
-//            // do stuff
-//            $message = Message::where('id', $this->message_id)->select('id', 'to_id', 'from_id')->with('sender')->first();
-//            if ($message){
-//                return $message;
-//            } else {
-//                return false;
-//            }
-//
-//    }
+    protected $appends = ['sender'];
+
+
+    public function getSenderAttribute($value) {
+//        $temp = $value.split(",");
+            // do stuff
+            $message = Message::where('id', $this->message_id)->select('id', 'to_id', 'from_id')->with('sender')->first();
+            if ($message){
+                return $message;
+            } else {
+                return false;
+            }
+
+    }
     /*
      * Each message belongs To User
      */
@@ -45,16 +45,16 @@ class MessageRecipient extends Model
         return $this->belongsTo('App\User', 'recipient_id')->select('id', 'username')->with(['profile'=>function($query) { $query->select('user_id', 'avatar');}]);
     }
 
-    public function sender()
-    {
-//        return $this->belongsTo('App\User', 'recipient_id')->select('id', 'username')->with(['profile'=>function($query) { $query->select('user_id', 'avatar');}]);
-        $message = Message::where('id', $this->message_id)->select('id', 'to_id', 'from_id')->first();
-        if ($message){
-            return response()->json($message);
-        } else {
-            return ["success"=>true];
-        }
-    }
+//    public function sender()
+//    {
+////        return $this->belongsTo('App\User', 'recipient_id')->select('id', 'username')->with(['profile'=>function($query) { $query->select('user_id', 'avatar');}]);
+//        $message = Message::where('id', $this->message_id)->select('id', 'to_id', 'from_id')->first();
+//        if ($message){
+//            return response()->json($message);
+//        } else {
+//            return ["success"=>true];
+//        }
+//    }
 
 //    public function sender()
 //    {
