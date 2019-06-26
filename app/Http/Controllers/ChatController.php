@@ -39,7 +39,7 @@ class ChatController extends Controller
             $q->where('to_id', $user->id)->first();
         })->first();
 
-        if($checkInbox !== null){
+        if(isset($checkInbox)){
             $messageRecipient = new MessageRecipient();
             $messageRecipient->message_id = $checkInbox->id;
             $messageRecipient->recipient_id = $toID;
