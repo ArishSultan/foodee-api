@@ -51,7 +51,7 @@ class ChatController extends Controller
             }
         } else {
             $message = new Message();
-            $message->to_id = $toID;
+            $message->to_id = 123;
             $message->from_id = $user->id;
             if($message->save()){
                 $messageRecipient = new MessageRecipient();
