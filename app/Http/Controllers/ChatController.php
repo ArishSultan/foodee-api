@@ -63,7 +63,7 @@ class ChatController extends Controller
                 $messageRecipient->message = $messageText;
                 $messageRecipient->type = $type;
                 if($messageRecipient->save()){
-                    CustomBroadcaster::fire($messageRecipient->id, 'news_feed', $messageRecipient);
+                    CustomBroadcaster::fire($messageRecipient->id, 'new_message', $messageRecipient);
                     return response()->json(["success"=>true, "data"=>$messageRecipient]);
                 }
             }
