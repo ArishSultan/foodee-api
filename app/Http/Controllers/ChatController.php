@@ -48,8 +48,9 @@ class ChatController extends Controller
             $messageRecipient->message = $messageText;
             $messageRecipient->type = $type;
             if($messageRecipient->save()){
-                $messageRecipient = Message::select('id', 'from_id', 'to_id')->first();
-                CustomBroadcaster::fire($toID, 'new_message', $messageRecipient);
+//                $messageRecipient = Message::select('id', 'from_id', 'to_id')->first();
+                $payload = MessageRecipient::where('id', $messageRecipient->id)->first();
+                CustomBroadcaster::fire($toID, 'new_message', $payload);
                 return response()->json(["success"=>true, "data"=>$messageRecipient]);
             }
         } else {
@@ -64,8 +65,8 @@ class ChatController extends Controller
                 $messageRecipient->message = $messageText;
                 $messageRecipient->type = $type;
                 if($messageRecipient->save()){
-                    $messageRecipient = Message::select('id', 'from_id', 'to_id')->first();
-                    CustomBroadcaster::fire($toID, 'new_message', $messageRecipient);
+                    $payload = MessageRecipient::where('id', $messageRecipient->id)->first();
+                    CustomBroadcaster::fire($toID, 'new_message', $payload);
                     return response()->json(["success"=>true, "data"=>$messageRecipient]);
                 }
             }
