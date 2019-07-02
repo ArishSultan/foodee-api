@@ -65,7 +65,7 @@ class ChatController extends Controller
                 $messageRecipient->message = $messageText;
                 $messageRecipient->type = $type;
                 if($messageRecipient->save()){
-                    $payload = MessageRecipient::where('id', $messageRecipient->id)->first();
+                    $payload = MessageRecipient::where('id', $messageRecipient->id)->with(['sender', 'receiver'])->first();
                     CustomBroadcaster::fire($toID, 'new_message', $payload);
                     return response()->json(["success"=>true, "data"=>$messageRecipient]);
                 }
