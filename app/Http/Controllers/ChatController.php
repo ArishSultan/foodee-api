@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\CustomBroadcaster;
 use App\Message;
 use App\MessageRecipient;
 use App\User;
@@ -47,6 +48,7 @@ class ChatController extends Controller
             $messageRecipient->message = $messageText;
             $messageRecipient->type = $type;
             if($messageRecipient->save()){
+                CustomBroadcaster::fire($messageRecipient->id, 'new_message', $messageRecipient);
                 return response()->json(["success"=>true, "data"=>$messageRecipient]);
             }
         } else {
@@ -61,6 +63,7 @@ class ChatController extends Controller
                 $messageRecipient->message = $messageText;
                 $messageRecipient->type = $type;
                 if($messageRecipient->save()){
+                    CustomBroadcaster::fire($messageRecipient->id, 'news_feed', $messageRecipient);
                     return response()->json(["success"=>true, "data"=>$messageRecipient]);
                 }
             }
