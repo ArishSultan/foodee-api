@@ -22,21 +22,21 @@ class User extends Authenticatable
         'password',
     ];
 
-    protected $appends = ['notifications'];
+//    protected $appends = ['notifications'];
 
-    public function getNotificationsAttribute($value) {
-
-        if (Auth::user()) {   // Check is user logged in
-            // do stuff
-            $notifications = Notification::where('author_id', Auth::user()->id)->where('is_read', 0)->get();
-            if ($notifications){
-                return $notifications;
-            } else {
-                return [];
-            }
-        }
-
-    }
+//    public function getNotificationsAttribute($value) {
+//
+//        if (Auth::user()) {   // Check is user logged in
+//            // do stuff
+//            $notifications = Notification::where('author_id', Auth::user()->id)->where('is_read', 0)->get();
+//            if ($notifications){
+//                return $notifications;
+//            } else {
+//                return [];
+//            }
+//        }
+//
+//    }
 
     public function profile()
     {
