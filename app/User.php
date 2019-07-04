@@ -28,7 +28,7 @@ class User extends Authenticatable
 
         if (Auth::user()) {   // Check is user logged in
             // do stuff
-            $notifications = $this->notifications();
+            $notifications = Auth::user()->notifications;
             if ($notifications){
                 return $notifications;
             } else {
