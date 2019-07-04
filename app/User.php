@@ -28,7 +28,7 @@ class User extends Authenticatable
 
         if (Auth::user()) {   // Check is user logged in
             // do stuff
-            $notifications = Auth::user()->notifications;
+            $notifications = Notification::where('author_id', Auth::user()->id)->where('is_read', 0)->get()->withCount();
             if ($notifications){
                 return $notifications;
             } else {
