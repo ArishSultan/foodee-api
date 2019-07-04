@@ -143,7 +143,7 @@ class PostController extends Controller
 
     public function like(Request $request, $id)
     {
-        $post = NewsFeed::where('id', $id)->select('id')->first();
+        $post = NewsFeed::where('id', $id)->select('id', 'user_id')->first();
         $existing_like = Like::where('post_id', $id)->where('user_id',$request->user()->id)->first();
 
         if (is_null($existing_like)) {
