@@ -163,9 +163,17 @@ class PostController extends Controller
         } else {
             if (is_null($existing_like->deleted_at)) {
                 $existing_like->delete();
+                Notification::where('author_id', $post->user->id)
+                    ->where('post_id', $id)
+                    ->where('user_id', $request->user()->id)
+                    ->delete();
                 return response()->json(["status"=>false, 'post_count'=>$post->likes()->count()], 200);
             } else {
                 $existing_like->restore();
+                Notification::where('author_id', $post->user->id)
+                    ->where('post_id', $id)
+                    ->where('user_id', $request->user()->id)
+                    ->delete();
                 return response()->json(["status"=>false, 'post_count'=>$post->likes()->count()], 200);
             }
         }

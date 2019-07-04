@@ -8,6 +8,14 @@ use Illuminate\Support\Carbon;
 class Notification extends Model
 {
 
+    protected $fillable = [
+        'post_id',
+        'author_id',
+        'user_id',
+        'message',
+        'type'
+    ];
+
     protected $dates = [
         'created_at',
         'updated_at'
