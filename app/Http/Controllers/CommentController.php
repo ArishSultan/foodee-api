@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 use App\Comment;
 use App\NewsFeed;
+use App\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
