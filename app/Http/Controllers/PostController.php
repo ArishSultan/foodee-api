@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 use App\Helpers\CustomBroadcaster;
 use App\Like;
 use App\NewsFeed;
+use App\Notification;
 use App\Providers\UploadServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -150,7 +151,15 @@ class PostController extends Controller
                 'post_id' => $id,
                 'user_id' => $request->user()->id
             ]);
-            return response()->json(["status"=>true, 'post_count'=>$post->likes()->count()], 200);
+            $notification = new Notification();
+            $notification->post_id = $post->id;
+            $notification->author_id = $post->user->id;
+            $notification->user_id = $request->user()->id;
+            $notification->message = $request->user()->username. " likes your post";
+            $notification->type = 1;
+            if($notification->save()){
+                return response()->json(["status"=>true, 'post_count'=>$post->likes()->count()], 200);
+            }
         } else {
             if (is_null($existing_like->deleted_at)) {
                 $existing_like->delete();
