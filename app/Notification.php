@@ -8,6 +8,8 @@ use Illuminate\Support\Carbon;
 class Notification extends Model
 {
 
+    protected $with = ['author', 'user'];
+
     protected $fillable = [
         'post_id',
         'author_id',
