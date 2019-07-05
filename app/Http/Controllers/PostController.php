@@ -151,15 +151,19 @@ class PostController extends Controller
                 'post_id' => $id,
                 'user_id' => $request->user()->id
             ]);
-            $notification = new Notification();
-            $notification->post_id = $post->id;
-            $notification->author_id = $post->user->id;
-            $notification->user_id = $request->user()->id;
-            $notification->message = $request->user()->username. " likes your post";
-            $notification->type = 1;
-            if($notification->save()){
-                return response()->json(["status"=>true, 'post_count'=>$post->likes()->count()], 200);
+            if($request->user()->id !== $post->user->id) {
+                $notification = new Notification();
+                $notification->post_id = $post->id;
+                $notification->author_id = $post->user->id;
+                $notification->user_id = $request->user()->id;
+                $notification->message = $request->user()->username. " likes your post";
+                $notification->type = 1;
+                $notification->save();
             }
+
+//            if($notification->save()){
+                return response()->json(["status"=>true, 'post_count'=>$post->likes()->count()], 200);
+//            }
         } else {
             if (is_null($existing_like->deleted_at)) {
                 $existing_like->delete();
