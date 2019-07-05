@@ -34,6 +34,7 @@ class AuthController extends Controller
         $username = $request->username;
         $email = $request->email;
         $phone = $request->phone;
+        $device_token = $request->device_token;
         $password = bcrypt($request->password);
 
         $existingUser = User::where('email',$email)->first();
@@ -46,7 +47,8 @@ class AuthController extends Controller
                 'username' => $username,
                 'email' => $email,
                 'phone' => $phone,
-                'password' => $password
+                'password' => $password,
+                'device_token' => $device_token
             ]);
 
             if(!$user) {
