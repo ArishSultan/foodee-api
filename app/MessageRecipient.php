@@ -43,7 +43,7 @@ class MessageRecipient extends Model
      */
     public function receiver()
     {
-        return $this->belongsTo('App\User', 'recipient_id')->select('id', 'username')->with(['profile'=>function($query) { $query->select('user_id', 'avatar');}]);
+        return $this->belongsTo('App\User', 'recipient_id')->select('id', 'username', 'device_token')->with(['profile'=>function($query) { $query->select('user_id', 'avatar');}]);
     }
 
     /*
@@ -51,7 +51,7 @@ class MessageRecipient extends Model
  */
     public function sender()
     {
-        return $this->belongsTo('App\User', 'sender_id')->select('id', 'username')->with(['profile'=>function($query) { $query->select('user_id', 'avatar');}]);
+        return $this->belongsTo('App\User', 'sender_id')->select('id', 'username', 'device_token')->with(['profile'=>function($query) { $query->select('user_id', 'avatar');}]);
     }
 
 //    public function sender()
