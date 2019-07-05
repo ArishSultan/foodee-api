@@ -41,7 +41,7 @@ class PostController extends Controller
                     ;}]);
             }])
             ->with(['user'=>function($q){
-                $q->select('id', 'username', 'email')
+                $q->select('id', 'username', 'email', 'device_token')
                     ->with(['profile'=>function($q){
                         $q->select('user_id', 'avatar');
                     }]);
