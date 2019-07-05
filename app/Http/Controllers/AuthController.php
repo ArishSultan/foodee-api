@@ -122,6 +122,7 @@ class AuthController extends Controller
                     'message' => 'Incorrect username or password!',
                     'token' => null
                 ], 201);
+            User::where('email', $email)->update(['device_token'=>$request->device_token]);
             $user = $request->user();
             $tokenResult = $user->createToken('Foodee');
             $token = $tokenResult->accessToken;
