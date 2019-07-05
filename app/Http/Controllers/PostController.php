@@ -156,7 +156,7 @@ class PostController extends Controller
                 $notification->post_id = $post->id;
                 $notification->author_id = $post->user->id;
                 $notification->user_id = $request->user()->id;
-                $notification->message = $request->user()->username. " likes your post";
+                $notification->message = " likes your post";
                 $notification->type = 1;
                 $notification->save();
             }
