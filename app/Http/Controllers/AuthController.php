@@ -163,7 +163,10 @@ class AuthController extends Controller
     {
 //        $user = $request->user();
         $user = User::where('id', $id)->first();
-        $user['profile'] = $user->profile->foods;
+        if(isset($user->profile->foods)){
+            $user['profile'] = $user->profile->foods;
+        }
+
         return response()->json($user);
     }
     
