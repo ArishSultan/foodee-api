@@ -38,7 +38,7 @@ class FoodCategoryController extends Controller
                 return response()->json(["success"=>true, "message"=> "Pleas try another, Its already been added", "data"=>$food]);
             } else {
                 $user->profile->foods()->attach($food->id);
-                $food = FoodCategory::where('id', $food->id)->withPivot('profile_id', 'food_id')->first();
+                $food = $user->profile->foods()->wherePivot('food_id', $food->id)->first();
                 return response()->json(["success"=>true, "message"=> "Food has been added successfully", "data"=>$food]);
 
             }
