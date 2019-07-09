@@ -13,6 +13,6 @@ class Profile extends Model
 
     public function foods()
     {
-        return $this->belongsToMany(FoodCategory::class, 'food_profile', 'profile_id', 'food_id');
+        return $this->belongsToMany(FoodCategory::class, 'food_profile', 'profile_id', 'food_id')->withPivot('profile_id', 'food_id');
     }
 }
