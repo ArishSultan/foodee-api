@@ -39,6 +39,7 @@ Route::group([
         Route::get('logout', 'AuthController@logout');
         Route::get('user', 'AuthController@user');
         Route::get('profile/{id}', 'AuthController@user');
+        Route::post('fcm/token', 'AuthController@updateToken');
         Route::post('lat/lng', 'AuthController@userLatLng');
         Route::get('find/peoples', 'AuthController@findPeoples');
         Route::resource('posts', 'PostController');

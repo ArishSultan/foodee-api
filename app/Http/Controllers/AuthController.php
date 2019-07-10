@@ -169,6 +169,15 @@ class AuthController extends Controller
 
         return response()->json($user);
     }
+
+    public function updateToken(Request $request)
+    {
+        $user = $request->user();
+        $user->device_token = $request->device_token;
+        if($user->save()){
+            return response()->json(['success'=>true, 'message'=>'FCM token has been updated successfully']);
+        }
+    }
     
     /*
      * Update lat, lng and fetching users within 10miles radius.
