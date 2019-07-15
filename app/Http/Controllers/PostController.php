@@ -99,7 +99,7 @@ class PostController extends Controller
         $data = $post;
         $data->lat = $request->lat;
         $data->lng = $request->lng;
-        $data->content = $request->content;
+        $data->content = $request['content'];
         $data->photos = $photos_string;
         if($data->save()){
 
@@ -115,7 +115,7 @@ class PostController extends Controller
         }
         return response()->json($post);
     }
-    public function delete(NewsFeed $post) {
+    public function destroy(NewsFeed $post) {
         $post->delete();
         return response()->json(['success'=>true, 'message'=>'deleted'], 204);
     }
