@@ -99,7 +99,7 @@ class PostController extends Controller
         $data = $post;
         $data->lat = $request->lat;
         $data->lng = $request->lng;
-        $data->content = $request->photos;
+        $data->content = $request->content;
         $data->photos = $photos_string;
         if($data->save()){
 
