@@ -100,6 +100,7 @@ class NewsFeed extends Model
 //        $dt = new Carbon($this->created_at);
 //        $dt->setLocale('es');
         //return Carbon::create($value)->diffForHumans();
+//        Carbon::now()->setTimezone(Auth::user()->timezone)->diffForHumans($financing_date)
         $carbonDate = new Carbon($value);
         return $carbonDate->diffForHumans();
         //return $this->created_at = $this->created_at->diffForHumans();

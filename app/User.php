@@ -20,7 +20,8 @@ class User extends Authenticatable
         'email',
         'phone',
         'password',
-        'device_token'
+        'device_token',
+        'timezone'
     ];
 
 //    protected $appends = ['notifications'];
