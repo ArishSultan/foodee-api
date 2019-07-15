@@ -86,12 +86,38 @@ class PostController extends Controller
         return response()->json($post, 201);
     }
     public function update(NewsFeed $post, Request $request) {
-        $post->update($request->all());
+//        $post->update($request->all());
+        global  $photos_string;
+
+        if($request->hasFile('photos')){
+            $photos = UploadServiceProvider::multiUploads($request, 'post');
+//                return $photos;
+            $photos_string = implode(",", $photos);
+//            return dd(implode(",", $photos));
+        }
+
+        $data = $post;
+        $data->lat = $request->lat;
+        $data->lng = $request->lng;
+        $data->content = $request->photos;
+        $data->photos = $photos_string;
+        if($data->save()){
+
+            if($request->has('tags')){
+                $post->tags()->detach();
+                $users = $request->tags;
+                foreach($users as $user){
+                    $post->tags()->attach($user, ['mode' => 'is with']);
+                }
+            }
+
+            return response()->json($data, 200);
+        }
         return response()->json($post);
     }
     public function delete(NewsFeed $post) {
         $post->delete();
-        return response()->json(null, 204);
+        return response()->json(['success'=>true, 'message'=>'deleted'], 204);
     }
 
     public function myTimeline(Request $request, $id)
