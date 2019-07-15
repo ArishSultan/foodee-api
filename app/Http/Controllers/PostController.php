@@ -116,8 +116,10 @@ class PostController extends Controller
         return response()->json($post);
     }
     public function destroy(NewsFeed $post) {
-        $post->delete();
-        return response()->json(['success'=>true, 'message'=>'deleted'], 204);
+        if($post->delete()){
+            return response()->json(['success'=>true, 'message'=>'deleted'], 204);
+        }
+
     }
 
     public function myTimeline(Request $request, $id)
