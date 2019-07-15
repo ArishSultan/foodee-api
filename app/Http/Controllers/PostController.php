@@ -118,6 +118,8 @@ class PostController extends Controller
     public function destroy(NewsFeed $post) {
         if($post->delete()){
             return response()->json(['success'=>true, 'message'=>'deleted'], 204);
+        } else {
+            return response()->json(['success'=>false, 'message'=>'No query results found for this model'], 204);
         }
 
     }
