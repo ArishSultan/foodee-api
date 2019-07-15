@@ -36,6 +36,7 @@ class AuthController extends Controller
         $phone = $request->phone;
         $device_token = $request->device_token;
         $password = bcrypt($request->password);
+        $timezone = $request->timezone;
 
         $existingUser = User::where('email',$email)->first();
 
@@ -48,7 +49,8 @@ class AuthController extends Controller
                 'email' => $email,
                 'phone' => $phone,
                 'password' => $password,
-                'device_token' => $device_token
+                'device_token' => $device_token,
+                'timezone' => $timezone
             ]);
 
             if(!$user) {
@@ -111,6 +113,7 @@ class AuthController extends Controller
 
 
         $email = $request->email;
+        $timezone = $request->timezone;
         $existingUser = User::where('email',$email)->first();
 
         if($existingUser) {
@@ -122,7 +125,7 @@ class AuthController extends Controller
                     'message' => 'Incorrect username or password!',
                     'token' => null
                 ], 201);
-            User::where('email', $email)->update(['device_token'=>$request->device_token]);
+            User::where('email', $email)->update(['device_token'=>$request->device_token, 'timezone'=>$timezone]);
             $user = $request->user();
             $tokenResult = $user->createToken('Foodee');
             $token = $tokenResult->accessToken;
