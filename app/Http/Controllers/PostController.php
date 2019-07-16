@@ -61,7 +61,9 @@ class PostController extends Controller
 //        return $newsFeeds;
     }
     public function show(NewsFeed $post) {
-        return $post;
+        $postObj = $post->with('tags');
+        return $postObj;
+//        return $post;
     }
     public function store(Request $request) {
         global  $photos_string;
