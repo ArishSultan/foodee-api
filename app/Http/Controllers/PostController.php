@@ -61,6 +61,7 @@ class PostController extends Controller
 //        return $newsFeeds;
     }
     public function show(NewsFeed $post) {
+
         $postObj = NewsFeed::where('id', $post->id)->
             with(['comments'=>function($query) {
                 $query->with(['user'=>function($q){
@@ -77,7 +78,7 @@ class PostController extends Controller
                         }]);
                 }])->with(['tags'=>function($query){
             $query->select('username');
-        }])->first();
+        }])->withCount('likes')->withCount('comments')->first();
         return $postObj;
 //        return $post;
     }
