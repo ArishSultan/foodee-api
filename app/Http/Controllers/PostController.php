@@ -231,4 +231,19 @@ class PostController extends Controller
             }
         }
     }
+
+    public function deletePostImages(Request $request)
+    {
+        $post = NewsFeed::where('id', $request->id)->select('id', 'photos')->first();
+
+        if(isset($post)){
+            $photos = $post->photos;
+            $arr = array_diff($photos, array($request->photo));
+            $photos_string = implode(",", $arr);
+            $post->photos = $photos_string;
+            if($post->save()){
+                return response()->json(["success"=>true, "message"=>"File has been deleted successfully"]);
+            }
+        }
+    }
 }
