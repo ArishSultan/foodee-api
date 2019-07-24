@@ -51,7 +51,7 @@ Route::group([
         Route::get('timeline/{id}', 'PostController@myTimeline');
         Route::post('update/photo', 'ProfileController@updatePhoto');
         Route::get('search/user', 'FilterController@index');
-        Route::post('posts/delete/image', 'ProfileController@deletePostImages');
+        Route::post('posts/delete/image', 'PostController@deletePostImages');
         // Chat messages routes
         Route::post('send/message', 'ChatController@send');
 
