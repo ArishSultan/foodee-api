@@ -61,7 +61,21 @@ class PostController extends Controller
 //        return $newsFeeds;
     }
     public function show(NewsFeed $post) {
-        $postObj = NewsFeed::where('id', $post->id)->with(['tags'=>function($query){
+        $postObj = NewsFeed::where('id', $post->id)->
+            with(['comments'=>function($query) {
+                $query->with(['user'=>function($q){
+                    $q->select('id', 'username', 'email', 'device_token')
+                        ->with(['profile'=>function($q){
+                            $q->select('user_id', 'avatar');
+                        }])
+                    ;}]);
+            }])
+                ->with(['user'=>function($q){
+                    $q->select('id', 'username', 'email', 'device_token')
+                        ->with(['profile'=>function($q){
+                            $q->select('user_id', 'avatar');
+                        }]);
+                }])->with(['tags'=>function($query){
             $query->select('username');
         }])->first();
         return $postObj;
