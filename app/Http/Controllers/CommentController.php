@@ -28,14 +28,17 @@ class CommentController extends Controller
         $request['user_id'] = $request->user()->id;
         $comment = Comment::create($request->all());
         $post = NewsFeed::where('id', $request->post_id)->select('id', 'user_id')->first();
-        $notification = new Notification();
-        $notification->post_id = $post->id;
-        $notification->author_id = $post->user->id;
-        $notification->user_id = $request->user()->id;
+        if($request->user()->id !== $comment->user->id) {
+            $notification = new Notification();
+            $notification->post_id = $post->id;
+            $notification->author_id = $post->user->id;
+            $notification->user_id = $request->user()->id;
 //        $notification->message = $request->user()->username. " commented on your post";
-        $notification->message = " commented on your post";
-        $notification->type = 2;
-        $notification->save();
+            $notification->message = " commented on your post";
+            $notification->type = 2;
+            $notification->save();
+        }
+
         return response()->json($comment, 201);
     }
     public function update(Comment $comment, Request $request) {
