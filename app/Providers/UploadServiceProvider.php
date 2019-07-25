@@ -30,22 +30,25 @@ class UploadServiceProvider
         global $array;
         $array = [];
         $files = $request->file('photos');
-        foreach($files as $file){
-            $allowedFileExtension=['jpg', 'png', 'gif', 'jpeg'];
-            $filename = $file->getClientOriginalName();
-            $extension = $file->getClientOriginalExtension();
-            $check=in_array($extension,$allowedFileExtension);
-            if($check)
-            {
+        if($request->hasFile('photos')){
+            foreach($files as $file){
+                $allowedFileExtension=['jpg', 'png', 'gif', 'jpeg'];
+                $filename = $file->getClientOriginalName();
+                $extension = $file->getClientOriginalExtension();
+                $check=in_array($extension,$allowedFileExtension);
+                if($check)
+                {
 //                $filename = $file->store('media/'.$folder.'/'.$product->id);
-                $filename = time().'-'.mt_rand(10,100).".".$extension;
-                $file->storeAs('media/'.$folder, $filename);
+                    $filename = time().'-'.mt_rand(10,100).".".$extension;
+                    $file->storeAs('media/'.$folder, $filename);
 
-                array_push($array, $filename);
+                    array_push($array, $filename);
 
+                }
             }
+            return $array;
         }
-        return $array;
+
     }
 
 }
