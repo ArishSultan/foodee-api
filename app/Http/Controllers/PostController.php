@@ -125,9 +125,10 @@ class PostController extends Controller
 
             array_push($imagesArray, $photos_string);
             $photos_string = implode(",", $imagesArray);
+            $data->photos = $photos_string;
         }
 
-        $data->photos = $photos_string;
+
         if($data->save()){
 
             if($request->has('tags')){
