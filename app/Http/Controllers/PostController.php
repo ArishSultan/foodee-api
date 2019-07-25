@@ -120,10 +120,13 @@ class PostController extends Controller
         $data->lng = $request->lng;
         $data->content = $request['content'];
 
-        $imagesArray = $post->photos;
+        if($request->hasFile('photos')){
+            $imagesArray = $post->photos;
 
-        array_push($imagesArray, $photos_string);
-        $photos_string = implode(",", $imagesArray);
+            array_push($imagesArray, $photos_string);
+            $photos_string = implode(",", $imagesArray);
+        }
+
         $data->photos = $photos_string;
         if($data->save()){
 
