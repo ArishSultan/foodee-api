@@ -95,7 +95,7 @@ class PostController extends Controller
         }
 
 
-        $post = NewsFeed::create(["user_id"=>$request->user()->id, "lat"=>$request['lat'], "lng"=>$request['lng'], "content"=>$request['content'], "photos"=>(count($request->file('photos') > 0) ? $photos_string : null)]);
+        $post = NewsFeed::create(["user_id"=>$request->user()->id, "lat"=>$request['lat'], "lng"=>$request['lng'], "content"=>$request['content'], "photos"=>(isset($request->photos) ? $photos_string : null)]);
         if($request->has('tags')){
             $users = $request->tags;
             foreach($users as $user){
