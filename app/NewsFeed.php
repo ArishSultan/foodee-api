@@ -91,7 +91,12 @@ class NewsFeed extends Model
 
     public function getPhotosAttribute($value) {
 //        $temp = $value.split(",");
-        return explode(',', $value);
+        if($value){
+            return explode(',', $value);
+        } else {
+            return null;
+        }
+
     }
 
 
