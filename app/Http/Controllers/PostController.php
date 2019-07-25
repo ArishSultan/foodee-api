@@ -105,6 +105,8 @@ class PostController extends Controller
         return response()->json($post, 201);
     }
     public function update(NewsFeed $post, Request $request) {
+
+        return $request->photos;
 //        $post->update($request->all());
         global  $photos_string;
 
