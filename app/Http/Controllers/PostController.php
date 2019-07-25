@@ -100,7 +100,7 @@ class PostController extends Controller
             $users = $request->tags;
             foreach($users as $user){
                 $post->tags()->attach($user, ['mode' => 'is with']);
-                CustomBroadcaster::fire($user, 'on_tag', $post);
+                CustomBroadcaster::fire($user, 'new_notification', $post);
             }
         }
         return response()->json($post, 201);
@@ -220,7 +220,7 @@ class PostController extends Controller
                 $notification->message = " likes your post";
                 $notification->type = 1;
                 $notification->save();
-                CustomBroadcaster::fire($post->user->id, 'new_like', $notification);
+                CustomBroadcaster::fire($post->user->id, 'new_notification', $notification);
             }
 
 //            if($notification->save()){

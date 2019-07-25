@@ -38,7 +38,7 @@ class CommentController extends Controller
             $notification->message = " commented on your post";
             $notification->type = 2;
             $notification->save();
-            CustomBroadcaster::fire($post->user->id, 'new_comment', $notification);
+            CustomBroadcaster::fire($post->user->id, 'new_notification', $notification);
         }
 
         return response()->json($comment, 201);
