@@ -106,7 +106,7 @@ class PostController extends Controller
     }
     public function update(NewsFeed $post, Request $request) {
 
-        return $request->photos;
+//        return $request->photos;
 //        $post->update($request->all());
         global  $photos_string;
 
