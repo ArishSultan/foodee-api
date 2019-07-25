@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 use App\Comment;
+use App\Helpers\CustomBroadcaster;
 use App\NewsFeed;
 use App\Notification;
 use Illuminate\Http\Request;
@@ -37,6 +38,7 @@ class CommentController extends Controller
             $notification->message = " commented on your post";
             $notification->type = 2;
             $notification->save();
+            CustomBroadcaster::fire($post->user->id, 'new_comment', $notification);
         }
 
         return response()->json($comment, 201);
