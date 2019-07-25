@@ -119,7 +119,12 @@ class PostController extends Controller
         $data->lat = $request->lat;
         $data->lng = $request->lng;
         $data->content = $request['content'];
-        $data->photos = $photos_string;
+
+        $imagesArray = $post->photos;
+
+        array_push($imagesArray, $photos_string);
+        $photos_string = implode(",", $imagesArray);
+        $data->photos = $imagesArray;
         if($data->save()){
 
             if($request->has('tags')){
