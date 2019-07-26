@@ -34,7 +34,7 @@ class CommentController extends Controller
             $notification->post_id = $post->id;
             $notification->author_id = $post->user->id;
             $notification->user_id = $request->user()->id;
-//        $notification->message = $request->user()->username. " commented on your post";
+//          $notification->message = $request->user()->username. " commented on your post";
             $notification->message = " commented on your post";
             $notification->type = 2;
             $notification->save();
