@@ -29,7 +29,7 @@ class CommentController extends Controller
         $request['user_id'] = $request->user()->id;
         $comment = Comment::create($request->all());
         $post = NewsFeed::where('id', $request->post_id)->select('id', 'user_id')->first();
-        if($request->user()->id !== $comment->user->id) {
+        if($request->user()->id !== $post->user->id) {
             $notification = new Notification();
             $notification->post_id = $post->id;
             $notification->author_id = $post->user->id;
