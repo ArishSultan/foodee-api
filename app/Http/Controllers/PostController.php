@@ -112,6 +112,7 @@ class PostController extends Controller
                     CustomBroadcaster::fire($user, 'new_notification', $notification);
                 }
 
+
 //                CustomBroadcaster::fire($user, 'new_notification', $post);
             }
         }
