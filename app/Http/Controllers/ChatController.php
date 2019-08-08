@@ -176,10 +176,16 @@ class ChatController extends Controller
             $q->where('to_id', $from_id)->first();
         })->first();
 
-//        if(isset($inbox)) {
-//            $ids = $inbox->messages->where('is_read', 0)->get()->pluck('id');
-//            $collection->push($ids);
-//        }
+
+
+        if(isset($inbox)) {
+            $collection = collect();
+            $un_read_messages = $inbox->unreadMessages()->pluck('id');
+            $collection->push($un_read_messages);
+            MessageRecipient::where('message_id', $inbox->id)
+                ->whereIn('id', $collection[0])
+                ->update(["is_read"=>1]);
+        }
 
         $messages = $inbox->messages;
         return $messages;
