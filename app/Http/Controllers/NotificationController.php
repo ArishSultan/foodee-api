@@ -17,7 +17,10 @@ class NotificationController extends Controller
         $collection = collect();
         $un_read_notifications = $user->unReadNotifications()->pluck('id');
         $collection->push($un_read_notifications);
-        return $collection;
+        Notification::where('author_id', $user->id)
+            ->whereIn('id', $collection[0])
+            ->update(["is_read"=>1]);
+//        return $collection;
         return $user->notifications;
     }
 
