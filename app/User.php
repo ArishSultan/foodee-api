@@ -59,7 +59,7 @@ class User extends Authenticatable
 
     public function getTotalNotificationsAttribute()
     {
-        return $this->hasMany(Notification::class,'author_id')->whereAuthorId($this->id)->count();
+        return $this->hasMany(Notification::class,'author_id')->whereAuthorId($this->id)->where('is_read', 0)->count();
 
     }
 //    public function getTotalNotificationsAttribute()
