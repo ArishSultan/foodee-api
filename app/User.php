@@ -49,7 +49,7 @@ class User extends Authenticatable
 
     public function notifications()
     {
-        return $this->hasMany(Notification::class, 'author_id')->withCount(['notifications']);
+        return $this->hasMany(Notification::class, 'author_id');
     }
 
     public function getTotalNotificationsAttribute()
