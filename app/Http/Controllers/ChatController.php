@@ -165,6 +165,7 @@ class ChatController extends Controller
      */
     public function messages($to_id, $from_id)
     {
+        $collection = collect();
 //        $inbox = Message::where("from_id", $from_id)->where('to_id', $to_id)->first();
         $inbox = Message::where(function($q) use ($to_id, $from_id){
             $q->where('from_id', $from_id);
@@ -175,9 +176,10 @@ class ChatController extends Controller
             $q->where('to_id', $from_id)->first();
         })->first();
 
-        if(isset($inbox)) {
-            return $inbox->messages->where('is_read', 0)->get()->pluck('id');
-        }
+//        if(isset($inbox)) {
+//            $ids = $inbox->messages->where('is_read', 0)->get()->pluck('id');
+//            $collection->push($ids);
+//        }
 
         $messages = $inbox->messages;
         return $messages;

@@ -24,6 +24,8 @@ class User extends Authenticatable
         'timezone'
     ];
 
+    protected $appends = ['total_notifications'];
+
 //    protected $appends = ['notifications'];
 
 //    public function getNotificationsAttribute($value) {
@@ -48,6 +50,12 @@ class User extends Authenticatable
     public function notifications()
     {
         return $this->hasMany(Notification::class, 'author_id');
+    }
+
+    public function getTotalNotificationsAttribute()
+    {
+        return $this->hasMany(Notification::class,'author_id')->whereAuthorId($this->id)->count();
+
     }
 
     public function likes()
