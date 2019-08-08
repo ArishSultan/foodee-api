@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Message extends Model
 {
-    protected $with = ['user'];
+    protected $with = ['user', 'unreadMessageCount'];
     protected $fillable = [
         "from_id",
         "to_id"
@@ -33,6 +33,11 @@ class Message extends Model
     public function messages()
     {
         return $this->hasMany('App\MessageRecipient', 'message_id');
+    }
+
+    public function unreadMessageCount()
+    {
+        return $this->hasMany('App\MessageRecipient', 'message_id')->where('is_read', 0)->count();
     }
 
 
