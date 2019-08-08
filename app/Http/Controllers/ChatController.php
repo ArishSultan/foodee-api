@@ -176,7 +176,7 @@ class ChatController extends Controller
         })->first();
 
         if(isset($inbox)) {
-            return $inbox->messages()->where('is_read', 0)->get()->pluck('id');
+            return $inbox->messages->where('is_read', 0)->get()->pluck('id');
         }
 
         $messages = $inbox->messages;
