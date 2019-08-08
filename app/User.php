@@ -52,6 +52,11 @@ class User extends Authenticatable
         return $this->hasMany(Notification::class, 'author_id');
     }
 
+    public function unReadNotifications()
+    {
+        return $this->hasMany(Notification::class, 'author_id')->where('is_read', 0);
+    }
+
     public function getTotalNotificationsAttribute()
     {
         return $this->hasMany(Notification::class,'author_id')->whereAuthorId($this->id)->count();

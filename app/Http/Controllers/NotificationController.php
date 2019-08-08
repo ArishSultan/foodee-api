@@ -14,6 +14,10 @@ class NotificationController extends Controller
 {
     public function index(Request $request) {
         $user = $request->user();
+        $collection = collect();
+        $un_read_notifications = $user->unReadNotifications()->pluck('id');
+        $collection->push($un_read_notifications);
+        return $collection;
         return $user->notifications;
     }
 
