@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Message extends Model
 {
-    protected $with = ['user', 'unreadMessageCount'];
+    protected $with = ['user', 'unreadMessages'];
     protected $fillable = [
         "from_id",
         "to_id"
