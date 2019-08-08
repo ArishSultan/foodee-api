@@ -174,6 +174,11 @@ class ChatController extends Controller
             $q->where('from_id', $to_id);
             $q->where('to_id', $from_id)->first();
         })->first();
+
+        if(isset($inbox)) {
+            return $inbox->messages()->where('is_read', 0)->get()->pluck('id');
+        }
+
         $messages = $inbox->messages;
         return $messages;
     }
