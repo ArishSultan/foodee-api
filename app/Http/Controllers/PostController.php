@@ -105,8 +105,8 @@ class PostController extends Controller
 
                     $notification = new Notification();
                     $notification->post_id = $post->id;
-                    $notification->author_id = $post->user->id;
-                    $notification->user_id = $user;
+                    $notification->author_id = $user;
+                    $notification->user_id = $request->user()->id;
                     $notification->message = " tagged you in a post";
                     $notification->type = 3;
                     $notification->save();
