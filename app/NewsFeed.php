@@ -126,4 +126,14 @@ class NewsFeed extends Model
                                 * SIN(RADIANS(lat)))) AS distance")
             )->orderBy('created_at','desc');
     }
+
+    // this is a recommended way to declare event handlers
+    public static function boot() {
+        parent::boot();
+
+        static::deleting(function($post) { // before delete() method call this
+            $post->tags()->detach();
+            // do the rest of the cleanup...
+        });
+    }
 }
