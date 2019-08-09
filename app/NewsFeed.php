@@ -134,7 +134,11 @@ class NewsFeed extends Model
         static::deleting(function($post) { // before delete() method call this
             if($post->tags){
                 foreach ($post->tags as $user){
-                    $user->notifications->delete();
+                    if($user->notifications){
+                        foreach ($user->notifications as $notification){
+                            $notification->delete();
+                        }
+                    }
                 }
             }
             // do the rest of the cleanup...
