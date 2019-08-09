@@ -132,7 +132,11 @@ class NewsFeed extends Model
         parent::boot();
 
         static::deleting(function($post) { // before delete() method call this
-            $post->tags()->detach();
+            if($post->tags){
+                foreach ($post->tags as $user){
+                    $user->notifications->delete();
+                }
+            }
             // do the rest of the cleanup...
         });
     }
