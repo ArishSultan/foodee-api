@@ -101,16 +101,16 @@ class PostController extends Controller
             foreach($users as $user){
                 $post->tags()->attach($user, ['mode' => 'is with']);
 
-                //if($request->user()->id !== $post->user->id) {
+                if($request->user()->id != $post->user->id) {
                     $notification = new Notification();
                     $notification->post_id = $post->id;
-                    $notification->author_id = $post->user->id;
+                    $notification->author_id = $user;
                     $notification->user_id = $user;
                     $notification->message = " tagged you in a post";
                     $notification->type = 3;
                     $notification->save();
                     CustomBroadcaster::fire($user, 'new_notification', $notification);
-                //}
+                }
 
 
 //                CustomBroadcaster::fire($user, 'new_notification', $post);
