@@ -66,6 +66,12 @@ class NewsFeed extends Model
         return $this->hasMany('App\Comment', 'post_id');
     }
 
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class, 'post_id');
+    }
+
+
     /*
      * Post has many likes
      */
@@ -132,15 +138,20 @@ class NewsFeed extends Model
         parent::boot();
 
         static::deleting(function($post) { // before delete() method call this
-            if($post->tags){
-                foreach ($post->tags as $user){
-                    if($user->notifications){
-                        foreach ($user->notifications as $notification){
-                            $notification->delete();
-                        }
-                    }
+            if($post->notifications){
+                foreach ($post->notifications as $notif){
+                    $notif->delete();
                 }
             }
+//            if($post->tags){
+//                foreach ($post->tags as $user){
+//                    if($user->notifications){
+//                        foreach ($user->notifications as $notification){
+//                            $notification->delete();
+//                        }
+//                    }
+//                }
+//            }
             // do the rest of the cleanup...
         });
     }
