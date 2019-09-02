@@ -34,14 +34,14 @@ class PostController extends Controller
         $posts =  NewsFeed::
         with(['comments'=>function($query) {
                 $query->with(['user'=>function($q){
-                    $q->select('id', 'username', 'email', 'device_token')
+                    $q->select('id', 'username', 'email', 'device_token', 'profile_link')
                         ->with(['profile'=>function($q){
                             $q->select('user_id', 'avatar');
                         }])
                     ;}]);
             }])
             ->with(['user'=>function($q){
-                $q->select('id', 'username', 'email', 'device_token')
+                $q->select('id', 'username', 'email', 'device_token', 'profile_link')
                     ->with(['profile'=>function($q){
                         $q->select('user_id', 'avatar');
                     }]);
