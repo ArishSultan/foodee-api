@@ -24,7 +24,7 @@ class User extends Authenticatable
         'timezone'
     ];
 
-    protected $appends = ['total_notifications'];
+    protected $appends = ['total_notifications', 'profile_link'];
 
 //    protected $appends = ['notifications'];
 
@@ -60,6 +60,12 @@ class User extends Authenticatable
     public function getTotalNotificationsAttribute()
     {
         return $this->hasMany(Notification::class,'author_id')->whereAuthorId($this->id)->where('is_read', 0)->count();
+
+    }
+
+    public function getProfileLinkAttribute()
+    {
+        return "http://34.220.151.44/user/"+$this->id+"";
 
     }
 //    public function getTotalNotificationsAttribute()
