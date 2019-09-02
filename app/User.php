@@ -65,7 +65,7 @@ class User extends Authenticatable
 
     public function getProfileLinkAttribute()
     {
-        return "http://34.220.151.44/user/"+$this->id+"";
+        return "http://34.220.151.44/user/";
 
     }
 //    public function getTotalNotificationsAttribute()
