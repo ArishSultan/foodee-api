@@ -16,3 +16,4 @@ Route::get('/', function () {
 });
 
 Route::get('/account/confirm/{email}/{id}', 'AuthController@confirm');
+Route::get('/user/{id}', 'AuthController@user');
