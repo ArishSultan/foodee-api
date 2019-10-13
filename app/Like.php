@@ -18,7 +18,7 @@ class Like extends Model
     ];
 
         /*
-     * Each message belongs to receiver
+     * Each like belongs to receiver
      */
     public function user()
     {

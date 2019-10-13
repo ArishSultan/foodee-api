@@ -63,6 +63,10 @@ Route::group([
         Route::get('notifications', 'NotificationController@index');
         Route::post('notification/delete/{id}', 'NotificationController@deleteNotification');
         Route::post('notification/clearall', 'NotificationController@clearAll');
+
+        Route::post('add/review', 'ReviewController@post');
+        Route::get('reviews', 'ReviewController@reviews');
+        
     });
 
 });
