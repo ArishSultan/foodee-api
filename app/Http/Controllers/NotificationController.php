@@ -35,7 +35,7 @@ class NotificationController extends Controller
         }
     }
 
-    public function clearAll (Request $request, $id)
+    public function clearAll (Request $request)
     {
 
         $user = $request->user();
@@ -44,7 +44,7 @@ class NotificationController extends Controller
         if($delete) {
             return response()->json(['success'=>true, 'message'=>'deleted']);
         }
-        
+
     }
 
 }
