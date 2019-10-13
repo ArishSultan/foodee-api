@@ -26,4 +26,3 @@ class Review extends Model
         return $this->belongsTo('App\User', 'to_id')->select('id', 'username')->with(['profile'=>function($query) { $query->select('user_id', 'avatar');}]);
     }
 }
-}
