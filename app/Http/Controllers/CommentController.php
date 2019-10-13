@@ -47,7 +47,7 @@ class CommentController extends Controller
         $comment->update($request->all());
         return response()->json($comment);
     }
-    public function delete(Comment $comment) {
+    public function destroy(Comment $comment) {
         $comment->delete();
         return response()->json(null, 204);
     }
