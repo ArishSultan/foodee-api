@@ -40,7 +40,7 @@ class NotificationController extends Controller
 
         $user = $request->user();
         // $delete = Notification::where('author_id', $user->id)->delete();
-        if($user->notifications->delete()){
+        if($user->notifications()->delete()){
             return response()->json(['success'=>true, 'message'=>'deleted']);
         }
           
