@@ -54,7 +54,7 @@ Route::group([
         Route::post('posts/delete/image', 'PostController@deletePostImages');
         // Chat messages routes
         Route::post('send/message', 'ChatController@send');
-        Route::post('delete/thread', 'ChatController@deleteThread');
+        Route::post('delete/thread/{id}', 'ChatController@deleteThread');
         Route::get('chats', 'ChatController@chats');
 
         Route::get('messages/{to_id}/{from_id}', 'ChatController@messages');
