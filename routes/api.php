@@ -52,6 +52,7 @@ Route::group([
         Route::post('update/photo', 'ProfileController@updatePhoto');
         Route::get('search/user', 'FilterController@index');
         Route::post('posts/delete/image', 'PostController@deletePostImages');
+        Route::get('who/liked/post/{id}', 'PostController@whoLikedMyPost');
         // Chat messages routes
         Route::post('send/message', 'ChatController@send');
         Route::post('delete/thread/{id}', 'ChatController@deleteThread');
