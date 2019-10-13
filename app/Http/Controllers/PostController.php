@@ -277,7 +277,7 @@ class PostController extends Controller
     public function whoLikedMyPost ($id) {
         $post = NewsFeed::select('id', 'user_id')->where('id', $id)->first();
         if($post){
-            return $post->likes()->with('user')->get();
+            return $post->likes;
         }
     }
 }
