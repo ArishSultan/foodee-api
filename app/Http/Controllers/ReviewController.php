@@ -27,7 +27,7 @@ class ReviewController extends Controller
             'rate' => $rate
         ]);
         if($post) {
-            return $post;
+            return response()->json(['success'=>true, 'data'=>$post]);
         }
     }
 
@@ -35,7 +35,7 @@ class ReviewController extends Controller
     {
         $user = $request->user();
         $reviews = Review::where('to_id', $user->id)->get();
-        return $reviews;
+        return response()->json(['data'=>$reviews]);
     }
 
 }
