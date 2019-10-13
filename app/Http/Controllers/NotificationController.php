@@ -24,4 +24,27 @@ class NotificationController extends Controller
         return $user->notifications;
     }
 
+    public function deleteNotification (Request $request, $id)
+    {
+        $notif = Notification::where('id', $id)->first();
+
+        if($notif) {
+            if($notif->delete()){
+                return response()->json(['success'=>true, 'message'=>'deleted']);
+            }
+        }
+    }
+
+    public function clearAll (Request $request, $id)
+    {
+
+        $user = $request->user();
+        $delete = Notification::where('author_id', $user->id)->delete();
+
+        if($delete) {
+            return response()->json(['success'=>true, 'message'=>'deleted']);
+        }
+        
+    }
+
 }

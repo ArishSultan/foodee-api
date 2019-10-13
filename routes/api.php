@@ -60,6 +60,8 @@ Route::group([
         Route::get('messages/{to_id}/{from_id}', 'ChatController@messages');
 
         Route::get('notifications', 'NotificationController@index');
+        Route::post('notification/delete/{id}', 'NotificationController@deleteNotification');
+        Route::post('notification/clearall', 'NotificationController@clearAll');
     });
 
 });
