@@ -62,4 +62,14 @@ class Message extends Model
         return$this->belongsTo('App\User', 'to_id')->select('id', 'username')->with(['profile'=>function($query) { $query->select('user_id', 'avatar');}]);
     }
 
+    // this is a recommended way to declare event handlers
+    public static function boot() {
+        parent::boot();
+
+        static::deleting(function($thread) { // before delete() method call this
+             $thread->messages()->delete();
+             // do the rest of the cleanup...
+        });
+    }
+
 }

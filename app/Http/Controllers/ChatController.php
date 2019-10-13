@@ -184,7 +184,7 @@ class ChatController extends Controller
             $collection->push($un_read_messages);
             MessageRecipient::where('message_id', $inbox->id)
                 ->whereIn('id', $collection[0])
-                ->where('recipient_id', $from_id)
+//                ->where('recipient_id', $from_id)
                 ->update(["is_read"=>1]);
         }
 
@@ -195,6 +195,18 @@ class ChatController extends Controller
     public function me(Request $request)
     {
         return $request->user();
+    }
+
+    public function deleteThread ($id)
+    {
+
+        $msg = Message::where('id', $id)->first();
+
+        if($msg) {
+            if($msg->delete()){
+                return resonse()->json(['success'=>true, 'message'=>'deleted']);
+            }
+        }
     }
 
 }
