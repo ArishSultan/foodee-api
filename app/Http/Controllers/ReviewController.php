@@ -31,10 +31,10 @@ class ReviewController extends Controller
         }
     }
 
-    public function reviews (Request $request)
+    public function reviews (Request $request, $userId)
     {
         $user = $request->user();
-        $reviews = Review::where('to_id', $user->id)->with('user')->get();
+        $reviews = Review::where('to_id', $userId)->with('user')->get();
         return response()->json(['data'=>$reviews]);
     }
 

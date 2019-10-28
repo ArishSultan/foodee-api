@@ -65,7 +65,7 @@ Route::group([
         Route::post('notification/clearall', 'NotificationController@clearAll');
 
         Route::post('add/review', 'ReviewController@post');
-        Route::get('reviews', 'ReviewController@reviews');
+        Route::get('reviews/{userId}', 'ReviewController@reviews');
         
     });
 
