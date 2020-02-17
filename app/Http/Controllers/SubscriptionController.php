@@ -59,7 +59,7 @@ class SubscriptionController extends Controller
         $user = $request->user();
         $userId = $user->id;
         $date = new Carbon;
-        $userExist = Subscription::where("userId",$userId)->first();
+        $userExist = Subscssription::where("userId",$userId)->first();
         if($userExist) {
 //            $currentTime =Carbon::now();
             $endDate = $userExist->end_date;
@@ -73,6 +73,11 @@ class SubscriptionController extends Controller
         }
         return response()->json(['success'=>true, 'subscription'=>'inactive', 'message' => 'Your subscription is inactive']);
 
+
+    }
+
+    private function sayHello() {
+        return response()->json(['success'=>true, 'subscription'=>'inactive', 'message' => 'Your subscription is inactive']);
 
     }
 

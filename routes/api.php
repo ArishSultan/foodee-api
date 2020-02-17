@@ -70,6 +70,7 @@ Route::group([
         /*Subscription Apis*/
         Route::post('subscription/purchase', 'SubscriptionController@purchaseSubscription');
         Route::post('subscription/check', 'SubscriptionController@checkSubscription');
+        Route::post('subscription/test', 'SubscriptionController@sayHello');
 
 
     });
