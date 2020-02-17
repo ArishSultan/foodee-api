@@ -14,7 +14,7 @@ class SubscriptionController extends Controller
 //        $user = $request->user();
         $userId = $request->id;
         $subscriptionType = $request->type; // 1 => Per Month, 2=> Per Year
-        $userExist = Subscription::where("userId",$userId)->first();
+        $userExist = Subscription::where("user_id",$userId)->first();
         if($userExist) {
           //If purchasing again
             $existingSubscription = new Subscription;
