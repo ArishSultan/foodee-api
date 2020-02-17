@@ -12,8 +12,6 @@ class SubscriptionController extends Controller
 {
 
     public function purchaseSubscription(Request $request) {
-
-
         $user = $request->user();
         $userId = $user->id;
         $subscriptionType = $request->type; // 1 => Per Month, 2=> Per Year
@@ -35,7 +33,6 @@ class SubscriptionController extends Controller
             }
             return response()->json(['success'=>factory(), 'message'=>'There is an error purchasing Subscription, Kindly contact support']);
 
-
         }else {
 
             //If purchase is new
@@ -54,10 +51,30 @@ class SubscriptionController extends Controller
                 return response()->json(['success'=>true, 'message'=>'Subscription successfully purchased', 'subscriptionEnd'=>'End Date']);
             }
             return response()->json(['success'=>factory(), 'message'=>'There is an error purchasing Subscription, Kindly contact support']);
-
-
         }
+    }
+
+    public function checkSubscription(Request $request) {
+
+        $user = $request->user();
+        $userId = $user->id;
+        $date = new Carbon;
+        $userExist = Subscription::where("userId",$userId)->first();
+        if($userExist) {
+//            $currentTime =Carbon::now();
+            $endDate = $userExist->end_date;
+
+            if($date > $endDate)  {
+                return response()->json(['success'=>true, 'subscription'=>'active', 'subscriptionEnd'=>'End Date','message' => 'Your subscription is active']);
+            }
+            $userExist->status = 'inactive';
+            $userExist->save();
+            return response()->json(['success'=>true, 'subscription'=>'inactive', 'message' => 'Your subscription is inactive']);
+        }
+        return response()->json(['success'=>true, 'subscription'=>'inactive', 'message' => 'Your subscription is inactive']);
+
 
     }
+
 
 }

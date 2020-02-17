@@ -65,8 +65,12 @@ Route::group([
         Route::post('notification/clearall', 'NotificationController@clearAll');
 
         Route::post('add/review', 'ReviewController@post');
-        Route::post('/subscription/purchase', 'SubscriptionController@purchaseSubscription');
         Route::get('reviews/{userId}', 'ReviewController@reviews');
+
+        /*Subscription Apis*/
+        Route::post('subscription/purchase', 'SubscriptionController@purchaseSubscription');
+        Route::post('subscription/check', 'SubscriptionController@checkSubscription');
+
 
     });
 
