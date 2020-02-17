@@ -64,11 +64,13 @@ class SubscriptionController extends Controller
         $userId = $request->id;
         $date = new Carbon;
         $userExist = Subscription::where("user_id",$userId)->first();
+
         if($userExist) {
 //            $currentTime =Carbon::now();
+            $startDate = $userExist->start_date;
             $endDate = $userExist->end_date;
 
-            if($date > $endDate)  {
+            if($startDate > $endDate)  {
                 return response()->json(['success'=>true, 'subscription'=>'active', 'subscriptionEnd'=>'End Date','message' => 'Your subscription is active']);
             }
             $userExist->status = 'inactive';
