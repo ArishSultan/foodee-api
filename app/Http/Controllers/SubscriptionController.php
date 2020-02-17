@@ -72,6 +72,7 @@ class SubscriptionController extends Controller
                 return response()->json(['success'=>true, 'subscription'=>'active', 'subscriptionEnd'=>'End Date','message' => 'Your subscription is active']);
             }
             $userExist->status = 'inactive';
+            $userExist->user_id = $userId;
             $userExist->save();
             return response()->json(['success'=>true, 'subscription'=>'inactive', 'message' => 'Your subscription is inactive']);
         }
