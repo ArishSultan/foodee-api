@@ -15,6 +15,7 @@ class SubscriptionController extends Controller
         $userId = $request->id;
         $subscriptionType = $request->type; // 1 => Per Month, 2=> Per Year
         $userExist = Subscription::where("user_id",$userId)->first();
+        $endDate = 0;
         if($userExist) {
           //If purchasing again
             $existingSubscription = new Subscription;
@@ -22,9 +23,11 @@ class SubscriptionController extends Controller
             $existingSubscription->start_date = $currentTime;
             $existingSubscription->status = "active";
             if($subscriptionType == 1) {
-                $existingSubscription->end_date =$currentTime->addMonth(1);
+                $endDate = $currentTime->addMonth(1);
+                $existingSubscription->end_date =$endDate;
             }else if($subscriptionType == 2) {
-                $existingSubscription->end_date = $currentTime->addYear(1);;
+                $endDate = $currentTime->addYear(1);
+                $existingSubscription->end_date =$endDate;
             }
 
             if($existingSubscription->save()) {
@@ -42,9 +45,11 @@ class SubscriptionController extends Controller
             $newSubscription->status = "active";
 
             if($subscriptionType == 1) {
-                $newSubscription->end_date =$currentTime->addMonth(1);
+                $endDate = $currentTime->addMonth(1);
+                $newSubscription->end_date = $endDate;
             }else if($subscriptionType == 2) {
-                $newSubscription->end_date = $currentTime->addYear(1);;
+                $endDate = $currentTime->addYear(1);
+                $newSubscription->end_date = $endDate;
             }
             if($newSubscription->save()) {
                 return response()->json(['success'=>true, 'message'=>'Subscription successfully purchased', 'subscriptionEnd'=>'End Date']);
@@ -58,7 +63,7 @@ class SubscriptionController extends Controller
 //        $user = $request->user();
         $userId = $request->id;
         $date = new Carbon;
-        $userExist = Subscssription::where("user_id",$userId)->first();
+        $userExist = Subscription::where("user_id",$userId)->first();
         if($userExist) {
 //            $currentTime =Carbon::now();
             $endDate = $userExist->end_date;
