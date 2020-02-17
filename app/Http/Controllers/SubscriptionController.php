@@ -72,7 +72,7 @@ class SubscriptionController extends Controller
             $d1 = new \DateTime($currentTime);
             $d2 = new \DateTime($endDate);
 
-            if($d1 > $d2)  {
+            if($d1 < $d2)  {
                 return response()->json(['success'=>true, 'subscription'=>'active', 'subscriptionEnd'=>'End Date','message' => 'Your subscription is active']);
             }
             $userExist->status = 'inactive';
