@@ -68,10 +68,9 @@ Route::group([
         Route::get('reviews/{userId}', 'ReviewController@reviews');
 
         /*Subscription Apis*/
-        Route::resource('subscription', 'SubscriptionController');
         Route::post('subscription/purchase', 'SubscriptionController@purchaseSubscription');
         Route::post('subscription/check', 'SubscriptionController@checkSubscription');
-        Route::post('subscription/test', 'SubscriptionController@sayHello');
+        Route::get('subscription/test', 'SubscriptionController@sayHello');
 
 
     });

@@ -4,7 +4,6 @@
 namespace App\Http\Controllers;
 use App\Subscription;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
 
@@ -76,7 +75,7 @@ class SubscriptionController extends Controller
 
     }
 
-    private function sayHello() {
+    public function sayHello() {
         return response()->json(['success'=>true, 'subscription'=>'inactive', 'message' => 'Your subscription is inactive']);
 
     }
