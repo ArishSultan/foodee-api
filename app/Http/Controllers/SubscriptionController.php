@@ -69,6 +69,9 @@ class SubscriptionController extends Controller
 //            $currentTime =Carbon::now();
             $startDate = $userExist->start_date;
             $endDate = $userExist->end_date;
+            return response()->json(['success'=>true, 'subscription'=>start_date, 'subscriptionEnd'=>$startDate,'message' => 'Your subscription is active']);
+
+
 
             if($startDate > $endDate)  {
                 return response()->json(['success'=>true, 'subscription'=>'active', 'subscriptionEnd'=>'End Date','message' => 'Your subscription is active']);
