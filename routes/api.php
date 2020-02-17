@@ -19,9 +19,6 @@ Route::group([
     Route::post('login', 'AuthController@login');
     Route::post('signup', 'AuthController@signup');
 
-    Route::post('subscription/purchase', 'SubscriptionController@purchaseSubscription');
-    Route::post('subscription/check', 'SubscriptionController@checkSubscription');
-    Route::get('subscription/test', 'SubscriptionController@sayHello');
 
     Route::group([
         'middleware' => 'auth:api'
@@ -37,6 +34,11 @@ Route::group([
 ], function () {
     Route::post('login', 'AuthController@login');
     Route::post('signup', 'AuthController@signup');
+
+    Route::post('subscription/purchase', 'SubscriptionController@purchaseSubscription');
+    Route::post('subscription/check', 'SubscriptionController@checkSubscription');
+    Route::get('subscription/test', 'SubscriptionController@sayHello');
+
 
     Route::group([
         'middleware' => 'auth:api'
