@@ -37,7 +37,7 @@ class SubscriptionController extends Controller
             //If purchase is new
             $newSubscription = new Subscription;
             $currentTime =Carbon::now();
-            $newSubscription->userId = $userId;
+            $newSubscription->user_id = $userId;
             $newSubscription->start_date = $currentTime;
             $newSubscription->status = "active";
 
