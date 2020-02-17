@@ -58,7 +58,7 @@ class SubscriptionController extends Controller
 //        $user = $request->user();
         $userId = $request->id;
         $date = new Carbon;
-        $userExist = Subscssription::where("userId",$userId)->first();
+        $userExist = Subscssription::where("user_id",$userId)->first();
         if($userExist) {
 //            $currentTime =Carbon::now();
             $endDate = $userExist->end_date;
