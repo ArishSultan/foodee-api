@@ -11,8 +11,8 @@ class SubscriptionController extends Controller
 {
 
     public function purchaseSubscription(Request $request) {
-        $user = $request->user();
-        $userId = $user->id;
+//        $user = $request->user();
+        $userId = $request->id;
         $subscriptionType = $request->type; // 1 => Per Month, 2=> Per Year
         $userExist = Subscription::where("userId",$userId)->first();
         if($userExist) {
@@ -55,8 +55,8 @@ class SubscriptionController extends Controller
 
     public function checkSubscription(Request $request) {
 
-        $user = $request->user();
-        $userId = $user->id;
+//        $user = $request->user();
+        $userId = $request->id;
         $date = new Carbon;
         $userExist = Subscssription::where("userId",$userId)->first();
         if($userExist) {
