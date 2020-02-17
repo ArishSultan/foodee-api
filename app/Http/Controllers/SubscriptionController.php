@@ -32,12 +32,12 @@ class SubscriptionController extends Controller
             if($subscriptionType == 1) {
 
                 $dt =Carbon::now();
-                $endDate = $dt->addMonth(1);
+                $endDate = $dt->addDay(1);
                 $userExist->end_date = $endDate;
 
             } else if($subscriptionType == 2) {
                 $dt =Carbon::now();
-                $endDate = $dt->addYear(1);
+                $endDate = $dt->addDay(2);
                 $userExist->end_date = $endDate;
             }
 
@@ -56,12 +56,12 @@ class SubscriptionController extends Controller
             $newSubscription->status = "active";
             if($subscriptionType == 1) {
                 $dt =Carbon::now();
-                $endDate = $dt->addMonth(1);
+                $endDate = $dt->addDay(1);
                 $newSubscription->end_date = $endDate;
 //                return response()->json(['success'=>true, 'endDate' => $endDate]);
             }else if($subscriptionType == 2) {
                 $dt =Carbon::now();
-                $endDate = $dt->addYear(1);
+                $endDate = $dt->addDay(2);
                 $newSubscription->end_date = $endDate;
 
             }
