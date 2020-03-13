@@ -68,7 +68,7 @@ class SubscriptionController extends Controller
             if($newSubscription->save()) {
                 return response()->json(['success'=>true, 'message'=>'Subscription successfully purchased', 'subscriptionEnd'=>'End Date']);
             }
-            return response()->json(['success'=>factory(), 'message'=>'There is an error purchasing Subscription, Kindly contact support']);
+            return response()->json(['success'=>false, 'message'=>'There is an error purchasing Subscription, Kindly contact support']);
         }
     }
 

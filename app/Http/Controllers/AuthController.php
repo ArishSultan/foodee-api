@@ -39,26 +39,30 @@ class AuthController extends Controller
         $timezone = $request->timezone;
 
         $existingUser = User::where('email',$email)->first();
-
         if($existingUser) {
             return response()->json(['message' => 'Email already exists.', 'status' => false, 'access_token' => null], 200);
-        }else {
+        }
 
-            $user = new User([
-                'username' => $username,
-                'email' => $email,
-                'phone' => $phone,
-                'password' => $password,
-                'device_token' => $device_token,
-                'timezone' => $timezone
-            ]);
 
-            if(!$user) {
+        $user = new User;
+        $user->username = $username;
+        $user->email = $email;
+        $user->phone = $phone;
+        $user->password = $password;
+        $user->device_token = $device_token;
+        $user->timezone = $timezone;
+//
+//        $user = new User([
+//                'username' => $username,
+//                'email' => $email,
+//                'phone' => $phone,
+//                'password' => $password,
+//                'device_token' => $device_token,
+//                'timezone' => $timezone
+//            ]);
+//
 
-                throw new HttpException(500);
-
-            }else {
-                if($user->save()){
+        if($user->save()){
                     $profile = new Profile();
                     $profile->user_id = $user->id;
                     if($profile->save()){
@@ -76,9 +80,51 @@ class AuthController extends Controller
                         ], 201);
                     }
 
-                }
-            }
+                }else {
+            return response()->json(['message' => 'Something went wrong', 'status' => false, 'access_token' => null], 200);
+
         }
+
+
+//        if($existingUser) {
+//            return response()->json(['message' => 'Email already exists.', 'status' => false, 'access_token' => null], 200);
+//        }else {
+//
+//            $user = new User([
+//                'username' => $username,
+//                'email' => $email,
+//                'phone' => $phone,
+//                'password' => $password,
+//                'device_token' => $device_token,
+//                'timezone' => $timezone
+//            ]);
+//
+//            if(!$user) {
+//
+//                throw new HttpException(500);
+//
+//            }else {
+//                if($user->save()){
+//                    $profile = new Profile();
+//                    $profile->user_id = $user->id;
+//                    if($profile->save()){
+//                        $tokenResult = $user->createToken('Foodee');
+//                        $token = $tokenResult->accessToken;
+//
+//                        $dataEmail = ["username"=>$user->username, "email"=>$user->email, "uid"=>$user->id];
+//                        Mail::to($user->email)->send(new ConfirmationEmail($dataEmail));
+//
+//                        return response()->json([
+//                            'status'=>true,
+//                            'access_token' => $tokenResult->accessToken,
+//                            'message' => 'Your account has been created successfully',
+//                            'user' => $user
+//                        ], 201);
+//                    }
+//
+//                }
+//            }
+//        }
 
 
     }
@@ -180,7 +226,7 @@ class AuthController extends Controller
             return response()->json(['success'=>true, 'message'=>'FCM token has been updated successfully']);
         }
     }
-    
+
     /*
      * Update lat, lng and fetching users within 10miles radius.
      */
