@@ -69,8 +69,8 @@ class AuthController extends Controller
                         $tokenResult = $user->createToken('Foodee');
                         $token = $tokenResult->accessToken;
 
-//                        $dataEmail = ["username"=>$user->username, "email"=>$user->email, "uid"=>$user->id];
-//                        Mail::to($user->email)->send(new ConfirmationEmail($dataEmail));
+                        $dataEmail = ["username"=>$user->username, "email"=>$user->email, "uid"=>$user->id];
+                        Mail::to($user->email)->send(new ConfirmationEmail($dataEmail));
 
                         return response()->json([
                             'status'=>true,
