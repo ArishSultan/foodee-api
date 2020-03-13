@@ -56,7 +56,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'noreply.pocketmoney@gmail.com'),
+        'address' => env('MAIL_FROM_ADDRESS', 'Foodeeapp5@gmail.com'),
         'name' => env('MAIL_FROM_NAME', 'Foodee'),
     ],
 
@@ -84,9 +84,9 @@ return [
     |
     */
 
-    'username' => 'noreply.pocketmoney@gmail.com',
+    'username' => 'Foodeeapp5@gmail.com',
 
-    'password' => 'pocket_money123@',
+    'password' => 'foodee123',
 
     /*
     |--------------------------------------------------------------------------
