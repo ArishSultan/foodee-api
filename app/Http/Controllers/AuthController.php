@@ -156,7 +156,6 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-
         $email = $request->email;
         $timezone = $request->timezone;
         $existingUser = User::where('email',$email)->first();

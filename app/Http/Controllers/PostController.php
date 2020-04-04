@@ -13,26 +13,7 @@ use App\User;
 class PostController extends Controller
 {
     public function index(Request $request) {
-
-//        return NewsFeed::withCount('comments')
-//            ->withCount('likes')
-//            ->with(['user'=>function($q){
-//                $q->select('id', 'username', 'email')
-//                    ->with(['profile'=>function($q){
-//                        $q->select('user_id', 'avatar');
-//                    }]);
-//                }, 'comments'=>function($query) {
-//                $query->with(['user'=>function($q){
-//                    $q->select('id', 'username', 'email')
-//                        ->with(['profile'=>function($q){
-//                            $q->select('user_id', 'avatar');
-//                        }]);}])->take(3);
-//            }])->orderBy('created_at', 'desc')->paginate(6);
-
-
-
-        $posts =  NewsFeed::
-        with(['comments'=>function($query) {
+        $posts =  NewsFeed::with(['comments'=>function($query) {
                 $query->with(['user'=>function($q){
                     $q->select('id', 'username', 'email', 'device_token')
                         ->with(['profile'=>function($q){
@@ -51,14 +32,7 @@ class PostController extends Controller
             }])
             ->withCount('likes')->withCount('comments')->orderBy('created_at', 'desc')->paginate(6);
 
-//        CustomBroadcaster::fire(1, 'news_feed', $posts);
-
         return $posts;
-
-//        $lat = $request->query('lat');
-//        $lng = $request->query('lng');
-//        $newsFeeds = NewsFeed::distance($lat, $lng, 10)->simplePaginate(10);
-//        return $newsFeeds;
     }
     public function show(NewsFeed $post) {
 
@@ -214,6 +188,29 @@ class PostController extends Controller
             return response()->json(["message"=>"No content were found!"], 204);
         }
 
+    }
+
+    public function featured() {
+        $posts =  NewsFeed::with(['comments'=>function($query) {
+                $query->with(['user'=>function($q){
+                    $q->select('id', 'username', 'email', 'device_token')
+                        ->with(['profile'=>function($q){
+                            $q->select('user_id', 'avatar');
+                        }])
+                    ;}]);
+            }])
+            ->with(['user'=>function($q){
+                $q->select('id', 'username', 'email', 'device_token')
+                    ->with(['profile'=>function($q){
+                        $q->select('user_id', 'avatar');
+                    }]);
+            }])
+            ->with(['tags'=>function($query){
+                $query->select('username');
+            }])
+            ->withCount('likes')->withCount('comments')->orderBy('likes_count', 'desc')->paginate(6);
+
+        return $posts;
     }
 
     public function like(Request $request, $id)

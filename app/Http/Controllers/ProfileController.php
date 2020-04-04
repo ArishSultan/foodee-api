@@ -20,31 +20,26 @@ class ProfileController extends Controller
     }
 
     public function store(Request $request) {
-
         $user = $request->user();
         $profile = new Profile();
-        $profile->user_id = $request->user()->id;
+        $profile->user_id = $user->id;
         $profile->interest = $request->interest;
         $profile->ages = $request->ages;
         $profile->contribution = $request->contribution;
-        if($profile->save()) {
-            if(isset($request->foods) && count($request->foods) > 0){
-                foreach($request->foods as $food){
+
+        if ($profile->save()) {
+            if (isset($request->foods) && count($request->foods) > 0) {
+                foreach($request->foods as $food) {
                     $profile->foods()->attach($food);
                 }
                 return response()->json(["success"=>true, "message"=> "Profile has been created successfully", "data"=>$profile]);
             }
-//            return response()->json(["success"=>true, "message"=> "Profile has been created successfully", "data"=>$profile]);
         } else {
             return response()->json(["success"=>false, "message"=> "Could not created", "data"=>[]]);
         }
-
     }
+
     public function update($id, Request $request) {
-
-
-//        $profile->update($request->all());
-//        return response()->json($profile);
         $username = $request->username;
         $message = $request->message;
         $age = $request->age;
@@ -103,12 +98,23 @@ class ProfileController extends Controller
                 return response()->json(["success"=>true, "message"=>"Profile has been updated successfully", "data"=>$user]);
             }
         }
-
-        //}
     }
-    public function delete(Profile $profile) {
-        $profile->delete();
-        return response()->json(null, 204);
+
+    public function delete(Request $request, $id) {
+        $profile = Profile::where('id', $id);
+	$_profile = $profile->get();
+	
+	if (count($_profile) > 0) {
+
+            $user_id = $_profile[0]->user_id;
+
+            $profile->delete();
+            User::where('id', $user_id)->delete();
+
+            return response()->json(null, 204);
+	} else {
+            return response()->json(null, 404);
+        }
     }
 
     public function updatePhoto(Request $request)

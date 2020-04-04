@@ -31,6 +31,12 @@ class ReviewController extends Controller
         }
     }
 
+    public function delete(Request $request, $id) {
+        Review::where('id', $id)->delete();
+
+	return response()->json(null, 204);
+    }
+
     public function reviews (Request $request, $userId)
     {
         $user = $request->user();
