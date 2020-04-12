@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'ses-smtp-user.20200412-134048'),
+    'host' => env('MAIL_HOST', 'smtp.googlemail.com'),
 
     /*
     |--------------------------------------------------------------------------
@@ -42,7 +42,7 @@ return [
     |
     */
 
-    'port' => env('MAIL_PORT', 587),
+    'port' => env('MAIL_PORT', 465),
 
     /*
     |--------------------------------------------------------------------------
@@ -71,7 +71,7 @@ return [
     |
     */
 
-    'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+    'encryption' => env('MAIL_ENCRYPTION', 'ssl'),
 
     /*
     |--------------------------------------------------------------------------
@@ -84,9 +84,9 @@ return [
     |
     */
 
-    'username' => 'AKIAX5JDNWVXGRLK6VM4',
+    'username' => 'Foodeeapp5@gmail.com',
 
-    'password' => 'BPMq7e+corDOOXzulFGqR0jvxkFoKO2HDwxZ6btes4FM',
+    'password' => 'foodee123',
 
     /*
     |--------------------------------------------------------------------------
