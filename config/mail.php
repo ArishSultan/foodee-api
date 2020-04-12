@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'smtp.gmail.com'),
+    'host' => env('MAIL_HOST', 'ses-smtp-user.20200412-134048'),
 
     /*
     |--------------------------------------------------------------------------
@@ -84,9 +84,9 @@ return [
     |
     */
 
-    'username' => 'Foodeeapp5@gmail.com',
+    'username' => 'AKIAX5JDNWVXGRLK6VM4',
 
-    'password' => 'foodee123',
+    'password' => 'BPMq7e+corDOOXzulFGqR0jvxkFoKO2HDwxZ6btes4FM',
 
     /*
     |--------------------------------------------------------------------------

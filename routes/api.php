@@ -34,7 +34,6 @@ Route::group([
 ], function () {
     Route::post('login', 'AuthController@login');
     Route::post('signup', 'AuthController@signup');
-
     Route::post('subscription/purchase', 'SubscriptionController@purchaseSubscription');
     Route::post('subscription/check', 'SubscriptionController@checkSubscription');
     Route::get('subscription/test', 'SubscriptionController@sayHello');
@@ -49,10 +48,10 @@ Route::group([
         Route::post('fcm/token', 'AuthController@updateToken');
         Route::post('lat/lng', 'AuthController@userLatLng');
         Route::get('find/peoples', 'AuthController@findPeoples');
+        Route::resource('posts', 'PostController');
         Route::resource('comments', 'CommentController');
         Route::resource('profile', 'ProfileController');
         Route::resource('food', 'FoodCategoryController');
-        Route::resource('posts', 'PostController');
         Route::get('featured', 'PostController@featured');
         Route::get('post/{id}/isLikedByMe', 'PostController@isLikedByMe');
         Route::post('post/like/{id}', 'PostController@like');
