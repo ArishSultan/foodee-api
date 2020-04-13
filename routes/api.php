@@ -2,6 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 
+
+Route::group(['middleware' => 'throttle:3'], function () {
+    Route::post('forgot-password', 'AuthController@sendResetLinkEmail');
+});
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -36,6 +41,7 @@ Route::group([
     Route::post('signup', 'AuthController@signup');
     Route::post('subscription/purchase', 'SubscriptionController@purchaseSubscription');
     Route::post('subscription/check', 'SubscriptionController@checkSubscription');
+
     Route::get('subscription/test', 'SubscriptionController@sayHello');
 	Route::delete('profile/{id}', 'ProfileController@delete');
         Route::delete('review/{id}', 'ReviewController@delete');
