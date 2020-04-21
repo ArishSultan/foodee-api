@@ -282,7 +282,7 @@ LIMIT 0 , 20;"));
     public function findPeoples(Request $request)
     {
         $username = $request->query('username');
-        return User::where('username', 'LIKE', "%{$username}%")->get();
+        return User::with('profile')->where('username', 'LIKE', "%{$username}%")->get();
     }
 
     public function sendResetLinkEmail(Request $request)
