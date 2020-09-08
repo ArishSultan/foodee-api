@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Profile extends Model
 {
-
     protected $casts = [
         'is_age_private' => 'boolean',
     ];

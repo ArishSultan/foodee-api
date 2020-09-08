@@ -1,221 +1,167 @@
 <?php
+
 namespace App\Http\Controllers;
-use App\Mail\ConfirmationEmail;
+
+use App\User;
 use App\Profile;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
-use App\User;
+use App\Mail\ConfirmationEmail;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Facades\Response;
-
 
 class AuthController extends Controller
 {
-    use SendsPasswordResetEmails;
-
-    public function __construct()
-    {
-//        $this->middleware('client');
-    }
-
     /**
      * Create user
      *
-     * @param  [string] name
-     * @param  [string] email
-     * @param  [string] password
-     * @param  [string] password_confirmation
-     * @return [string] message
+     * @param Request $request
+     * @return JsonResponse
      */
 
     public function signup(Request $request)
     {
+        $email = $request->get('email');
+        $phone = $request->get('phone');
+        $timezone = $request->get('timezone');
+        $username = $request->get('username');
+        $device_token = $request->get('device_token');
+        $password = bcrypt($request->get('password'));
 
+        $existingUser = User::query()->where('email', $email)->first();
 
-        $username = $request->username;
-        $email = $request->email;
-        $phone = $request->phone;
-        $device_token = $request->device_token;
-        $password = bcrypt($request->password);
-        $timezone = $request->timezone;
-
-        $existingUser = User::where('email',$email)->first();
-        if($existingUser) {
-            return response()->json(['message' => 'Email already exists.', 'status' => false, 'access_token' => null], 200);
+        if ($existingUser) {
+            return response()->json([
+                'status' => false,
+                'access_token' => null,
+                'message' => 'Email already exists.'
+            ], 200);
         }
 
 
         $user = new User;
-        $user->username = $username;
+
         $user->email = $email;
         $user->phone = $phone;
+        $user->email_confirm = 0;
+        $user->username = $username;
         $user->password = $password;
-        $user->device_token = $device_token;
         $user->timezone = $timezone;
-//
-//        $user = new User([
-//                'username' => $username,
-//                'email' => $email,
-//                'phone' => $phone,
-//                'password' => $password,
-//                'device_token' => $device_token,
-//                'timezone' => $timezone
-//            ]);
-//
+        $user->device_token = $device_token;
 
-        if($user->save()){
-                    $profile = new Profile();
-                    $profile->user_id = $user->id;
-                    if($profile->save()){
-                        $tokenResult = $user->createToken('Foodee');
-                        $token = $tokenResult->accessToken;
+        if ($user->save()) {
+            $profile = new Profile;
+            $profile->user_id = $user->id;
 
-//                        $dataEmail = ["username"=>$user->username, "email"=>$user->email, "uid"=>$user->id];
-//                        Mail::to($user->email)->send(new ConfirmationEmail($dataEmail));
+            if ($profile->save()) {
+                $tokenResult = $user->createToken('Foodee');
 
-                        return response()->json([
-                            'status'=>true,
-                            'access_token' => $tokenResult->accessToken,
-                            'message' => 'Your account has been created successfully',
-                            'user' => $user
-                        ], 201);
-                    }
+                $dataEmail = [
+                    "uid" => $user->id,
+                    "email" => $user->email,
+                    "username" => $user->username
+                ];
 
-                }else {
-            return response()->json(['message' => 'Something went wrong', 'status' => false, 'access_token' => null], 200);
+                Mail::to($user->email)->send(new ConfirmationEmail($dataEmail));
 
+                return response()->json([
+                    'status' => true,
+                    'user' => $user,
+                    'access_token' => $tokenResult->accessToken,
+                    'message' => 'Your account has been created successfully'
+                ], 201);
+            }
         }
 
-
-//        if($existingUser) {
-//            return response()->json(['message' => 'Email already exists.', 'status' => false, 'access_token' => null], 200);
-//        }else {
-//
-//            $user = new User([
-//                'username' => $username,
-//                'email' => $email,
-//                'phone' => $phone,
-//                'password' => $password,
-//                'device_token' => $device_token,
-//                'timezone' => $timezone
-//            ]);
-//
-//            if(!$user) {
-//
-//                throw new HttpException(500);
-//
-//            }else {
-//                if($user->save()){
-//                    $profile = new Profile();
-//                    $profile->user_id = $user->id;
-//                    if($profile->save()){
-//                        $tokenResult = $user->createToken('Foodee');
-//                        $token = $tokenResult->accessToken;
-//
-//                        $dataEmail = ["username"=>$user->username, "email"=>$user->email, "uid"=>$user->id];
-//                        Mail::to($user->email)->send(new ConfirmationEmail($dataEmail));
-//
-//                        return response()->json([
-//                            'status'=>true,
-//                            'access_token' => $tokenResult->accessToken,
-//                            'message' => 'Your account has been created successfully',
-//                            'user' => $user
-//                        ], 201);
-//                    }
-//
-//                }
-//            }
-//        }
-
-
+        return response()->json(['message' => 'Something went wrong', 'status' => false, 'access_token' => null], 200);
     }
 
 
-    /*
-     * account confirm
-     */
     public function confirm($email, $id)
     {
-        $user = User::where('id', $id)->where('email', $email)->where('email_confirm', 0)->first();
-        if(isset($user)){
+        $user = User::query()
+            ->where('id', $id)
+            ->where('email', $email)
+            ->where('email_confirm', 0)
+            ->first();
+
+        if (isset($user)) {
             $user->email_confirm = true;
-            if($user->save()){
+            if ($user->save()) {
                 return view('emails.user.confirmed');
             }
         }
+
+        return null;
     }
 
     /**
      * Login user and create token
-     *
-     * @param  [string] email
-     * @param  [string] password
-     * @param  [boolean] remember_me
-     * @return [string] access_token
-     * @return [string] token_type
-     * @return [string] expires_at
+     * @param Request $request
+     * @return JsonResponse
      */
     public function login(Request $request)
     {
-        $email = $request->email;
-        $timezone = $request->timezone;
-        $existingUser = User::where('email',$email)->first();
+        $email = $request->get('email');
+        $timezone = $request->get('timezone');
+        $existingUser = User::query()->where('email', $email)->first();
 
-        if($existingUser) {
-
+        if ($existingUser) {
             $credentials = request(['email', 'password']);
-            if (!Auth::attempt($credentials))
+
+            if (!Auth::attempt($credentials)) {
                 return response()->json([
+                    'token' => null,
                     'status' => false,
-                    'message' => 'Incorrect username or password!',
-                    'token' => null
+                    'message' => 'Incorrect username or password!'
                 ], 201);
-            User::where('email', $email)->update(['device_token'=>$request->device_token, 'timezone'=>$timezone]);
+            }
+
+            User::query()->where('email', $email)->update([
+                'device_token' => $request->get('device_token'),
+                'timezone' => $timezone
+            ]);
+
             $user = $request->user();
             $tokenResult = $user->createToken('Foodee');
             $token = $tokenResult->accessToken;
 
             return response()->json([
-                'status' => true,
-                'access_token' => $token,
-                'token_type' => 'Bearer',
                 'user' => $user,
-                'message' => 'Login Successfull',
-
-
+                'status' => true,
+                'token_type' => 'Bearer',
+                'access_token' => $token,
+                'message' => 'Login Successful',
             ], 200);
         }
 
+        return null;
     }
 
     /**
      * Logout user (Revoke the token)
      *
-     * @return [string] message
+     * @param Request $request
+     * @return JsonResponse
      */
     public function logout(Request $request)
     {
         $request->user()->token()->revoke();
-        return response()->json([
-            'message' => 'Successfully logged out'
-        ]);
+        return response()->json(['message' => 'Successfully logged out']);
     }
 
 
     /**
      * Get the authenticated User
      *
-     * @return [json] user object
+     * @param $id
+     * @return JsonResponse
      */
-    public function user(Request $request, $id)
+    public function user($id)
     {
-//        $user = $request->user();
-        $user = User::where('id', $id)->first();
-        if(isset($user->profile->foods)){
+        $user = User::query()->where('id', $id)->first();
+        if (isset($user->profile->foods)) {
             $user['profile'] = $user->profile->foods;
         }
 
@@ -225,10 +171,93 @@ class AuthController extends Controller
     public function updateToken(Request $request)
     {
         $user = $request->user();
-        $user->device_token = $request->device_token;
-        if($user->save()){
-            return response()->json(['success'=>true, 'message'=>'FCM token has been updated successfully']);
+        $user->device_token = $request->get('device_token');
+        if ($user->save()) {
+            return response()->json(['success' => true, 'message' => 'FCM token has been updated successfully']);
         }
+
+        return null;
+    }
+
+    public function nearby(Request $request)
+    {
+        $user = $request->user();
+        $user_lat=$user->lat;
+        $user_lng=$user->lng;
+        $user_result = null;
+        $food = $request->query('food') . "%";
+        $type = $request->query('type');
+        if ($food && $type) {
+            $user_result = DB::select('SELECT distinct (ST_Distance_Sphere(POINT(u.lng, u.lat), POINT(:ulng, :ulat)) / 1000) as distance, p2.is_age_private, u.*, p2.contribution FROM food_categories as fc
+    inner join food_profile as p on fc.id = p.food_id
+    inner join profiles p2 on p.profile_id = p2.id
+    inner join users u on p2.user_id = u.id
+WHERE fc.name LIKE :foodname AND p2.contribution = :type;', [
+                "foodname" => $food,
+                "type" => $type,
+                "ulat" => $user_lat,
+                "ulng"=> $user_lng
+            ]);
+        } else if ($food) {
+            $user_result = DB::select('SELECT distinct (ST_Distance_Sphere(POINT(u.lng, u.lat), POINT(:ulng, :ulat)) / 1000) as distance, p2.is_age_private, u.*, p2.contribution FROM food_categories as fc
+    inner join food_profile as p on fc.id = p.food_id
+    inner join profiles p2 on p.profile_id = p2.id
+    inner join users u on p2.user_id = u.id
+WHERE fc.name LIKE :foodname ;', [
+                "foodname" => $food,
+                "ulat" => $user_lat,
+                "ulng"=> $user_lng
+            ]);
+        } else if ($type) {
+            $user_result = DB::select('SELECT distinct (ST_Distance_Sphere(POINT(u.lng, u.lat), POINT(:ulng, :ulat)) / 1000) as distance, a.is_age_private, u.*, a.contribution FROM profiles as a
+    inner join users u on a.user_id = u.id
+WHERE a.contribution = :type;', [
+                "type" => $type,
+                "ulat" => $user_lat,
+                "ulng"=> $user_lng
+            ]);
+        }
+        return $user_result;
+
+//        return $user_result;
+//        $result = DB::select('select distinct profile_id from food_categories as a inner join food_profile as b on a.id=b.food_id where a.id=2');
+
+//        return $result;
+//        $user = $request->user();
+//
+//        $type = $request->query('type');
+//        $name = $request->query('name');
+//
+//        $query = "SELECT users.*, profiles.contribution, profiles.is_age_ ST_Distance_Sphere(POINT(users.lat, users.lng), POINT(:lat, :lng)) as distance ";
+//        $query .= "FROM users join profiles on profiles.user_id = users.id WHERE NOT users.id = ".$user->id;
+//
+//        if ($type || $name) {
+//            $query .= " AND ";
+//        }
+//
+//        if ($type) {
+//            $query .= "profiles.contribution = '".$type."'";
+//        }
+//
+//        if ($type && $name) {
+//            $query .= " AND ";
+//        }
+//
+//        if ($name) {
+//            $query .= "users.username LIKE LOWER('".$name."%') ";
+//        }
+//
+//        $query .= " ORDER BY distance"; //, );
+//
+//        $users = DB::select($query, ["lat" => $user->lat, "lng" => $user->lng]);
+//
+//        foreach($users as $user) {
+//            $user->is_age_private = $user->is_age_private == 1;
+//            $user->foods = Profile::query()->where('user_id', $user->user_id)->select('id', 'user_id')->first()->foods;
+//            $user->password = $query;
+//        }
+//
+//        return $users;
     }
 
     /*
@@ -236,44 +265,14 @@ class AuthController extends Controller
      */
     public function userLatLng(Request $request)
     {
-        $collection = collect();
         $user = $request->user();
-        $user->lat = $request->lat;
-        $user->lng = $request->lng;
-        if($user->save()){
-            $users = DB::select(DB::raw("SELECT
-  users.id, users.username, users.email, users.phone, users.lat, users.lng,
-   profiles.user_id,
-    profiles.avatar,
-     profiles.cover,
-     profiles.message,
-     profiles.location,
-     profiles.age,
-     profiles.contribution,
-     profiles.is_age_private,
-      (
-    3959 * acos (
-      cos ( radians($request->lat) )
-      * cos( radians( lat ) )
-      * cos( radians( lng ) - radians($request->lng) )
-      + sin ( radians($request->lat) )
-      * sin( radians( lat ) )
-    )
-  ) AS distance
-FROM users join profiles on profiles.user_id = users.id
-HAVING distance <= 10
-ORDER BY distance
-LIMIT 0 , 20;"));
 
-            foreach($users as $user){
-//                echo $user->user_id;
-                $user->is_age_private = ($user->is_age_private == 1 ? true : false);
-                $user->foods = Profile::where('user_id', $user->user_id)->select('id', 'user_id')->first()->foods;
-            }
+        $user->lat = $request->get('lat');
+        $user->lng = $request->get('lng');
 
-            return response()->json(["success"=>true, "data"=>$users]);
+        $user->save();
 
-        }
+        return $user;
     }
 
     /*
@@ -283,22 +282,5 @@ LIMIT 0 , 20;"));
     {
         $username = $request->query('username');
         return User::with('profile')->where('username', 'LIKE', "%{$username}%")->get();
-    }
-
-    public function sendResetLinkEmail(Request $request)
-    {
-        $this->validateEmail($request);
-
-        // We will send the password reset link to this user. Once we have attempted
-        // to send the link, we will examine the response then see the message we
-        // need to show to the user. Finally, we'll send out a proper response.
-        $response = $this->broker()->sendResetLink(
-            $request->only('email')
-        );
-
-
-        return $response == Password::RESET_LINK_SENT
-            ? Response::json(["resp" => $response])
-            : Response::json(["error" => $response]);
     }
 }

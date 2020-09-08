@@ -6,6 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Passport\HasApiTokens;
+
 class User extends Authenticatable
 {
     use Notifiable, HasApiTokens;
@@ -25,22 +26,6 @@ class User extends Authenticatable
     ];
 
     protected $appends = ['total_notifications', 'profile_link'];
-
-//    protected $appends = ['notifications'];
-
-//    public function getNotificationsAttribute($value) {
-//
-//        if (Auth::user()) {   // Check is user logged in
-//            // do stuff
-//            $notifications = Notification::where('author_id', Auth::user()->id)->where('is_read', 0)->get();
-//            if ($notifications){
-//                return $notifications;
-//            } else {
-//                return [];
-//            }
-//        }
-//
-//    }
 
     public function profile()
     {
