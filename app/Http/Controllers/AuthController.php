@@ -13,14 +13,23 @@ use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
+    function sendMail() {
+        $dataEmail = [
+            "uid" => 123,
+            "email" => 'email',
+            "username" => 'user'
+        ];
+
+        Mail::to('arishsultan104@gmail.com')->send(new ConfirmationEmail($dataEmail));
+    }
+
     /**
      * Create user
      *
      * @param Request $request
      * @return JsonResponse
      */
-
-    public function signup(Request $request)
+    public function signup(Request $request): ?JsonResponse
     {
         $email = $request->get('email');
         $phone = $request->get('phone');
@@ -74,7 +83,7 @@ class AuthController extends Controller
             }
         }
 
-        return response()->json(['message' => 'Something went wrong', 'status' => false, 'access_token' => null], 200);
+        return response()->json(['message' => 'Something went wrong', 'status' => false, 'access_token' => null]);
     }
 
 
@@ -101,7 +110,7 @@ class AuthController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function login(Request $request)
+    public function login(Request $request): ?JsonResponse
     {
         $email = $request->get('email');
         $timezone = $request->get('timezone');
@@ -114,7 +123,7 @@ class AuthController extends Controller
                 return response()->json([
                     'token' => null,
                     'status' => false,
-                    'message' => 'Incorrect username or password!'
+                    'message' => 'Incorrect password!'
                 ], 201);
             }
 
@@ -133,10 +142,10 @@ class AuthController extends Controller
                 'token_type' => 'Bearer',
                 'access_token' => $token,
                 'message' => 'Login Successful',
-            ], 200);
+            ]);
         }
 
-        return null;
+        return response()->json(['message' => 'No User Exists']);
     }
 
     /**
@@ -145,7 +154,7 @@ class AuthController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function logout(Request $request)
+    public function logout(Request $request): ?JsonResponse
     {
         $request->user()->token()->revoke();
         return response()->json(['message' => 'Successfully logged out']);
@@ -158,7 +167,7 @@ class AuthController extends Controller
      * @param $id
      * @return JsonResponse
      */
-    public function user($id)
+    public function user($id): ?JsonResponse
     {
         $user = User::query()->where('id', $id)->first();
         if (isset($user->profile->foods)) {
@@ -168,10 +177,11 @@ class AuthController extends Controller
         return response()->json($user);
     }
 
-    public function updateToken(Request $request)
+    public function updateToken(Request $request): ?JsonResponse
     {
         $user = $request->user();
         $user->device_token = $request->get('device_token');
+
         if ($user->save()) {
             return response()->json(['success' => true, 'message' => 'FCM token has been updated successfully']);
         }
@@ -179,7 +189,7 @@ class AuthController extends Controller
         return null;
     }
 
-    public function nearby(Request $request)
+    public function nearby(Request $request): array
     {
         $user = $request->user();
         $user_lat=$user->lat;

@@ -42,7 +42,7 @@ return [
     |
     */
 
-    'port' => env('MAIL_PORT', 465),
+    'port' => env('MAIL_PORT', 587),
 
     /*
     |--------------------------------------------------------------------------
@@ -56,8 +56,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'Foodeeapp5@gmail.com'),
-        'name' => env('MAIL_FROM_NAME', 'Foodee'),
+        'address' => env('MAIL_FROM_ADDRESS', 'arishsultan104@gmail.com'),
+        'name' => env('MAIL_FROM_NAME', 'nmpnlymvxkspaarw'),
     ],
 
     /*
@@ -71,7 +71,7 @@ return [
     |
     */
 
-    'encryption' => env('MAIL_ENCRYPTION', 'ssl'),
+    'encryption' => env('MAIL_ENCRYPTION', 'tls'),
 
     /*
     |--------------------------------------------------------------------------
@@ -84,9 +84,9 @@ return [
     |
     */
 
-    'username' => 'Foodeeapp5@gmail.com',
+    'username' => 'arishsultan104@gmail.com',
 
-    'password' => 'foodee123',
+    'password' => 'nmpnlymvxkspaarw',
 
     /*
     |--------------------------------------------------------------------------

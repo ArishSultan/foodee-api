@@ -30,10 +30,12 @@ class ConfirmationEmail extends Mailable
     public function build()
     {
         return $this->view('emails.user.confirmation')
-            ->from('Foodeeapp5@gmail.com', 'Foodee')
+            ->from('arishsultan104@gmail.com', 'Foodee')
             ->subject('Please confirm your email address')
             ->with([
-                'data' => $this->data
+                'data' => $this->data,
+                'ip' => gethostname(),
+                'port' => config('app.env') == 'production' ? '': ':8000'
             ]);
     }
 }

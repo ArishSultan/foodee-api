@@ -37,11 +37,8 @@ Route::group([
     'prefix' => 'v1',
     'middleware' => 'cors'
 ], function () {
-
+    Route::get('test', 'AuthController@sendMail');
     Route::get('subscription/test', 'SubscriptionController@sayHello');
-
-    Route::post('login', 'AuthController@login');
-//    Route::post('signup', 'AuthController@signup');
     Route::post('subscription/check', 'SubscriptionController@checkSubscription');
     Route::post('subscription/purchase', 'SubscriptionController@purchaseSubscription');
 

@@ -1,1 +1,0 @@
-sudo docker run --rm -v $(pwd):/app php $(pwd)/artisan serve
