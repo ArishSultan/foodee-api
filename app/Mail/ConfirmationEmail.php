@@ -34,7 +34,7 @@ class ConfirmationEmail extends Mailable
             ->subject('Please confirm your email address')
             ->with([
                 'data' => $this->data,
-                'ip' => gethostbyname(gethostname())
+                'ip' => '18.237.88.70'
             ]);
     }
 }
