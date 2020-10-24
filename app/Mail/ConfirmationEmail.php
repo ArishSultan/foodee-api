@@ -34,8 +34,7 @@ class ConfirmationEmail extends Mailable
             ->subject('Please confirm your email address')
             ->with([
                 'data' => $this->data,
-                'ip' => gethostname(),
-                'port' => config('app.env') == 'production' ? '': ':8000'
+                'ip' => gethostbyname(gethostname())
             ]);
     }
 }
