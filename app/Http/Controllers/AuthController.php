@@ -24,7 +24,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Create user
+     * Create user0xaa0000
      *
      * @param Request $request
      * @return JsonResponse

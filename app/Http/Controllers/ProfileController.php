@@ -51,7 +51,7 @@ class ProfileController extends Controller
 
         $user = User::where('id', $id)->first();
 
-        if($user->profile == null){
+        if ($user->profile == null) {
             $profile = new Profile();
             $profile->user_id = $user->id;
             $profile->message = $message;
@@ -93,6 +93,9 @@ class ProfileController extends Controller
             $user->profile->contribution = $contribution;
             $user->profile->is_age_private = $is_age_private;
 
+
+//            return $message;
+
             if($user->save() && $user->profile->save()){
                 $user->profile->foods;
                 return response()->json(["success"=>true, "message"=>"Profile has been updated successfully", "data"=>$user]);
@@ -103,7 +106,7 @@ class ProfileController extends Controller
     public function delete(Request $request, $id) {
         $profile = Profile::where('id', $id);
 	$_profile = $profile->get();
-	
+
 	if (count($_profile) > 0) {
 
             $user_id = $_profile[0]->user_id;

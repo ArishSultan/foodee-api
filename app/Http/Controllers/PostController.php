@@ -34,8 +34,8 @@ class PostController extends Controller
 
         return $posts;
     }
-    public function show(NewsFeed $post) {
 
+    public function show(NewsFeed $post) {
         $postObj = NewsFeed::where('id', $post->id)->
             with(['comments'=>function($query) {
                 $query->with(['user'=>function($q){

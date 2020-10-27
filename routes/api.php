@@ -45,6 +45,7 @@ Route::group([
     Route::delete('review/{id}', 'ReviewController@delete');
     Route::delete('profile/{id}', 'ProfileController@delete');
     Route::get('nearby', 'AuthController@nearBy');
+    Route::resource('profile', 'ProfileController');
 
     Route::group([
         'middleware' => 'auth:api'
@@ -65,7 +66,6 @@ Route::group([
         Route::get('nearby', 'AuthController@nearby');
 
         Route::resource('posts', 'PostController');
-        Route::resource('profile', 'ProfileController');
         Route::resource('comments', 'CommentController');
         Route::resource('food', 'FoodCategoryController');
 
