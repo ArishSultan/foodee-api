@@ -198,33 +198,37 @@ class AuthController extends Controller
         $food = $request->query('food') . "%";
         $type = $request->query('type');
         if ($food && $type) {
-            $user_result = DB::select('SELECT distinct (ST_Distance_Sphere(POINT(u.lng, u.lat), POINT(:ulng, :ulat)) / 1000) as distance, p2.is_age_private, u.*, p2.contribution FROM food_categories as fc
+            $user_result = DB::select('SELECT distinct (ST_Distance_Sphere(POINT(u.lng, u.lat), POINT(:ulng, :ulat)) / 1000) as distance, p2.is_age_private, u.*, p2.contribution
+FROM food_categories as fc
     inner join food_profile as p on fc.id = p.food_id
     inner join profiles p2 on p.profile_id = p2.id
     inner join users u on p2.user_id = u.id
-WHERE fc.name LIKE :foodname AND p2.contribution = :type;', [
+WHERE (NOT u.id = :id) fc.name LIKE :foodname AND p2.contribution = :type;', [
                 "foodname" => $food,
                 "type" => $type,
                 "ulat" => $user_lat,
-                "ulng"=> $user_lng
+                "ulng" => $user_lng,
+                "id" => $user->id
             ]);
         } else if ($food) {
             $user_result = DB::select('SELECT distinct (ST_Distance_Sphere(POINT(u.lng, u.lat), POINT(:ulng, :ulat)) / 1000) as distance, p2.is_age_private, u.*, p2.contribution FROM food_categories as fc
     inner join food_profile as p on fc.id = p.food_id
     inner join profiles p2 on p.profile_id = p2.id
     inner join users u on p2.user_id = u.id
-WHERE fc.name LIKE :foodname ;', [
+WHERE (NOT u.id = :id) AND fc.name LIKE :foodname ;', [
                 "foodname" => $food,
                 "ulat" => $user_lat,
-                "ulng"=> $user_lng
+                "ulng"=> $user_lng,
+                "id" => $user->id
             ]);
         } else if ($type) {
             $user_result = DB::select('SELECT distinct (ST_Distance_Sphere(POINT(u.lng, u.lat), POINT(:ulng, :ulat)) / 1000) as distance, a.is_age_private, u.*, a.contribution FROM profiles as a
     inner join users u on a.user_id = u.id
-WHERE a.contribution = :type;', [
+WHERE (NOT u.id = :id) AND a.contribution = :type;', [
                 "type" => $type,
                 "ulat" => $user_lat,
-                "ulng"=> $user_lng
+                "ulng"=> $user_lng,
+                "id" => $user->id
             ]);
         }
         return $user_result;
